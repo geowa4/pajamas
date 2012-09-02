@@ -60,7 +60,7 @@
         var queryString = ''
           , enc = encodeURIComponent
           , push = function (k, v) {
-              qs += enc(k) + '=' + enc(v) + '&'
+              queryString += enc(k) + '=' + enc(v) + '&'
             }
           , i
           , val
@@ -79,7 +79,7 @@
           }
         }
 
-        return qs.replace(/&$/, '').replace(/%20/g,'+')
+        return queryString.replace(/&$/, '').replace(/%20/g,'+')
       }
     , responseParsers = {
       'json' : function (deferred) {
@@ -96,13 +96,14 @@
   return function (options) {
     var deferred = Q.defer()
       , promise = deferred.promise
+      // TODO: handle timeouts
       , timeout
       , method = (options.method || 'GET').toUpperCase()
-      , url = options.url
+      , url = options.url || ''
       , data = (options.processData !== false && options.data) ?
           toQueryString(options.data) :
           (options.data || null)
-      , dataType = options.dataType
+      , dataType = options.dataType || 'json'
       , http = xhr();
     if (data && method === 'GET') {
       url = urlAppend(url, data)
