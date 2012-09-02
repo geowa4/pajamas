@@ -49,7 +49,20 @@ asyncTest('GET valid JSON with data', 4, function () {
 
 module('invalid GET')
 
-asyncTest('GET valid JSON', 1, function () {
+asyncTest('GET with defaults (url does not exist)', 1, function () {
+  Qjax({
+      url      : 'this-does-not-exist.json'
+    , dataType : 'json'
+  }).then(function (value) {
+    ok(false, 'deferred was resolved')
+    start()
+  }, function (reason) {
+    ok(true, 'deferred was rejected')
+    start()
+  })
+})
+
+asyncTest('GET JSON that does not exist', 1, function () {
   Qjax({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
@@ -117,7 +130,7 @@ asyncTest('POST valid JSON with data', 4, function () {
 
 module('invalid POST')
 
-asyncTest('POST valid JSON', 1, function () {
+asyncTest('POST JSON to somewhere that does not exist', 1, function () {
   Qjax({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
