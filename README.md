@@ -15,6 +15,9 @@ This should look familiar to jQuery:
     var qPromise = Qjax({
         url      : '/my/awesome/data.json'
       , dataType : 'json'
+      , data     : { // optional; null is assumed
+          whatever : 'you want'
+        }
       , method   : 'GET' // optional; 'GET' is assumed
     })
 
@@ -57,6 +60,10 @@ XML support.
 ### v0.5
 
 JS support.
+
+### v0.6
+
+Handle timeouts
 
 ### v1.0?
 
