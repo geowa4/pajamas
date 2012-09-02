@@ -13,12 +13,12 @@ Usage
 This should look familiar to jQuery:
 
     var qPromise = Qjax({
-        url      : '/my/awesome/data.json'
-      , dataType : 'json'
-      , data     : { // optional; null is assumed
+        url      : '/my/awesome/data.json'  // optional; '' is assumed
+      , dataType : 'json'                   // optional; 'json' is assumed
+      , data     : {                        // optional; null is assumed
           whatever : 'you want'
         }
-      , method   : 'GET' // optional; 'GET' is assumed
+      , method   : 'GET'                    // optional; 'GET' is assumed
     })
 
 Then, you can do whatever you'd normally do with a Q promise, such as:
@@ -63,7 +63,7 @@ JS support.
 
 ### v0.6
 
-Handle timeouts
+Handle timeouts; result function (from _)
 
 ### v1.0?
 

@@ -98,19 +98,20 @@
       , promise = deferred.promise
       // TODO: handle timeouts
       , timeout
-      , method = (options.method || 'GET').toUpperCase()
-      , url = options.url || ''
-      , data = (options.processData !== false && options.data) ?
-          toQueryString(options.data) :
-          (options.data || null)
-      , dataType = options.dataType || 'json'
+      , o = options == null ? {} : options
+      , method = (o.method || 'GET').toUpperCase()
+      , url = o.url || ''
+      , data = (o.processData !== false && o.data) ?
+          toQueryString(o.data) :
+          (o.data || null)
+      , dataType = o.dataType || 'json'
       , http = xhr();
     if (data && method === 'GET') {
       url = urlAppend(url, data)
       data = null
     }
     http.open(method, url, true)
-    setHeaders(http, options)
+    setHeaders(http, o)
     http.onreadystatechange = function () {
       var status = http.status
       if (http && http[readyState] === 4) {
@@ -118,7 +119,7 @@
             status === 304 ||
             status === 0 && http[responseText] !== '') {
           if (http[responseText])
-            responseParsers[options.dataType].call(http, deferred)
+            responseParsers[dataType].call(http, deferred)
           else
             deferred.resolve(null)
         } else deferred.reject(new Error(http.status + ': ' + http.statusText))
