@@ -122,7 +122,9 @@
             responseParsers[dataType].call(http, deferred)
           else
             deferred.resolve(null)
-        } else deferred.reject(new Error(http.status + ': ' + http.statusText))
+        } else deferred.reject(
+                new Error(method + ' ' + url + ': ' +
+                  http.status + ' ' + http.statusText))
       }
     }
     try {
