@@ -45,6 +45,10 @@ This lib needs more tests; a grunt build to automate them would be nice.
 Currently, I have only tested GET requests for JSON in a non-AMD environment.
 I need to test POST, parsing JSON when `window.JSON` is not present, and much more.
 
+### v0.1.1
+
+Test with [RequireJS](http://requirejs.org/).
+
 ### v0.2
 
 Plain text support.
