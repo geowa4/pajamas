@@ -1,7 +1,7 @@
-!function (factory) {
-  if (typeof module != 'undefined') module.exports = factory(require('q'))
-  else if (typeof define == 'function' && define.amd) define(['q'], factory)
-  else this['Qjax'] = factory(this['Q'])
+!(function (factory) {
+  if (typeof module !== 'undefined') module.exports = factory(require('q'))
+  else if (typeof define === 'function' && define.amd) define(['q'], factory)
+  else this['qjax'] = factory(this['Q'])
 } (function (Q) {
   var win = window
     , readyState = 'readyState'
@@ -54,7 +54,7 @@
           headers[contentType] = options.contentType ||
             defaultHeaders.contentType
         for (h in headers)
-          headers.hasOwnProperty(h) && http.setRequestHeader(h, headers[h])
+          if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
       }
     , toQueryString = function (data) {
         var queryString = ''
@@ -70,12 +70,13 @@
           for (i = 0; data && i < data.length; i++)
             push(data[i].name, data[i].value)
         } else {
-          for (var prop in data) {
-            if (!Object.hasOwnProperty.call(data, prop)) continue
-            val = data[prop]
-            if (isArray(val)) 
-              for (i = 0; i < val.length; i++) push(prop, val[i])
-            else push(prop, data[prop])
+          for (prop in data) {
+            if (data.hasOwnProperty(prop)) {
+              val = data[prop]
+              if (isArray(val))
+                for (i = 0; i < val.length; i++) push(prop, val[i])
+              else push(prop, data[prop])
+            }
           }
         }
 
@@ -134,4 +135,4 @@
     }
     return promise;
   }
-})
+}))

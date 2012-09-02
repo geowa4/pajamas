@@ -1,4 +1,4 @@
-Qjax (v0.0.1)
+Qjax (v0.1)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -12,7 +12,7 @@ Usage
 
 This should look familiar to jQuery:
 
-    var qPromise = Qjax({
+    var qPromise = qjax({
         url      : '/my/awesome/data.json'  // optional; '' is assumed
       , dataType : 'json'                   // optional; 'json' is assumed
       , data     : {                        // optional; null is assumed
@@ -27,7 +27,7 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
       then(function (value) {
         // do something with the JSON
       }, function (error) {
-        // error.message is of the form "<status code>: <status text>"
+        // error.message is of the form "<method> <url>: <status code> <status text>"
       })
 
 POSTing your data is done in the exact same way as the GET, just change the `method` option to `"POST"`.
@@ -39,7 +39,7 @@ Roadmap
 The following is what it will take for me to call v1.0
 
 
-### v0.1
+### v0.1 (COMPLETE)
 
 This lib needs more tests; a grunt build to automate them would be nice.
 Currently, I have only tested GET requests for JSON in a non-AMD environment.
@@ -63,7 +63,8 @@ JS support.
 
 ### v0.6
 
-Handle timeouts; result function (from _)
+Handle timeouts.
+Use `result` function (from _)?
 
 ### v1.0?
 
