@@ -1,5 +1,5 @@
 !(function (factory) {
-  if (typeof module !== 'undefined') module.exports = factory(require('q'))
+  if (typeof module !== 'undefined' && module.exports) module.exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
   else this['qjax'] = factory(this['Q'])
 } (function (Q) {
