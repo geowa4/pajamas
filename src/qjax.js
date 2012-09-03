@@ -114,8 +114,9 @@
     http.open(method, url, true)
     setHeaders(http, o)
     http.onreadystatechange = function () {
-      var status = http.status
+      var status
       if (http && http[readyState] === 4) {
+        status = http.status
         if (status >= 200 && status < 300 ||
             status === 304 ||
             status === 0 && http[responseText] !== '') {

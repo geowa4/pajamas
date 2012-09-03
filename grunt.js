@@ -38,6 +38,10 @@ module.exports = function(grunt) {
           files: '<config:lint.files>'
         , tasks: 'lint qunit'
       }
+    , server : {
+          port : 8000
+        , base : '.'
+      }
     , jshint : {
           options: {
               camelcase : true
@@ -78,5 +82,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib')
 
   grunt.registerTask('default', 'lint qunit concat min')
+
+  grunt.registerTask('test', 'server watch')
 
 }
