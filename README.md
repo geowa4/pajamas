@@ -103,4 +103,4 @@ References
 ----------
 
 Qjax is based upon @[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library.
-In fact, after reading through it's source I decided to try out his code style.
+In fact, after reading through it's source I decided to try out his code style (with some modifications).
