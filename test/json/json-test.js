@@ -49,7 +49,7 @@ asyncTest('GET valid JSON with data', 4, function () {
 
 asyncTest('parse valid JSON without using window.JSON', 4, function () {
   var _JSON = window.JSON
-  delete window.JSON
+  if (window.JSON) delete window.JSON
   qjax({
       url      : 'json-test.json'
     , dataType : 'json'
