@@ -1,10 +1,12 @@
-Qjax (v0.1)
+Qjax (v0.1.1)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 
 Presently, Qjax only supports JSON.
 Future versions will support more data types, like XML, JSONP, etc.
+
+This library has been tested against Chrome (latest), FF (latest), and IE9.
 
 
 Usage
@@ -33,6 +35,27 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
 POSTing your data is done in the exact same way as the GET, just change the `method` option to `"POST"`.
 
 
+AMD
+---
+
+Qjax declares 'q' as it's sole dependency.
+Therefore, if q.js is not discoverable, you will likely need to define a path.
+See [amd-test.js](https://github.com/geowa4/qjax/blob/master/test/amd/amd-test.js) for an example.
+
+
+Building
+--------
+
+If you would like to build Qjax on your own you will need to do the following.
+
+1. As root or Administrator, install [grunt](https://github.com/cowboy/grunt) 
+   (`npm install -g grunt`).
+1. Navigate to the project's root, and 
+   install [grunt-contrib](https://github.com/gruntjs/grunt-contrib) 
+   (`npm install grunt-contrib`).
+1. Run grunt (`grunt`).
+
+
 Roadmap
 -------
 
@@ -45,9 +68,10 @@ This lib needs more tests; a grunt build to automate them would be nice.
 Currently, I have only tested GET requests for JSON in a non-AMD environment.
 I need to test POST, parsing JSON when `window.JSON` is not present, and much more.
 
-### v0.1.1
+### v0.1.1 (COMPLETE)
 
 Test with [RequireJS](http://requirejs.org/).
+Test in FF (latest) and IE9.
 
 ### v0.2
 

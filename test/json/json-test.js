@@ -1,4 +1,4 @@
-/*global qjax:true module:true asyncTest: true ok:true strictEqual:true deepEqual:true start:true*/
+/*global qjax:true module:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
 module('valid GET')
 
 asyncTest('GET valid JSON', 4, function () {

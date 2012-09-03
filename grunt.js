@@ -66,6 +66,7 @@ module.exports = function(grunt) {
             , laxcomma  : true
             , sub       : true
             , browser   : true
+            , onevar    : true
           }
         , globals: {
               QUnit         : true
