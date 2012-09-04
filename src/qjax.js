@@ -47,7 +47,7 @@
         headers[accept] = headers[accept] ||
           defaultHeaders[accept][options.dataType] ||
           defaultHeaders[accept]['*']
-        // breaks cross-origin requests with legacy browsers
+
         if (!options.crossOrigin && !headers[requestedWith])
           headers[requestedWith] = defaultHeaders.requestedWith
         if (!headers[contentType])
@@ -83,15 +83,18 @@
         return queryString.replace(/&$/, '').replace(/%20/g,'+')
       }
     , responseParsers = {
-      'json' : function (deferred) {
-        var r = this[responseText]
-        try {
-          r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
-          deferred.resolve(r)
-        } catch (err) {
-          deferred.reject(new Error('Could not parse JSON in response.'))
+        json : function (deferred) {
+          var r = this[responseText]
+          try {
+            r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
+            deferred.resolve(r)
+          } catch (err) {
+            deferred.reject(new Error('Could not parse JSON in response.'))
+          }
         }
-      }
+      , text : function (deferred) {
+          deferred.resolve(this[responseText])
+        }
     }
 
   return function (options) {

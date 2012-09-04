@@ -1,9 +1,9 @@
-Qjax (v0.1.1)
+Qjax (v0.2)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 
-Presently, Qjax only supports JSON.
+Presently, Qjax only supports JSON and plain text.
 Future versions will support more data types, like XML, JSONP, etc.
 
 This library has been tested against Chrome (latest), FF (latest), and IE9.
@@ -73,7 +73,7 @@ I need to test POST, parsing JSON when `window.JSON` is not present, and much mo
 Test with [RequireJS](http://requirejs.org/).
 Test in FF (latest) and IE9.
 
-### v0.2
+### v0.2 (COMPLETE)
 
 Plain text support.
 
