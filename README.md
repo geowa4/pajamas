@@ -81,7 +81,7 @@ Plain text support.
 
 HTML support.
 
-### v0.4
+### v0.4 (COMPLETE)
 
 XML support.
 
@@ -95,12 +95,19 @@ Handle timeouts.
 Use `result` function (from _)?
 
 ### v0.7
-"before" option (enhance tests).
+Mock XHR object for tests.
+When tests fail, log the error message.
 Type inference.
+
+### v0.8
+
+Validate and document `processData` option.
+Test against bad options.
 
 ### v1.0?
 
-TBD
+Use this for my own website.
+Other criteria TBD.
 
 
 References

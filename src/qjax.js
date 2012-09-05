@@ -98,6 +98,9 @@
       , html : function (deferred) {
           responseParsers.text.call(this, deferred)
         }
+      , xml  : function (deferred) {
+          deferred.resolve(this.responseXML)
+        }
     }
 
   return function (options) {
