@@ -1,4 +1,4 @@
-Qjax (v0.3)
+Qjax (v0.5)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -85,7 +85,7 @@ HTML support.
 
 XML support.
 
-### v0.5
+### v0.5 (COMPLETE)
 
 JS support.
 

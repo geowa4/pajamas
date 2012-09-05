@@ -92,6 +92,13 @@
             deferred.reject(new Error('Could not parse JSON in response.'))
           }
         }
+      , js   : function (deferred) {
+          try {
+            deferred.resolve(eval(this[responseText]))
+          } catch (err) {
+            deferred.reject(err)
+          }
+        }
       , text : function (deferred) {
           deferred.resolve(this[responseText])
         }
@@ -103,8 +110,7 @@
           // Chrome makes `responseXML` null
           // while FF and IE make `documentElement` null
           // so I try to normalize the two here
-          if (r === null || r.documentElement === null)
-            deferred.resolve(null)
+          if (r === null || r.documentElement === null) deferred.resolve(null)
           else deferred.resolve(this.responseXML)
         }
     }
