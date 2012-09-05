@@ -80,7 +80,6 @@ module.exports = function(grunt) {
           }
         , globals: {
               QUnit         : true
-            , ActiveXObject : true
             , define        : true
             , module        : true
             , require       : true

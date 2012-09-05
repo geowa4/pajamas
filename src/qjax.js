@@ -8,7 +8,7 @@
     , xmlHttpRequest = 'XMLHttpRequest'
     , xhr = win[xmlHttpRequest] ?
         function () { return new win[xmlHttpRequest]() } :
-        function () { return new ActiveXObject('Microsoft.XMLHTTP') }
+        function () { return new win.ActiveXObject('Microsoft.XMLHTTP') }
     , responseText = 'responseText'
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
