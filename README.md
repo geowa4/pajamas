@@ -1,4 +1,4 @@
-Qjax (v0.2)
+Qjax (v0.3)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -77,7 +77,7 @@ Test in FF (latest) and IE9.
 
 Plain text support.
 
-### v0.3
+### v0.3 (COMPLETE)
 
 HTML support.
 
@@ -93,6 +93,10 @@ JS support.
 
 Handle timeouts.
 Use `result` function (from _)?
+
+### v0.7
+"before" option (enhance tests).
+Type inference.
 
 ### v1.0?
 

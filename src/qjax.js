@@ -95,6 +95,9 @@
       , text : function (deferred) {
           deferred.resolve(this[responseText])
         }
+      , html : function (deferred) {
+          responseParsers.text.call(this, deferred)
+        }
     }
 
   return function (options) {
