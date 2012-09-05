@@ -107,10 +107,13 @@
         }
       , xml  : function (deferred) {
           var r = this.responseXML
-          // Chrome makes `responseXML` null
-          // while FF and IE make `documentElement` null
-          // so I try to normalize the two here
-          if (r === null || r.documentElement === null) deferred.resolve(null)
+          // Chrome makes `responseXML` null;
+          // IE makes `documentElement` null;
+          // FF makes up an element;
+          // this is my attempt at standardization
+          if (r === null || r.documentElement === null ||
+              r.documentElement.nodeName === 'parsererror')
+            deferred.resolve(null)
           else deferred.resolve(this.responseXML)
         }
     }
