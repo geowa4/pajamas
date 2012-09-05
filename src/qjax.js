@@ -99,7 +99,13 @@
           responseParsers.text.call(this, deferred)
         }
       , xml  : function (deferred) {
-          deferred.resolve(this.responseXML)
+          var r = this.responseXML
+          // Chrome makes `responseXML` null
+          // while FF and IE make `documentElement` null
+          // so I try to normalize the two here
+          if (r === null || r.documentElement === null)
+            deferred.resolve(null)
+          else deferred.resolve(this.responseXML)
         }
     }
 
