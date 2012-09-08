@@ -91,15 +91,19 @@ JS support.
 
 ### v0.6
 
+JSONP support
+
+### v0.7
+
 Handle timeouts.
 Use `result` function (from _)?
 
-### v0.7
+### v0.8
 Mock XHR object for tests.
 When tests fail, log the error message.
 Type inference.
 
-### v0.8
+### v0.9
 
 Validate and document `processData` option.
 Test against bad options.
