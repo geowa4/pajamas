@@ -21,7 +21,7 @@
             , html   : 'text/html'
             , text   : 'text/plain'
             , json   : 'application/json, text/javascript'
-            , script : 'text/javascript, application/javascript,' + 
+            , script : 'text/javascript, application/javascript,' +
                        ' application/ecmascript, application/x-ecmascript'
           }
         , requestedWith: xmlHttpRequest
