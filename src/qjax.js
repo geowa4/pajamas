@@ -15,13 +15,13 @@
     , defaultHeaders = {
           contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
         , Accept: {
-              '*'  : 'text/javascript, text/html, application/xml,' +
-                     ' text/xml, */*'
-            , xml  : 'application/xml, text/xml'
-            , html : 'text/html'
-            , text : 'text/plain'
-            , json : 'application/json, text/javascript'
-            , js   : 'application/javascript, text/javascript'
+              '*'    : 'text/javascript, text/html, application/xml,' +
+                       ' text/xml, */*'
+            , xml    : 'application/xml, text/xml'
+            , html   : 'text/html'
+            , text   : 'text/plain'
+            , json   : 'application/json, text/javascript'
+            , script : 'application/javascript, text/javascript'
           }
         , requestedWith: xmlHttpRequest
       }
