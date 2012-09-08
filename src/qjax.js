@@ -83,7 +83,7 @@
         return queryString.replace(/&$/, '').replace(/%20/g,'+')
       }
     , responseParsers = {
-        json : function (deferred) {
+        json   : function (deferred) {
           var r = this[responseText]
           try {
             r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
@@ -92,20 +92,20 @@
             deferred.reject(new Error('Could not parse JSON in response.'))
           }
         }
-      , js   : function (deferred) {
+      , script : function (deferred) {
           try {
             deferred.resolve(eval(this[responseText]))
           } catch (err) {
             deferred.reject(err)
           }
         }
-      , text : function (deferred) {
+      , text   : function (deferred) {
           deferred.resolve(String(this[responseText]))
         }
-      , html : function (deferred) {
+      , html   : function (deferred) {
           deferred.resolve(this[responseText])
         }
-      , xml  : function (deferred) {
+      , xml    : function (deferred) {
           var r = this.responseXML
           // Chrome makes `responseXML` null;
           // IE makes `documentElement` null;
