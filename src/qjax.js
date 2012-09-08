@@ -126,7 +126,7 @@
       , o = options == null ? {} : options
       , method = (o.method || 'GET').toUpperCase()
       , url = o.url || ''
-      , data = (o.processData !== false && o.data) ?
+      , data = (o.data && o.processData && typeof o.data !== 'string') ?
           toQueryString(o.data) :
           (o.data || null)
       , dataType = o.dataType || 'json'
