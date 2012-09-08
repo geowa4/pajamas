@@ -100,10 +100,10 @@
           }
         }
       , text : function (deferred) {
-          deferred.resolve(this[responseText])
+          deferred.resolve(String(this[responseText]))
         }
       , html : function (deferred) {
-          responseParsers.text.call(this, deferred)
+          deferred.resolve(this[responseText])
         }
       , xml  : function (deferred) {
           var r = this.responseXML
