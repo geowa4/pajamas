@@ -1,13 +1,14 @@
 /*global qjax:true module:true asyncTest:true ok:true strictEqual:true start:true*/
 module('valid GET')
 
-asyncTest('GET text', 3, function () {
+asyncTest('GET text', 4, function () {
   qjax({
       url      : 'text-test-value.htm'
     , dataType : 'text'
   }).then(function (value) {
     ok(true, 'deferred was resolved')
     ok(value != null, 'response received')
+    strictEqual(typeof value, 'string', 'value is a String')
     strictEqual(value
       , '<h1>hello, world</h1>'
       , 'response is an html fragment')
