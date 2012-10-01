@@ -3,7 +3,7 @@ module('valid GET')
 
 asyncTest('GET value', 3, function () {
   qjax({
-      url      : 'js-test-value.js'
+      url      : 'script-test-value.js'
     , dataType : 'script'
   }).then(function (value) {
     ok(true, 'deferred was resolved')
@@ -36,7 +36,7 @@ asyncTest('GET JS that does not exist', 1, function () {
 
 asyncTest('GET error-ridden JS', 1, function () {
   qjax({
-      url      : 'js-test-error.js'
+      url      : 'script-test-error.js'
     , dataType : 'script'
   }).then(function (value) {
     ok(false, 'deferred was resolved')
