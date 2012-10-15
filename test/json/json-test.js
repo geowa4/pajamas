@@ -3,7 +3,7 @@ module('valid GET')
 
 asyncTest('GET valid JSON', 4, function () {
   qjax({
-      url      : 'json-test.json'
+      url : 'json-test.json'
   }).then(function (value) {
     ok(true, 'deferred was resolved')
     ok(value != null, 'response received')
