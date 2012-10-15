@@ -26,16 +26,8 @@
           }
         , requestedWith: xmlHttpRequest
       }
-    , toString = Object.prototype.toString
     , isArray = Array.isArray || function (obj) {
         return obj instanceof Array
-      }
-      // TODO: evaluate use of `result`
-    , result = function (obj, prop) {
-        var val
-        if (obj == null) return null
-        val = obj[prop]
-        return (typeof val === 'function') ? val.call(obj) : val
       }
     , urlAppend = function (url, dataString) {
         return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
