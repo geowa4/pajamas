@@ -44,7 +44,7 @@ test('check method calls', 10, function () {
 
   strictEqual(FakeXHR.instance.methodCallCount('send'), 1, 'send called')
   strictEqual(FakeXHR.instance.methodCallArgs('send', 0).length, 1, 'send called with 1 args')
-  deepEqual(FakeXHR.instance.methodCallArgs('send', 0), { '0' : null }, 'send called with 1 args')
+  deepEqual(FakeXHR.instance.methodCallArgs('send', 0), { '0' : null }, 'send called with null')
 })
 
 
