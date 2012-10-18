@@ -119,11 +119,12 @@
       , o = options == null ? {} : options
       , method = (o.method || 'GET').toUpperCase()
       , url = o.url || ''
-      , data = (o.data && o.processData && typeof o.data !== 'string') ?
+      , data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
           toQueryString(o.data) :
           (o.data || null)
       , dataType = o.dataType || 'json'
       , http = xhr();
+    delete o.data
     if (data && method === 'GET') {
       url = urlAppend(url, data)
       data = null

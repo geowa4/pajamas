@@ -1,4 +1,53 @@
-/*global qjax:true module:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
+/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
+module('fake xhr', {
+    setup    : function () {
+      FakeXHR.setup()
+    }
+  , teardown : function () {
+      FakeXHR.restore()
+    }
+})
+
+test('check method calls', 10, function () {
+  qjax({
+      url      : 'json-test.json'
+    , dataType : 'json'
+    , data     : {
+        foo : 'bar'
+      }
+  })
+  strictEqual(FakeXHR.instance.methodCallCount('open'), 1, 'open called')
+  strictEqual(FakeXHR.instance.methodCallArgs('open', 0).length, 3, 'open called with 3 args')
+  deepEqual(FakeXHR.instance.methodCallArgs('open', 0), {
+        '0' : 'GET'
+      , '1' : 'json-test.json?foo=bar'
+      , '2' : true
+    }
+    , 'check open args')
+
+  strictEqual(FakeXHR.instance.methodCallCount('setRequestHeader'), 3, 'setRequestHeader called 3x')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), {
+        '0' : 'Accept'
+      , '1' : 'application/json, text/javascript'
+    }
+    , 'Accepts header is set')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 1), {
+        '0' : 'X-Requested-With'
+      , '1' : 'XMLHttpRequest'
+    }
+    , 'X-Requested-With header is set')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 2), {
+        '0' : 'Content-Type'
+      , '1' : 'application/x-www-form-urlencoded; charset=UTF-8'
+    }
+    , 'Content-Type header is set')
+
+  strictEqual(FakeXHR.instance.methodCallCount('send'), 1, 'send called')
+  strictEqual(FakeXHR.instance.methodCallArgs('send', 0).length, 1, 'send called with 1 args')
+  deepEqual(FakeXHR.instance.methodCallArgs('send', 0), { '0' : null }, 'send called with 1 args')
+})
+
+
 module('valid GET')
 
 asyncTest('GET valid JSON', 4, function () {
