@@ -16,6 +16,7 @@ test('check method calls', 10, function () {
         foo : 'bar'
       }
   })
+
   strictEqual(FakeXHR.instance.methodCallCount('open'), 1, 'open called')
   strictEqual(FakeXHR.instance.methodCallArgs('open', 0).length, 3, 'open called with 3 args')
   deepEqual(FakeXHR.instance.methodCallArgs('open', 0), ['GET', 'json-test.json?foo=bar', true], 'check open args')
@@ -28,6 +29,14 @@ test('check method calls', 10, function () {
   strictEqual(FakeXHR.instance.methodCallCount('send'), 1, 'send called')
   strictEqual(FakeXHR.instance.methodCallArgs('send', 0).length, 1, 'send called with 1 args')
   deepEqual(FakeXHR.instance.methodCallArgs('send', 0), [null], 'send called with null')
+})
+
+test('infer JSON data type', 1, function () {
+  qjax({
+      url      : 'json-test.json'
+  })
+
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/json, text/javascript'], 'Accepts header defaults to JSON')
 })
 
 

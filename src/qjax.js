@@ -29,6 +29,13 @@
     , isArray = Array.isArray || function (obj) {
         return obj instanceof Array
       }
+    , inferDataType = function (url) {
+        var extension = url.substr(url.lastIndexOf('.') + 1)
+        if (extension === url) return 'json'
+        else if (extension === 'js') return 'script'
+        else if (extension === 'txt') return 'text'
+        else return extension
+      }
     , urlAppend = function (url, dataString) {
         return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
       }
@@ -122,9 +129,8 @@
       , data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
           toQueryString(o.data) :
           (o.data || null)
-      , dataType = o.dataType || 'json'
-      , http = xhr();
-    delete o.data
+      , http = xhr()
+    o.dataType || (o.dataType = inferDataType(url))
     if (data && method === 'GET') {
       url = urlAppend(url, data)
       data = null
@@ -139,7 +145,7 @@
             status === 304 ||
             status === 0 && http[responseText] !== '') {
           if (http[responseText])
-            responseParsers[dataType].call(http, deferred)
+            responseParsers[o.dataType].call(http, deferred)
           else
             deferred.resolve(null)
         } else deferred.reject(
