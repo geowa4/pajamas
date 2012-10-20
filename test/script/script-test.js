@@ -8,7 +8,7 @@ module('fake xhr', {
 test('infer script data type', 1, function () {
   qjax({
       url : 'script-test.js'
-    , xhr      : function () {
+    , xhr : function () {
         return new FakeXHR()
       }
   })

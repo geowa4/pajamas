@@ -33,8 +33,8 @@ test('check method calls', 10, function () {
 
 test('infer JSON data type', 1, function () {
   qjax({
-      url      : 'json-test.json'
-    , xhr      : function () {
+      url : 'json-test.json'
+    , xhr : function () {
         return new FakeXHR()
       }
   })
