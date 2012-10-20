@@ -1,10 +1,7 @@
 /*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
 module('fake xhr', {
     setup    : function () {
-      FakeXHR.setup()
-    }
-  , teardown : function () {
-      FakeXHR.restore()
+      FakeXHR.instance = null
     }
 })
 
@@ -14,6 +11,9 @@ test('check method calls', 10, function () {
     , dataType : 'json'
     , data     : {
         foo : 'bar'
+      }
+    , xhr      : function () {
+        return new FakeXHR()
       }
   })
 
@@ -34,6 +34,9 @@ test('check method calls', 10, function () {
 test('infer JSON data type', 1, function () {
   qjax({
       url      : 'json-test.json'
+    , xhr      : function () {
+        return new FakeXHR()
+      }
   })
 
   deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/json, text/javascript'], 'Accepts header defaults to JSON')

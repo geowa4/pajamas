@@ -29,6 +29,11 @@
     , isArray = Array.isArray || function (obj) {
         return obj instanceof Array
       }
+    , isFunction = typeof (/-/) !== 'function' ? function (obj) {
+        return typeof obj === 'function'
+      } : function (obj) {
+        return Object.prototype.toString.call(obj) === '[object Function]'
+      }
     , inferDataType = function (url) {
         var extension = url.substr(url.lastIndexOf('.') + 1)
         if (extension === url) return 'json'
@@ -129,7 +134,7 @@
       , data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
           toQueryString(o.data) :
           (o.data || null)
-      , http = xhr()
+      , http = isFunction(o.xhr) ? o.xhr() : xhr()
     o.dataType || (o.dataType = inferDataType(url))
     if (data && method === 'GET') {
       url = urlAppend(url, data)

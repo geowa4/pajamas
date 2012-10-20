@@ -1,16 +1,16 @@
 /*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
 module('fake xhr', {
     setup    : function () {
-      FakeXHR.setup()
-    }
-  , teardown : function () {
-      FakeXHR.restore()
+      FakeXHR.instance = null
     }
 })
 
 test('infer script data type', 1, function () {
   qjax({
       url : 'script-test.js'
+    , xhr      : function () {
+        return new FakeXHR()
+      }
   })
 
   deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), [
@@ -27,6 +27,9 @@ test('check method calls', 10, function () {
     , dataType : 'script'
     , data     : {
         foo : 'bar'
+      }
+    , xhr      : function () {
+        return new FakeXHR()
       }
   })
 
