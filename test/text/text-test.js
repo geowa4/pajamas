@@ -1,4 +1,4 @@
-/*global qjax:true module:true asyncTest:true ok:true strictEqual:true start:true*/
+/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
 module('fake xhr', {
     setup    : function () {
       FakeXHR.instance = null
@@ -34,7 +34,7 @@ test('check method calls', 10, function () {
 
   strictEqual(FakeXHR.instance.methodCallCount('open'), 1, 'open called')
   strictEqual(FakeXHR.instance.methodCallArgs('open', 0).length, 3, 'open called with 3 args')
-  deepEqual(FakeXHR.instance.methodCallArgs('open', 0), ['GET', 'script-test.js?foo=bar', true], 'check open args')
+  deepEqual(FakeXHR.instance.methodCallArgs('open', 0), ['GET', 'text-test-value.htm?foo=bar', true], 'check open args')
 
   strictEqual(FakeXHR.instance.methodCallCount('setRequestHeader'), 3, 'setRequestHeader called 3x')
   deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'text/plain'], 'Accepts header is set')
