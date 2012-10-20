@@ -1,6 +1,6 @@
 /*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
 module('fake xhr', {
-    setup    : function () {
+    setup : function () {
       FakeXHR.instance = null
     }
 })
