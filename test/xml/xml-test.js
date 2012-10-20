@@ -1,4 +1,48 @@
-/*global qjax:true module:true asyncTest:true ok:true strictEqual:true start:true Document:true*/
+/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true Document:true*/
+module('fake xhr', {
+    setup : function () {
+      FakeXHR.instance = null
+    }
+})
+
+test('check method calls', 10, function () {
+  qjax({
+      url      : 'xml-test.xml'
+    , dataType : 'xml'
+    , data     : {
+        foo : 'bar'
+      }
+    , xhr      : function () {
+        return new FakeXHR()
+      }
+  })
+
+  strictEqual(FakeXHR.instance.methodCallCount('open'), 1, 'open called')
+  strictEqual(FakeXHR.instance.methodCallArgs('open', 0).length, 3, 'open called with 3 args')
+  deepEqual(FakeXHR.instance.methodCallArgs('open', 0), ['GET', 'xml-test.xml?foo=bar', true], 'check open args')
+
+  strictEqual(FakeXHR.instance.methodCallCount('setRequestHeader'), 3, 'setRequestHeader called 3x')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/xml, text/xml'], 'Accepts header is set')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 1), ['X-Requested-With', 'XMLHttpRequest'], 'X-Requested-With header is set')
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 2), ['Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8'], 'Content-Type header is set')
+
+  strictEqual(FakeXHR.instance.methodCallCount('send'), 1, 'send called')
+  strictEqual(FakeXHR.instance.methodCallArgs('send', 0).length, 1, 'send called with 1 args')
+  deepEqual(FakeXHR.instance.methodCallArgs('send', 0), [null], 'send called with null')
+})
+
+test('infer xml data type', 1, function () {
+  qjax({
+      url : 'xml-test.xml'
+    , xhr : function () {
+        return new FakeXHR()
+      }
+  })
+
+  deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/xml, text/xml'], 'Accepts header defaults to xml')
+})
+
+
 module('valid GET')
 
 asyncTest('GET XML', 7, function () {

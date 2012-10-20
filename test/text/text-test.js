@@ -17,7 +17,7 @@ test('infer text data type', 1, function () {
         'Accept'
       , 'text/plain'
     ]
-    , 'Accepts header defaults to script')
+    , 'Accepts header defaults to text')
 })
 
 test('check method calls', 10, function () {
