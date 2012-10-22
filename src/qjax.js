@@ -87,6 +87,9 @@
 
         return queryString.replace(/&$/, '').replace(/%20/g,'+')
       }
+    , defaultParser = function (deferred) {
+        deferred.resolve(this)
+      }
     , responseParsers = {
         json   : function (deferred) {
           var r = this[responseText]
@@ -150,7 +153,7 @@
             status === 304 ||
             status === 0 && http[responseText] !== '') {
           if (http[responseText])
-            responseParsers[o.dataType].call(http, deferred)
+            (responseParsers[o.dataType] || defaultParser).call(http, deferred)
           else
             deferred.resolve(null)
         } else deferred.reject(
