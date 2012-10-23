@@ -18,7 +18,7 @@
       , "url"  : "https://github.com/geowa4/qjax/raw/master/LICENSE"
     }]
   , "dependencies"    : {
-        "q" : ">=0.8.7"
+        "q" : ">=0.8.9"
     }
   , "devDependencies" : {
         "grunt-contrib" : ">=0.1.7"
