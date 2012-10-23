@@ -2,7 +2,7 @@
     "name"            : "qjax"
   , "description"     : "A wrapper for asynchronous http requests using the q promise library"
   , "keywords"        : ["ajax", "xhr", "q", "promise", "async"]
-  , "version"         : "0.5.1"
+  , "version"         : "0.6"
   , "homepage"        : "https://github.com/geowa4/qjax"
   , "author"          : "George Adams IV (http://gada.ms)"
   , "repository"      : {

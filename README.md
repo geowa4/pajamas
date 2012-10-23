@@ -1,4 +1,4 @@
-Qjax (v0.5.1)
+Qjax (v0.6)
 =============
 
 Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -33,6 +33,8 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
       })
 
 POSTing your data is done in the exact same way as the GET, just change the `method` option to `"POST"`.
+
+If you set the `dataType` to `'*'`, the promise will be resolved XHR object.
 
 
 AMD
@@ -89,19 +91,18 @@ XML support.
 
 JS support.
 
-### v0.6
+### v0.6 (COMPLETE)
 
-JSONP support
+Default parser (`Accepts: *`).
+Better tests with mock XHR.
 
 ### v0.7
 
 Handle timeouts.
-Use `result` function (from _)?
 
 ### v0.8
-Mock XHR object for tests.
-When tests fail, log the error message.
-Type inference.
+
+JSONP support; crossOrigin scripts
 
 ### v0.9
 
