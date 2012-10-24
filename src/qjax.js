@@ -4,6 +4,7 @@
   else this['qjax'] = factory(this['Q'])
 } (function (Q) {
   var win = window
+    , doc = document
     , readyState = 'readyState'
     , xmlHttpRequest = 'XMLHttpRequest'
     , xhr = win[xmlHttpRequest] ?
@@ -133,6 +134,16 @@
         }
         return copy
       }
+    , getDefaultUrl = function () {
+        var anchor
+        try {
+          return location.href
+        } catch (e) {
+          anchor = doc.createElement('a')
+          anchor.href = ''
+          return anchor.href
+        }
+      }
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
         http.open(o.method, o.url, true)
@@ -165,7 +176,7 @@
       , promise = deferred.promise
       , o = options == null ? {} : clone(options)
     o.method = o.method ? o.method.toUpperCase() : 'GET'
-    o.url || (o.url = '')
+    o.url || (o.url = getDefaultUrl())
     o.data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
       toQueryString(o.data) :
       (o.data || null)
