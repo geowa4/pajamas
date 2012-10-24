@@ -5,6 +5,7 @@
 } (function (Q) {
   var win = window
     , doc = document
+    , rurl = /^([\w\+\.\-]+:)(?:\/\/([^\/?#:]*)(?::(\d+)|)|)/
     , readyState = 'readyState'
     , xmlHttpRequest = 'XMLHttpRequest'
     , xhr = win[xmlHttpRequest] ?
@@ -134,16 +135,6 @@
         }
         return copy
       }
-    , getDefaultUrl = function () {
-        var anchor
-        try {
-          return location.href
-        } catch (e) {
-          anchor = doc.createElement('a')
-          anchor.href = ''
-          return anchor.href
-        }
-      }
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
         http.open(o.method, o.url, true)
@@ -170,22 +161,45 @@
           deferred.reject(err)
         }
       }
+    , isCrossDomain = function (url, defaultUrl) {
+        var parts = rurl.exec(url)
+          , defaultParts = rurl.exec(defaultUrl)
+        return !!(parts &&
+          (parts[1] !== defaultParts[1] || parts[2] !== defaultParts[2] ||
+            (parts[3] || (parts[1] === "http:" ? 80 : 443)) !==
+              (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 )))
+      }
+    , sendRemote = function (o, deferred) {
+        //TODO
+      }
 
   return function (options) {
     var deferred = Q.defer()
       , promise = deferred.promise
       , o = options == null ? {} : clone(options)
+      , defaultUrl = (function () {
+          var anchor
+          try {
+            return location.href
+          } catch (e) {
+            anchor = doc.createElement('a')
+            anchor.href = ''
+            return anchor.href
+          }
+        } ())
     o.method = o.method ? o.method.toUpperCase() : 'GET'
-    o.url || (o.url = getDefaultUrl())
+    o.url || (o.url = defaultUrl)
     o.data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
       toQueryString(o.data) :
       (o.data || null)
     o.dataType || (o.dataType = inferDataType(o.url))
+    o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
     if (o.data && o.method === 'GET') {
       o.url = urlAppend(o.url, o.data)
       o.data = null
     }
-    sendLocal(o, deferred)
+    if (!o.crossDomain) sendLocal(o, deferred)
+    else sendRemote(o, deferred)
     return promise;
   }
 }))
