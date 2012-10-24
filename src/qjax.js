@@ -53,7 +53,7 @@
           defaultHeaders[accept][options.dataType] ||
           defaultHeaders[accept]['*']
 
-        if (!options.crossOrigin && !headers[requestedWith])
+        if (!options.crossDomain && !headers[requestedWith])
           headers[requestedWith] = defaultHeaders.requestedWith
         if (!headers[contentType])
           headers[contentType] = options.contentType ||
@@ -124,48 +124,57 @@
             deferred.resolve(null)
           else deferred.resolve(this.responseXML)
         }
-    }
+      }
+    , clone = function (o) {
+        var copy = {}
+          , prop
+        for (prop in o) {
+          if (o.hasOwnProperty(prop)) copy[prop] = o[prop];
+        }
+        return copy
+      }
+    , sendLocal = function (o, deferred) {
+        var http = isFunction(o.xhr) ? o.xhr() : xhr()
+        http.open(o.method, o.url, true)
+        setHeaders(http, o)
+        http.onreadystatechange = function () {
+          var status
+          if (http && http[readyState] === 4) {
+            status = http.status
+            if (status >= 200 && status < 300 ||
+                status === 304 ||
+                status === 0 && http[responseText] !== '') {
+              if (http[responseText])
+                (responseParsers[o.dataType] || defaultParser).call(http, deferred)
+              else
+                deferred.resolve(null)
+            } else deferred.reject(
+                    new Error(o.method + ' ' + o.url + ': ' +
+                      http.status + ' ' + http.statusText))
+          }
+        }
+        try {
+          http.send(o.data)
+        } catch (err) {
+          deferred.reject(err)
+        }
+      }
 
   return function (options) {
     var deferred = Q.defer()
       , promise = deferred.promise
-      // TODO: handle timeouts
-      , timeout
-      , o = options == null ? {} : options
-      , method = (o.method || 'GET').toUpperCase()
-      , url = o.url || ''
-      , data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
-          toQueryString(o.data) :
-          (o.data || null)
-      , http = isFunction(o.xhr) ? o.xhr() : xhr()
-    o.dataType || (o.dataType = inferDataType(url))
-    if (data && method === 'GET') {
-      url = urlAppend(url, data)
-      data = null
+      , o = options == null ? {} : clone(options)
+    o.method = o.method ? o.method.toUpperCase() : 'GET'
+    o.url || (o.url = '')
+    o.data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
+      toQueryString(o.data) :
+      (o.data || null)
+    o.dataType || (o.dataType = inferDataType(o.url))
+    if (o.data && o.method === 'GET') {
+      o.url = urlAppend(o.url, o.data)
+      o.data = null
     }
-    http.open(method, url, true)
-    setHeaders(http, o)
-    http.onreadystatechange = function () {
-      var status
-      if (http && http[readyState] === 4) {
-        status = http.status
-        if (status >= 200 && status < 300 ||
-            status === 304 ||
-            status === 0 && http[responseText] !== '') {
-          if (http[responseText])
-            (responseParsers[o.dataType] || defaultParser).call(http, deferred)
-          else
-            deferred.resolve(null)
-        } else deferred.reject(
-                new Error(method + ' ' + url + ': ' +
-                  http.status + ' ' + http.statusText))
-      }
-    }
-    try {
-      http.send(data)
-    } catch (err) {
-      deferred.reject(err)
-    }
+    sendLocal(o, deferred)
     return promise;
   }
 }))
