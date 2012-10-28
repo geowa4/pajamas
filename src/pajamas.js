@@ -1,7 +1,7 @@
 !(function (factory) {
   if (typeof module !== 'undefined' && module.exports) module.exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
-  else this['qjax'] = factory(this['Q'])
+  else this['pj'] = factory(this['Q'])
 } (function (Q) {
   var win = window
     , doc = document
@@ -44,6 +44,7 @@
         else return extension
       }
     , urlAppend = function (url, dataString) {
+        if (typeof dataString !== 'string') return url
         return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
       }
     , setHeaders = function (http, options) {
@@ -167,10 +168,26 @@
         return !!(parts &&
           (parts[1] !== defaultParts[1] || parts[2] !== defaultParts[2] ||
             (parts[3] || (parts[1] === "http:" ? 80 : 443)) !==
-              (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 )))
+              (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 ))))
       }
-    , sendRemote = function (o, deferred) {
-        //TODO
+    , sendCrossOriginScript = function (o, deferred) {
+        var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement
+          , script = document.createElement('script')
+        script.async = 'async'
+        script.src = o.url
+        script.onload = script.onreadystatechange = function(_, isAbort) {
+          if (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) {
+            script.onload = script.onreadystatechange = null;
+            if (head && script.parentNode) {
+              head.removeChild(script);
+            }
+            script = undefined;
+            if (!isAbort) {
+              deferred.resolve()
+            }
+          }
+        }
+        head.appendChild(script)
       }
 
   return function (options) {
@@ -199,7 +216,7 @@
       o.data = null
     }
     if (!o.crossDomain) sendLocal(o, deferred)
-    else sendRemote(o, deferred)
+    else sendCrossOriginScript(o, deferred)
     return promise;
   }
 }))

@@ -1,4 +1,4 @@
-/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
+/*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true strictEqual:true deepEqual:true start:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
@@ -6,7 +6,7 @@ module('fake xhr', {
 })
 
 test('infer script data type', 1, function () {
-  qjax({
+  pj({
       url : 'script-test.js'
     , xhr : function () {
         return new FakeXHR()
@@ -22,7 +22,7 @@ test('infer script data type', 1, function () {
 })
 
 test('check method calls', 10, function () {
-  qjax({
+  pj({
       url      : 'script-test.js'
     , dataType : 'script'
     , data     : {
@@ -51,7 +51,7 @@ test('check method calls', 10, function () {
 module('valid GET')
 
 asyncTest('GET value', 3, function () {
-  qjax({
+  pj({
       url      : 'script-test-value.js'
     , dataType : 'script'
   }).then(function (value) {
@@ -71,7 +71,7 @@ asyncTest('GET value', 3, function () {
 module('invalid GET')
 
 asyncTest('GET JS that does not exist', 1, function () {
-  qjax({
+  pj({
       url      : 'this-does-not-exist.js'
     , dataType : 'script'
   }).then(function (value) {
@@ -84,7 +84,7 @@ asyncTest('GET JS that does not exist', 1, function () {
 })
 
 asyncTest('GET error-ridden JS', 1, function () {
-  qjax({
+  pj({
       url      : 'script-test-error.js'
     , dataType : 'script'
   }).then(function (value) {

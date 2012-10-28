@@ -1,4 +1,4 @@
-/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true Document:true*/
+/*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true Document:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
@@ -6,7 +6,7 @@ module('fake xhr', {
 })
 
 test('check method calls', 10, function () {
-  qjax({
+  pj({
       url      : 'xml-test.xml'
     , dataType : 'xml'
     , data     : {
@@ -32,7 +32,7 @@ test('check method calls', 10, function () {
 })
 
 test('infer xml data type', 1, function () {
-  qjax({
+  pj({
       url : 'xml-test.xml'
     , xhr : function () {
         return new FakeXHR()
@@ -46,7 +46,7 @@ test('infer xml data type', 1, function () {
 module('valid GET')
 
 asyncTest('GET XML', 7, function () {
-  qjax({
+  pj({
       url      : 'xml-test.xml'
     , dataType : 'xml'
   }).then(function (value) {
@@ -71,7 +71,7 @@ asyncTest('GET XML', 7, function () {
 module('invalid GET')
 
 asyncTest('GET bad XML', function () {
-  qjax({
+  pj({
       url      : 'xml-test-invalid.xml'
     , dataType : 'xml'
   }).then(function (value) {
@@ -84,7 +84,7 @@ asyncTest('GET bad XML', function () {
 })
 
 asyncTest('GET non-existent XML', 1, function () {
-  qjax({
+  pj({
       url      : 'this-file-does-not-exist.xml'
     , dataType : 'xml'
   }).then(function (value) {

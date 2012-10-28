@@ -1,4 +1,4 @@
-/*global qjax:true FakeXHR:true module:true asyncTest:true test ok:true deepEqual:true start:true*/
+/*global pj:true FakeXHR:true module:true asyncTest:true test ok:true deepEqual:true start:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
@@ -6,7 +6,7 @@ module('fake xhr', {
 })
 
 test('Accept header when dataType is set to *', 1, function () {
-  qjax({
+  pj({
       url      : 'asterisk-test.html'
     , dataType : '*'
     , xhr      : function () {
@@ -21,7 +21,7 @@ test('Accept header when dataType is set to *', 1, function () {
 module('deferred resolution')
 
 asyncTest('resolved with the xhr', 1, function () {
-  qjax({
+  pj({
       url      : 'asterisk-test.html'
     , dataType : '*'
   }).then(function (response) {

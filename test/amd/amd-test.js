@@ -3,17 +3,17 @@ requirejs.config({
     baseUrl : '../..'
   , paths : {
         q    : 'lib/q'
-      , qjax : 'src/qjax'
+      , pj : 'src/pajamas'
     }
 })
 
 
 module('AMD load')
 
-asyncTest('qjax loads via AMD', 2, function () {
-  requirejs(['qjax'], function (qjax) {
-    ok(typeof window.qjax === 'undefined', 'qjax is not global')
-    ok(typeof qjax === 'function', 'qjax is defined and is a function')
+asyncTest('pajamas loads via AMD', 2, function () {
+  requirejs(['pj'], function (pj) {
+    ok(typeof window.pj === 'undefined', 'pajamas is not global')
+    ok(typeof pj === 'function', 'pajamas is defined and is a function')
     start()
   }, function (err) {
     ok(false, err.requireType)

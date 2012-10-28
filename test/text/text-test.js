@@ -1,4 +1,4 @@
-/*global qjax:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
+/*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
@@ -6,7 +6,7 @@ module('fake xhr', {
 })
 
 test('infer text data type', 1, function () {
-  qjax({
+  pj({
       url : 'text-test-value.txt'
     , xhr : function () {
         return new FakeXHR()
@@ -21,7 +21,7 @@ test('infer text data type', 1, function () {
 })
 
 test('check method calls', 10, function () {
-  qjax({
+  pj({
       url      : 'text-test-value.htm'
     , dataType : 'text'
     , data     : {
@@ -50,7 +50,7 @@ test('check method calls', 10, function () {
 module('valid GET')
 
 asyncTest('GET text', 4, function () {
-  qjax({
+  pj({
       url      : 'text-test-value.htm'
     , dataType : 'text'
   }).then(function (value) {
@@ -68,7 +68,7 @@ asyncTest('GET text', 4, function () {
 })
 
 asyncTest('GET HTML', 3, function () {
-  qjax({
+  pj({
       url      : 'text-test-value.htm'
     , dataType : 'html'
   }).then(function (value) {
@@ -88,7 +88,7 @@ asyncTest('GET HTML', 3, function () {
 module('invalid GET')
 
 asyncTest('GET text that does not exist', 1, function () {
-  qjax({
+  pj({
       url      : 'this-does-not-exist.txt'
     , dataType : 'text'
   }).then(function (value) {
@@ -101,7 +101,7 @@ asyncTest('GET text that does not exist', 1, function () {
 })
 
 asyncTest('GET HTML that does not exist', 1, function () {
-  qjax({
+  pj({
       url      : 'this-does-not-exist.htm'
     , dataType : 'html'
   }).then(function (value) {
