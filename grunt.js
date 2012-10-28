@@ -64,7 +64,6 @@ module.exports = function(grunt) {
             , noarg     : true
             , nonew     : true
             , quotmark  : 'single'
-            , regexp    : true
             , undef     : true
             , unused    : true
             , trailing  : true
