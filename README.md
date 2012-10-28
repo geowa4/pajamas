@@ -1,9 +1,9 @@
-Qjax (v0.6)
+Pajamas (v0.6)
 =============
 
-Qjax is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
+Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 
-Presently, Qjax only supports JSON and plain text.
+Presently, Pajamas only supports JSON and plain text.
 Future versions will support more data types, like XML, JSONP, etc.
 
 This library has been tested against Chrome (latest), FF (latest), and IE9.
@@ -14,7 +14,7 @@ Usage
 
 This should look familiar to jQuery:
 
-    var qPromise = qjax({
+    var promise = pj({
         url      : '/my/awesome/data.json'  // optional; the current url is assumed
       , dataType : 'json'                   // optional; 'json' is assumed
       , data     : {                        // optional; null is assumed
@@ -25,7 +25,7 @@ This should look familiar to jQuery:
 
 Then, you can do whatever you'd normally do with a Q promise, such as:
 
-    qPromise.
+    promise.
       then(function (value) {
         // do something with the JSON
       }, function (error) {
@@ -40,15 +40,15 @@ If you set the `dataType` to `'*'`, the promise will be resolved with the XHR ob
 AMD
 ---
 
-Qjax declares 'q' as it's sole dependency.
+Pajamas declares 'q' as it's sole dependency.
 Therefore, if q.js is not discoverable, you will likely need to define a path.
-See [amd-test.js](https://github.com/geowa4/qjax/blob/master/test/amd/amd-test.js) for an example.
+See [amd-test.js](https://github.com/geowa4/pajamas/blob/master/test/amd/amd-test.js) for an example.
 
 
 Building
 --------
 
-If you would like to build Qjax on your own you will need to do the following.
+If you would like to build Pajamas on your own you will need to do the following.
 
 1. As root or Administrator, install [grunt](https://github.com/cowboy/grunt) 
    (`npm install -g grunt`).
@@ -98,11 +98,11 @@ Better tests with mock XHR.
 
 ### v0.7
 
-Handle timeouts.
+JSONP support; crossOrigin scripts
 
 ### v0.8
 
-JSONP support; crossOrigin scripts
+Handle timeouts.
 
 ### v0.9
 
@@ -118,5 +118,5 @@ Other criteria TBD.
 References
 ----------
 
-Qjax is based upon @[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library.
+Pajamas is based upon @[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library.
 In fact, after reading through it's source I decided to try out his code style (with some modifications).

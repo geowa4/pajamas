@@ -1,21 +1,21 @@
 {
-    "name"            : "qjax"
+    "name"            : "pajamas"
   , "description"     : "A wrapper for asynchronous http requests using the q promise library"
   , "keywords"        : ["ajax", "xhr", "q", "promise", "async"]
   , "version"         : "0.6"
-  , "homepage"        : "https://github.com/geowa4/qjax"
+  , "homepage"        : "https://github.com/geowa4/pajamas"
   , "author"          : "George Adams IV (http://gada.ms)"
   , "repository"      : {
         "type"        : "git"
-      , "url"         : "https://github.com/geowa4/qjax"
+      , "url"         : "https://github.com/geowa4/pajamas"
     }
-  , "main"            : "./src/qjax.js"
+  , "main"            : "./src/pajamas.js"
   , "bugs"            : {
-        "url"         : "https://github.com/geowa4/qjax/issues"
+        "url"         : "https://github.com/geowa4/pajamas/issues"
     }
   , "licenses": [{
         "type" : "MIT"
-      , "url"  : "https://github.com/geowa4/qjax/raw/master/LICENSE"
+      , "url"  : "https://github.com/geowa4/pajamas/raw/master/LICENSE"
     }]
   , "dependencies"    : {
         "q" : ">=0.8.9"
