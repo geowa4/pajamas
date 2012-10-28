@@ -36,6 +36,7 @@
       } : function (obj) {
         return Object.prototype.toString.call(obj) === '[object Function]'
       }
+    , now = Date.now || function () { return (new Date()).getTime() }
     , inferDataType = function (url) {
         var extension = url.substr(url.lastIndexOf('.') + 1)
         if (extension === url) return 'json'
