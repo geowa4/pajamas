@@ -179,9 +179,13 @@
         script.async = 'async'
         if (o.dataType === 'jsonp') {
           callbackName = 'pajamas' + now()
-          callback = function (data) { deferred.resolve(data) }
+          callback = function (data) {
+            delete window[callbackName]
+            deferred.resolve(data)
+          }
+          window[callbackName] = callback
           //TODO: need timeout or this can never be rejected
-          o.url = (o.url.contains('?') ? '&' : '?') + (o.jsonp || 'callback') + '='
+          o.url += (o.url.indexOf('?') > -1 ? '&' : '?') + (o.jsonp || 'callback') + '=' + callbackName
           script.src = o.url
         }
         else {
