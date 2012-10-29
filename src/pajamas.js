@@ -171,11 +171,22 @@
             (parts[3] || (parts[1] === "http:" ? 80 : 443)) !==
               (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 ))))
       }
-    , sendCrossOriginScript = function (o, deferred) {
+    , sendRemote = function (o, deferred) {
         var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement
           , script = document.createElement('script')
+          , callbackName
+          , callback
         script.async = 'async'
-        script.src = o.url
+        if (o.dataType === 'jsonp') {
+          callbackName = 'pajamas' + now()
+          callback = function (data) { deferred.resolve(data) }
+          //TODO: need timeout or this can never be rejected
+          o.url = (o.url.contains('?') ? '&' : '?') + (o.jsonp || 'callback') + '='
+          script.src = o.url
+        }
+        else {
+          script.src = o.url
+        }
         script.onload = script.onreadystatechange = function(_, isAbort) {
           if (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) {
             script.onload = script.onreadystatechange = null;
@@ -184,8 +195,9 @@
             }
             script = undefined;
             if (!isAbort) {
-              deferred.resolve()
+              if (o.dataType !== 'jsonp') deferred.resolve()
             }
+          else deferred.reject(new Error(o.url + ' aborted'))
           }
         }
         head.appendChild(script)
@@ -217,7 +229,7 @@
       o.data = null
     }
     if (!o.crossDomain) sendLocal(o, deferred)
-    else sendCrossOriginScript(o, deferred)
+    else sendRemote(o, deferred)
     return promise;
   }
 }))
