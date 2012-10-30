@@ -36,7 +36,6 @@
       } : function (obj) {
         return Object.prototype.toString.call(obj) === '[object Function]'
       }
-    , now = Date.now || function () { return (new Date()).getTime() }
     , inferDataType = function (url) {
         var extension = url.substr(url.lastIndexOf('.') + 1)
         if (extension === url) return 'json'
@@ -178,7 +177,7 @@
           , callback
         script.async = 'async'
         if (o.dataType === 'jsonp') {
-          callbackName = 'pajamas' + now()
+          callbackName =  o.jsonp || 'pajamas' + (Date.now || function () { return (new Date()).getTime() }).call()
           callback = function (data) {
             delete window[callbackName]
             deferred.resolve(data)
@@ -232,7 +231,7 @@
       o.url = urlAppend(o.url, o.data)
       o.data = null
     }
-    if (!o.crossDomain) sendLocal(o, deferred)
+    if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
     else sendRemote(o, deferred)
     return promise;
   }
