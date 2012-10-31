@@ -39,19 +39,19 @@ asyncTest('infer JSONP data type', 2, function () {
       ok(false, 'deferred was rejected')
       start()
     })
+})
 
-  asyncTest('remote JSONP', 1, function () {
-    pj({
-        url : 'http://gumball.wickedlysmart.com/'
-      , dataType : 'jsonp'
-    })
-    .then(function (data) {
-        strictEqual(Object.prototype.toString.call(data), '[object Array]', 'data is an array')
-        start()
-      }
-    , function () {
-        ok(false, 'deferred was rejected')
-        start()
-      })
+asyncTest('remote JSONP', 1, function () {
+  pj({
+      url : 'http://gumball.wickedlysmart.com/'
+    , dataType : 'jsonp'
   })
+  .then(function (data) {
+      strictEqual(Object.prototype.toString.call(data), '[object Array]', 'data is an array')
+      start()
+    }
+  , function () {
+      ok(false, 'deferred was rejected')
+      start()
+    })
 })
