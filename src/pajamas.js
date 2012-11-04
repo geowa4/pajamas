@@ -81,10 +81,10 @@
         } else {
           for (prop in data) {
             if (data.hasOwnProperty(prop)) {
-              val = data[prop]
+              val = data[prop] || ''
               if (isArray(val))
                 for (i = 0; i < val.length; i++) push(prop + '[]', val[i])
-              else push(prop, data[prop])
+              else push(prop, val)
             }
           }
         }
