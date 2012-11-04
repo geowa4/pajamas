@@ -1,5 +1,6 @@
 !(function (factory) {
-  if (typeof module !== 'undefined' && module.exports) module.exports = factory(require('q'))
+  if (typeof module !== 'undefined' && module.exports)
+    module.exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
   else this['pj'] = factory(this['Q'])
 } (function (Q) {
@@ -65,10 +66,10 @@
           if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
       }
     , toQueryString = function (data) {
-        var queryString = ''
+        var queryStringBuilder = []
           , enc = encodeURIComponent
           , push = function (k, v) {
-              queryString += enc(k) + '=' + enc(v) + '&'
+              queryStringBuilder.push(enc(k) + '=' + enc(v))
             }
           , i
           , val
@@ -82,13 +83,60 @@
             if (data.hasOwnProperty(prop)) {
               val = data[prop]
               if (isArray(val))
-                for (i = 0; i < val.length; i++) push(prop, val[i])
+                for (i = 0; i < val.length; i++) push(prop + '[]', val[i])
               else push(prop, data[prop])
             }
           }
         }
 
-        return queryString.replace(/&$/, '').replace(/%20/g,'+')
+        return queryStringBuilder.join('&').replace(/%20/g,'+')
+      }
+    , val = function (el) {
+        var v
+
+        if (el.nodeName === 'select') {
+          v = (function () {
+            var v
+              , vals = []
+              , selectedIndex = el.selectedIndex
+              , values = []
+              , opt
+              , options = el.options
+              , one = el.type === 'select-one'
+              , i
+              , max
+
+            if (selectedIndex < 0) return null
+
+            i = one ? selectedIndex : 0;
+            max = one ? selectedIndex + 1 : options.length;
+            for (; i < max; i++) {
+              opt = options[i]
+
+              if (opt.selected && !opt.disabled &&
+                  (!opt.parentNode.disabled ||
+                    opt.parentNode.nodeName.toLowerCase() !== 'optgroup')) {
+                v = val(opt)
+
+                if (one) return v
+                vals.push(v);
+              }
+            }
+
+            return vals;
+          } ())
+        }
+        else if (el.nodeName === 'option') {
+          v = el.attributes.value;
+          return !v || v.specified ? el.value : el.text;
+        }
+        else {
+          v = el.value;
+        }
+
+        return typeof v === 'string' ?
+          v.replace(/\r/g, '') :
+          v == null ? '' : v;
       }
     , defaultParser = function (deferred) {
         deferred.resolve(this)
@@ -148,7 +196,8 @@
                 status === 304 ||
                 status === 0 && http[responseText] !== '') {
               if (http[responseText])
-                (responseParsers[o.dataType] || defaultParser).call(http, deferred)
+                (responseParsers[o.dataType] || defaultParser)
+                  .call(http, deferred)
               else
                 deferred.resolve(null)
             } else deferred.reject(
@@ -171,27 +220,31 @@
               (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 ))))
       }
     , sendRemote = function (o, deferred) {
-        var head = document.head || document.getElementsByTagName('head')[0] || document.documentElement
+        var head = document.head || document.getElementsByTagName('head')[0] ||
+            document.documentElement
           , script = document.createElement('script')
           , callbackName
           , callback
         script.async = 'async'
         if (o.dataType === 'jsonp') {
-          callbackName =  o.jsonp || 'pajamas' + (Date.now || function () { return (new Date()).getTime() }).call()
+          callbackName =  o.jsonp || 'pajamas' +
+            (Date.now || function () { return (new Date()).getTime() }).call()
           callback = function (data) {
             delete window[callbackName]
             deferred.resolve(data)
           }
           window[callbackName] = callback
           //TODO: need timeout or this can never be rejected
-          o.url += (o.url.indexOf('?') > -1 ? '&' : '?') + (o.jsonp || 'callback') + '=' + callbackName
+          o.url += (o.url.indexOf('?') > -1 ? '&' : '?') +
+            (o.jsonp || 'callback') + '=' + callbackName
           script.src = o.url
         }
         else {
           script.src = o.url
         }
         script.onload = script.onreadystatechange = function(_, isAbort) {
-          if (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) {
+          if (isAbort || !script.readyState ||
+            /loaded|complete/.test(script.readyState)) {
             script.onload = script.onreadystatechange = null;
             if (head && script.parentNode) {
               head.removeChild(script);
@@ -205,34 +258,63 @@
         }
         head.appendChild(script)
       }
+    , pajamas = function (options) {
+        var deferred = Q.defer()
+          , promise = deferred.promise
+          , o = options == null ? {} : clone(options)
+          , defaultUrl = (function () {
+              var anchor
+              try {
+                return location.href
+              } catch (e) {
+                anchor = doc.createElement('a')
+                anchor.href = ''
+                return anchor.href
+              }
+            } ())
+        o.method = o.method ? o.method.toUpperCase() : 'GET'
+        o.url || (o.url = defaultUrl)
+        o.data = (o.data && o.processData !== false &&
+            typeof o.data !== 'string') ?
+          toQueryString(o.data) :
+          (o.data || null)
+        o.dataType || (o.dataType = inferDataType(o.url))
+        o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
+        if (o.data && o.method === 'GET') {
+          o.url = urlAppend(o.url, o.data)
+          o.data = null
+        }
+        if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
+        else sendRemote(o, deferred)
+        return promise;
+      }
 
-  return function (options) {
-    var deferred = Q.defer()
-      , promise = deferred.promise
-      , o = options == null ? {} : clone(options)
-      , defaultUrl = (function () {
-          var anchor
-          try {
-            return location.href
-          } catch (e) {
-            anchor = doc.createElement('a')
-            anchor.href = ''
-            return anchor.href
-          }
-        } ())
-    o.method = o.method ? o.method.toUpperCase() : 'GET'
-    o.url || (o.url = defaultUrl)
-    o.data = (o.data && o.processData !== false && typeof o.data !== 'string') ?
-      toQueryString(o.data) :
-      (o.data || null)
-    o.dataType || (o.dataType = inferDataType(o.url))
-    o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
-    if (o.data && o.method === 'GET') {
-      o.url = urlAppend(o.url, o.data)
-      o.data = null
+  pajamas.param = toQueryString
+  pajamas.val = val
+  pajamas.serializeArray = function () {
+    var arr = []
+      , i
+      , j
+      , e
+      , crlf = /\r?\n/g
+      , pushAll = function (elems) {
+          for (var j = 0; j < elems.length; j++)
+            arr.push({
+                name : elems[j].name
+              , value: val(elems[j]).replace(crlf, '\r\n')
+            })
+        }
+    for (i = 0; i < arguments.length; i++) {
+      e = arguments[i]
+      e.elements ?
+        pushAll(e.elements) :
+        arr.push({ name : e.name, value : val(e).replace(crlf, '\r\n') })
     }
-    if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
-    else sendRemote(o, deferred)
-    return promise;
+    return arr
   }
+  pajamas.serialize = function (){
+    return pajamas.param(pajamas.serializeArray.apply(null, arguments))
+  }
+
+  return pajamas
 }))
