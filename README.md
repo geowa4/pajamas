@@ -1,4 +1,4 @@
-Pajamas (v0.6)
+Pajamas (v0.8)
 =============
 
 Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -96,18 +96,23 @@ JS support.
 Default parser (`Accepts: *`).
 Better tests with mock XHR.
 
-### v0.7
+### v0.7 (COMPLETE)
 
 JSONP support; crossOrigin scripts
 
-### v0.8
+### v0.8 (COMPLETE)
 
-Handle timeouts.
+Validate and document `processData` option.
+Expose `param`, `serialize`, and `serializeArray` functions.
 
 ### v0.9
 
-Validate and document `processData` option.
-Test against bad options.
+Handle timeouts.
+Travis CI.
+
+### v0.10
+
+Ender support.
 
 ### v1.0?
 

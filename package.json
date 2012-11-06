@@ -1,26 +1,26 @@
 {
-    "name"            : "pajamas"
-  , "description"     : "A wrapper for asynchronous http requests using the q promise library"
-  , "keywords"        : ["ajax", "xhr", "q", "promise", "async"]
-  , "version"         : "0.6"
-  , "homepage"        : "https://github.com/geowa4/pajamas"
-  , "author"          : "George Adams IV (http://gada.ms)"
-  , "repository"      : {
-        "type"        : "git"
-      , "url"         : "https://github.com/geowa4/pajamas"
+    "name"              : "pajamas"
+  , "description"       : "A wrapper for asynchronous http requests using the q promise library"
+  , "keywords"          : ["ajax", "xhr", "q", "promise", "async"]
+  , "version"           : "0.8"
+  , "homepage"          : "https://github.com/geowa4/pajamas"
+  , "author"            : "George Adams IV (http://gada.ms)"
+  , "repository"        : {
+        "type"          : "git"
+      , "url"           : "https://github.com/geowa4/pajamas"
     }
-  , "main"            : "./src/pajamas.js"
-  , "bugs"            : {
-        "url"         : "https://github.com/geowa4/pajamas/issues"
+  , "main"              : "./src/pajamas.js"
+  , "bugs"              : {
+        "url"           : "https://github.com/geowa4/pajamas/issues"
     }
-  , "licenses": [{
-        "type" : "MIT"
-      , "url"  : "https://github.com/geowa4/pajamas/raw/master/LICENSE"
+  , "licenses"          : [{
+        "type"          : "MIT"
+      , "url"           : "https://github.com/geowa4/pajamas/raw/master/LICENSE"
     }]
-  , "dependencies"    : {
-        "q" : ">=0.8.9"
+  , "dependencies"      : {
+        "q"             : ">=0.8.9"
     }
-  , "devDependencies" : {
+  , "devDependencies"   : {
         "grunt-contrib" : ">=0.1.7"
     }
 }
