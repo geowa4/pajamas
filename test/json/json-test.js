@@ -42,6 +42,19 @@ test('infer JSON data type', 1, function () {
   deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/json, text/javascript'], 'Accepts header defaults to JSON')
 })
 
+test('data not processed', 1, function () {
+  pj({
+      url         : 'json-test.json'
+    , processData : false
+    , data        : {foo : 'bar'}
+    , xhr         : function () {
+        return new FakeXHR()
+      }
+  })
+
+  deepEqual(FakeXHR.instance.methodCallArgs('send', 0), [{foo : 'bar'}], 'send called with original data')
+})
+
 
 module('valid GET')
 

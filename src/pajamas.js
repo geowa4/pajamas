@@ -66,35 +66,58 @@
           if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
       }
     , toQueryString = function (data) {
-        var queryStringBuilder = []
+        var prefix
+          , queryStringBuilder = []
           , enc = encodeURIComponent
-          , push = function (k, v) {
-              queryStringBuilder.push(enc(k) + '=' + enc(v))
+          , push = function(key, value) {
+              value = isFunction(value) ?
+                value() :
+                (value == null ? '' : value)
+              queryStringBuilder.push(enc(key) + '=' + enc(value))
             }
-          , i
-          , val
-          , prop
+          , buildParams = function (prefix, obj, push) {
+              var name
+                , i
+                , v
 
-        if (isArray(data)) {
-          for (i = 0; data && i < data.length; i++)
-            push(data[i].name, data[i].value)
-        } else {
-          for (prop in data) {
-            if (data.hasOwnProperty(prop)) {
-              val = data[prop] || ''
-              if (isArray(val))
-                for (i = 0; i < val.length; i++) push(prop + '[]', val[i])
-              else push(prop, val)
+              if (isArray(obj)) {
+                for (i = 0; i < obj.length; i++) {
+                  v = obj[i]
+                  if (/\[\]$/.test(prefix)) {
+                    push(prefix, v)
+                  } else {
+                    buildParams(
+                        prefix + '[' + (typeof v === 'object' ? i : '') + ']'
+                      , v
+                      , push)
+                  }
+                }
+              } else if (obj && typeof obj === 'object') {
+                for (name in obj) {
+                  if (obj.hasOwnProperty(name))
+                    buildParams(prefix + '[' + name + ']', obj[name], push)
+                }
+              } else push(prefix, obj)
             }
+
+        if (isArray(data)) { // assume output from serializeArray
+          for (prefix in data) {
+            if (data.hasOwnProperty(prefix))
+              push(data[prefix].name, data[prefix].value)
+          }
+        } else {
+          for (prefix in data) {
+            if (data.hasOwnProperty(prefix))
+              buildParams(prefix, data[prefix], push)
           }
         }
 
-        return queryStringBuilder.join('&').replace(/%20/g,'+')
+        return queryStringBuilder.join('&').replace(/%20/g, '+')
       }
     , val = function (el) {
         var v
 
-        if (el.nodeName === 'select') {
+        if (el.nodeName.toLowerCase() === 'select') {
           v = (function () {
             var v
               , vals = []
@@ -119,16 +142,24 @@
                 v = val(opt)
 
                 if (one) return v
-                vals.push(v);
+                vals.push(v)
               }
             }
 
-            return vals;
+            return vals
           } ())
         }
-        else if (el.nodeName === 'option') {
+        else if (el.nodeName.toLowerCase() === 'option') {
           v = el.attributes.value;
           return !v || v.specified ? el.value : el.text;
+        }
+        else if (el.type === 'button' ||
+            el.nodeName.toLowerCase() === 'button') {
+          v = el.getAttributeNode('value')
+          return v ? v.value : undefined
+        }
+        else if (el.type === 'radio' || el.type === 'checkbox') {
+          return el.getAttribute('value') === null ? 'on' : el.value
         }
         else {
           v = el.value;
@@ -216,8 +247,8 @@
           , defaultParts = rurl.exec(defaultUrl)
         return !!(parts &&
           (parts[1] !== defaultParts[1] || parts[2] !== defaultParts[2] ||
-            (parts[3] || (parts[1] === "http:" ? 80 : 443)) !==
-              (defaultParts[3] || (defaultParts[1] === "http:" ? 80 : 443 ))))
+            (parts[3] || (parts[1] === 'http:' ? 80 : 443)) !==
+              (defaultParts[3] || (defaultParts[1] === 'http:' ? 80 : 443 ))))
       }
     , sendRemote = function (o, deferred) {
         var head = document.head || document.getElementsByTagName('head')[0] ||
@@ -280,7 +311,7 @@
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
         o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
-        if (o.data && o.method === 'GET') {
+        if (o.data && typeof o.data === 'string' && o.method === 'GET') {
           o.url = urlAppend(o.url, o.data)
           o.data = null
         }
@@ -295,20 +326,41 @@
     var arr = []
       , i
       , j
-      , e
+      , el
       , crlf = /\r?\n/g
+      , checkableType = /radio|checkbox/i
       , pushAll = function (elems) {
-          for (var j = 0; j < elems.length; j++)
-            arr.push({
-                name : elems[j].name
-              , value: val(elems[j]).replace(crlf, '\r\n')
-            })
+          var el
+            , v
+            , i
+            , j
+          for (i = 0; i < elems.length; i++) {
+            el = elems[i]
+            if (el.name && !el.disabled &&
+                (checkableType.test(el.type) ? el.checked : true)) {
+              v = val(el)
+              if (v != null) {
+                if (isArray(v)) {
+                  for (j = 0; j < v.length; j++) {
+                    arr.push({
+                        name  : el.name
+                      , value : v[j].replace(crlf, '\r\n')
+                    })
+                  }
+                }
+                else {
+                  arr.push({
+                      name  : el.name
+                    , value : v.replace(crlf, '\r\n')
+                  })
+                }
+              }
+            }
+          }
         }
     for (i = 0; i < arguments.length; i++) {
-      e = arguments[i]
-      e.elements ?
-        pushAll(e.elements) :
-        arr.push({ name : e.name, value : val(e).replace(crlf, '\r\n') })
+      el = arguments[i]
+      el.elements ? pushAll(el.elements) : pushAll([el])
     }
     return arr
   }
