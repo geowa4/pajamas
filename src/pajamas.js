@@ -29,53 +29,51 @@
           }
         , requestedWith: xmlHttpRequest
       }
+
     , isArray = Array.isArray || function (obj) {
         return obj instanceof Array
       }
+
     , isFunction = typeof (/-/) !== 'function' ? function (obj) {
         return typeof obj === 'function'
       } : function (obj) {
         return Object.prototype.toString.call(obj) === '[object Function]'
       }
+
+    , clone = function (o) {
+        var copy = {}
+          , prop
+
+        for (prop in o) {
+          if (o.hasOwnProperty(prop)) copy[prop] = o[prop];
+        }
+
+        return copy
+      }
+
     , inferDataType = function (url) {
         var extension = url.substr(url.lastIndexOf('.') + 1)
+
         if (extension === url) return 'json'
         else if (extension === 'js') return 'script'
         else if (extension === 'txt') return 'text'
         else return extension
       }
-    , urlAppend = function (url, dataString) {
-        if (typeof dataString !== 'string') return url
-        return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
-      }
-    , setHeaders = function (http, options) {
-        var headers = options.headers || {}
-          , accept = 'Accept'
-          , h
 
-        headers[accept] = headers[accept] ||
-          defaultHeaders[accept][options.dataType] ||
-          defaultHeaders[accept]['*']
-
-        if (!options.crossDomain && !headers[requestedWith])
-          headers[requestedWith] = defaultHeaders.requestedWith
-        if (!headers[contentType])
-          headers[contentType] = options.contentType ||
-            defaultHeaders.contentType
-        for (h in headers)
-          if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
-      }
     , toQueryString = function (data) {
         var prefix
           , queryStringBuilder = []
-          , enc = encodeURIComponent
+
           , push = function(key, value) {
+              var enc = encodeURIComponent
+
               value = isFunction(value) ?
                 value() :
                 (value == null ? '' : value)
               queryStringBuilder.push(enc(key) + '=' + enc(value))
             }
-          , buildParams = function (prefix, obj, push) {
+
+          , buildParams = function (prefix, obj) {
               var name
                 , i
                 , v
@@ -85,30 +83,32 @@
                   v = obj[i]
                   if (/\[\]$/.test(prefix)) {
                     push(prefix, v)
-                  } else {
+                  }
+                  else {
                     buildParams(
                         prefix + '[' + (typeof v === 'object' ? i : '') + ']'
-                      , v
-                      , push)
+                      , v)
                   }
                 }
-              } else if (obj && typeof obj === 'object') {
+              }
+              else if (obj && typeof obj === 'object') {
                 for (name in obj) {
                   if (obj.hasOwnProperty(name))
-                    buildParams(prefix + '[' + name + ']', obj[name], push)
+                    buildParams(prefix + '[' + name + ']', obj[name])
                 }
-              } else push(prefix, obj)
+              }
+              else push(prefix, obj)
             }
 
         if (isArray(data)) { // assume output from serializeArray
-          for (prefix in data) {
-            if (data.hasOwnProperty(prefix))
-              push(data[prefix].name, data[prefix].value)
+          for (prefix = 0; prefix < data.length; prefix++) {
+            push(data[prefix].name, data[prefix].value)
           }
-        } else {
+        }
+        else {
           for (prefix in data) {
             if (data.hasOwnProperty(prefix))
-              buildParams(prefix, data[prefix], push)
+              buildParams(prefix, data[prefix])
           }
         }
 
@@ -125,14 +125,14 @@
               , values = []
               , opt
               , options = el.options
-              , one = el.type === 'select-one'
+              , isSingleSelect = el.type === 'select-one'
               , i
               , max
 
             if (selectedIndex < 0) return null
 
-            i = one ? selectedIndex : 0;
-            max = one ? selectedIndex + 1 : options.length;
+            i = isSingleSelect ? selectedIndex : 0;
+            max = isSingleSelect ? selectedIndex + 1 : options.length;
             for (; i < max; i++) {
               opt = options[i]
 
@@ -141,7 +141,7 @@
                     opt.parentNode.nodeName.toLowerCase() !== 'optgroup')) {
                 v = val(opt)
 
-                if (one) return v
+                if (isSingleSelect) return v
                 vals.push(v)
               }
             }
@@ -169,12 +169,38 @@
           v.replace(/\r/g, '') :
           v == null ? '' : v;
       }
+
+    , urlAppend = function (url, dataString) {
+        if (typeof dataString !== 'string') return url
+        return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
+      }
+
+    , setHeaders = function (http, options) {
+        var headers = options.headers || {}
+          , accept = 'Accept'
+          , h
+
+        headers[accept] = headers[accept] ||
+          defaultHeaders[accept][options.dataType] ||
+          defaultHeaders[accept]['*']
+
+        if (!options.crossDomain && !headers[requestedWith])
+          headers[requestedWith] = defaultHeaders.requestedWith
+        if (!headers[contentType])
+          headers[contentType] = options.contentType ||
+            defaultHeaders.contentType
+        for (h in headers)
+          if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
+      }
+
     , defaultParser = function (deferred) {
         deferred.resolve(this)
       }
+
     , responseParsers = {
         json   : function (deferred) {
           var r = this[responseText]
+
           try {
             r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
             deferred.resolve(r)
@@ -207,20 +233,16 @@
           else deferred.resolve(this.responseXML)
         }
       }
-    , clone = function (o) {
-        var copy = {}
-          , prop
-        for (prop in o) {
-          if (o.hasOwnProperty(prop)) copy[prop] = o[prop];
-        }
-        return copy
-      }
+
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
+
         http.open(o.method, o.url, true)
         setHeaders(http, o)
+
         http.onreadystatechange = function () {
           var status
+
           if (http && http[readyState] === 4) {
             status = http.status
             if (status >= 200 && status < 300 ||
@@ -231,17 +253,20 @@
                   .call(http, deferred)
               else
                 deferred.resolve(null)
-            } else deferred.reject(
+            }
+            else deferred.reject(
                     new Error(o.method + ' ' + o.url + ': ' +
                       http.status + ' ' + http.statusText))
           }
         }
+
         try {
           http.send(o.data)
         } catch (err) {
           deferred.reject(err)
         }
       }
+
     , isCrossDomain = function (url, defaultUrl) {
         var parts = rurl.exec(url)
           , defaultParts = rurl.exec(defaultUrl)
@@ -340,7 +365,7 @@
                 (checkableType.test(el.type) ? el.checked : true)) {
               v = val(el)
               if (v != null) {
-                if (isArray(v)) {
+                if (isArray(v)) { // from multiple select, for instance
                   for (j = 0; j < v.length; j++) {
                     arr.push({
                         name  : el.name

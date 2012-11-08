@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8">        <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9">               <![endif]-->
+<!--[if gt IE 8]><!--> <html>                          <!--<![endif]-->
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <title>Serialization Test</title>
+
+    <link rel="stylesheet" type="text/css" href="../../lib/qunit.css"/>
+
+    <script type="text/javascript" src="../../lib/fakexhr.js"></script>
+    <script type="text/javascript" src="../../lib/q.js"></script>
+    <script type="text/javascript" src="../../src/pajamas.js"></script>
+    <script type="text/javascript" src="../../lib/qunit.js"></script>
+    <script type="text/javascript" src="serialization-test.js"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture">
+      <form id="form" action="formaction">
+        <label for="action" id="label-for">Action:</label>
+        <input type="text" name="action" value="Test" id="text1" maxlength="30"/>
+        <input type="text" name="text2" value="Test" id="text2" disabled="disabled"/>
+        <input type="radio" name="radio1" id="radio1" value="on"/>
+
+        <input type="radio" name="radio2" id="radio2" checked="checked"/>
+        <input type="checkbox" name="check" id="check1" checked="checked"/>
+        <input type="checkbox" id="check2" value="on"/>
+
+        <input type="hidden" name="hidden" id="hidden1"/>
+        <input type="text" style="display:none;" name="foo[bar]" id="hidden2"/>
+
+        <input type="text" id="name" name="name" value="name" />
+        <input type="search" id="search" name="search" value="search" />
+
+        <input type="email" id="html5email" name="email" value="dave@jquery.com" />
+        <input type="number" id="html5number" name="number" value="43" />
+
+        <button id="button" name="button" type="button">Button</button>
+
+        <textarea id="area1" maxlength="30">foobar</textarea>
+
+        <select name="select1" id="select1">
+          <option id="option1a" class="emptyopt" value="">Nothing</option>
+          <option id="option1b" value="1">1</option>
+          <option id="option1c" value="2">2</option>
+          <option id="option1d" value="3">3</option>
+        </select>
+        <select name="select2" id="select2">
+          <option id="option2a" class="emptyopt" value="">Nothing</option>
+          <option id="option2b" value="1">1</option>
+          <option id="option2c" value="2">2</option>
+          <option id="option2d" selected="selected" value="3">3</option>
+        </select>
+        <select name="select3" id="select3" multiple="multiple">
+          <option id="option3a" class="emptyopt" value="">Nothing</option>
+          <option id="option3b" selected="selected" value="1">1</option>
+          <option id="option3c" selected="selected" value="2">2</option>
+          <option id="option3d" value="3">3</option>
+          <option id="option3e">no value</option>
+        </select>
+        <select name="select4" id="select4" multiple="multiple">
+          <optgroup disabled="disabled">
+            <option id="option4a" class="emptyopt" value="">Nothing</option>
+            <option id="option4b" disabled="disabled" selected="selected" value="1">1</option>
+            <option id="option4c" selected="selected" value="2">2</option>
+          </optgroup>
+          <option selected="selected" disabled="disabled" id="option4d" value="3">3</option>
+          <option id="option4e">no value</option>
+        </select>
+        <select name="select5" id="select5">
+          <option id="option5a" value="3">1</option>
+          <option id="option5b" value="2">2</option>
+          <option id="option5c" value="1" data-attr="">3</option>
+        </select>
+
+        <object id="object1" codebase="stupid">
+          <param name="p1" value="x1" />
+          <param name="p2" value="x2" />
+        </object>
+
+        <span id="台北Táiběi"></span>
+        <span id="台北" lang="中文"></span>
+        <span id="utf8class1" class="台北Táiběi 台北"></span>
+        <span id="utf8class2" class="台北"></span>
+        <span id="foo:bar" class="foo:bar"></span>
+        <span id="test.foo[5]bar" class="test.foo[5]bar"></span>
+
+        <foo_bar id="foobar">test element</foo_bar>
+      </form>
+    </div>
+  </body>
+</html>
