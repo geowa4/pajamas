@@ -61,7 +61,7 @@ asyncTest('GET value', 3, function () {
       , 7
       , 'response is a number')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -74,10 +74,10 @@ asyncTest('GET JS that does not exist', 1, function () {
   pj({
       url      : 'this-does-not-exist.js'
     , dataType : 'script'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })
@@ -87,7 +87,7 @@ asyncTest('GET error-ridden JS', 1, function () {
   pj({
       url      : 'script-test-error.js'
     , dataType : 'script'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
   }, function (reason) {

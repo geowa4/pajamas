@@ -74,7 +74,7 @@ asyncTest('GET valid JSON', 4, function () {
         }
       , 'response parsed properly')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -99,7 +99,7 @@ asyncTest('GET valid JSON with data', 4, function () {
         }
       , 'response parsed properly')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -127,7 +127,7 @@ asyncTest('parse valid JSON without using window.JSON', 4, function () {
       , 'response parsed properly')
     start()
     window.JSON = _JSON
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
     window.JSON = _JSON
@@ -141,10 +141,10 @@ asyncTest('GET with defaults (url does not exist)', 1, function () {
   pj({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })
@@ -154,10 +154,10 @@ asyncTest('GET JSON that does not exist', 1, function () {
   pj({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })
@@ -183,7 +183,7 @@ asyncTest('POST valid JSON', 4, function () {
         }
       , 'response parsed properly')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -209,7 +209,7 @@ asyncTest('POST valid JSON with data', 4, function () {
         }
       , 'response parsed properly')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -222,10 +222,10 @@ asyncTest('POST JSON to somewhere that does not exist', 1, function () {
   pj({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })

@@ -61,7 +61,7 @@ asyncTest('GET text', 4, function () {
       , '<h1>hello, world</h1>'
       , 'response is an html fragment')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -78,7 +78,7 @@ asyncTest('GET HTML', 3, function () {
       , '<h1>hello, world</h1>'
       , 'response is an html fragment')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -91,10 +91,10 @@ asyncTest('GET text that does not exist', 1, function () {
   pj({
       url      : 'this-does-not-exist.txt'
     , dataType : 'text'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })
@@ -104,10 +104,10 @@ asyncTest('GET HTML that does not exist', 1, function () {
   pj({
       url      : 'this-does-not-exist.htm'
     , dataType : 'html'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })

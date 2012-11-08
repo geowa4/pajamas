@@ -1,4 +1,4 @@
-/*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true Document:true*/
+/*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
@@ -61,7 +61,7 @@ asyncTest('GET XML', 7, function () {
     strictEqual(doc.firstChild.firstChild.nodeValue, 'baz',
       'Inner value is \'baz\'')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -77,7 +77,7 @@ asyncTest('GET bad XML', function () {
   }).then(function (value) {
     strictEqual(value, null, 'response is null')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
@@ -87,10 +87,10 @@ asyncTest('GET non-existent XML', 1, function () {
   pj({
       url      : 'this-file-does-not-exist.xml'
     , dataType : 'xml'
-  }).then(function (value) {
+  }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function (reason) {
+  }, function () {
     ok(true, 'deferred was rejected')
     start()
   })

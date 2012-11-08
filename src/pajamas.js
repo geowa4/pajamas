@@ -122,7 +122,6 @@
             var v
               , vals = []
               , selectedIndex = el.selectedIndex
-              , values = []
               , opt
               , options = el.options
               , isSingleSelect = el.type === 'select-one'
@@ -350,7 +349,6 @@
   pajamas.serializeArray = function () {
     var arr = []
       , i
-      , j
       , el
       , crlf = /\r?\n/g
       , checkableType = /radio|checkbox/i

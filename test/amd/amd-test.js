@@ -1,4 +1,4 @@
-/*global requirejs:true module:true asyncTest:true ok:true start:true stop:true*/
+/*global requirejs:true module:true asyncTest:true ok:true start:true*/
 requirejs.config({
     baseUrl : '../..'
   , paths : {

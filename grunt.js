@@ -18,20 +18,20 @@ module.exports = function(grunt) {
       }
     , concat : {
         dist: {
-            src: [
+            src  : [
                 '<banner:meta.banner>'
               , '<file_strip_banner:src/<%= pkg.name %>.js>'
             ]
-          , dest: 'dist/<%= pkg.name %>.js'
+          , dest : 'dist/<%= pkg.name %>.js'
         }
       }
     , min    : {
-        dist: {
-            src: [
+        dist : {
+            src  : [
                 '<banner:meta.banner>'
               , '<config:concat.dist.dest>'
             ]
-          , dest: 'dist/<%= pkg.name %>.min.js'
+          , dest : 'dist/<%= pkg.name %>.min.js'
         }
       }
     , compress : {
@@ -39,26 +39,26 @@ module.exports = function(grunt) {
             options : {
               mode : 'gzip'
             }
-          , files: {
+          , files   : {
               'dist/<%= pkg.name %>.min.js.gz': 'dist/<%= pkg.name %>.min.js'
             }
         }
       }
     , watch  : {
-          files: '<config:lint.files>'
-        , tasks: 'lint qunit'
+          files : '<config:lint.files>'
+        , tasks : 'lint qunit'
       }
     , server : {
           port : 8000
         , base : '.'
       }
     , jshint : {
-          options: {
+          options : {
               camelcase : true
             , eqeqeq    : true
             , forin     : true
             , immed     : true
-            , indent    : 2
+            //, indent    : 2
             , latedef   : true
             , newcap    : true
             , noarg     : true
@@ -77,7 +77,7 @@ module.exports = function(grunt) {
             , browser   : true
             , onevar    : true
           }
-        , globals: {
+        , globals : {
               QUnit         : true
             , define        : true
             , module        : true

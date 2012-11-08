@@ -27,7 +27,7 @@ asyncTest('resolved with the xhr', 1, function () {
   }).then(function (response) {
     ok(response instanceof (window.XMLHttpRequest || window.ActiveXObject), 'resolved with the xhr')
     start()
-  }, function (reason) {
+  }, function () {
     ok(false, 'deferred was rejected')
     start()
   })
