@@ -236,7 +236,7 @@
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
 
-        http.open(o.method, o.url, true)
+        http.open(o.type, o.url, true)
         setHeaders(http, o)
 
         http.onreadystatechange = function () {
@@ -254,7 +254,7 @@
                 deferred.resolve(null)
             }
             else deferred.reject(
-                    new Error(o.method + ' ' + o.url + ': ' +
+                    new Error(o.type + ' ' + o.url + ': ' +
                       http.status + ' ' + http.statusText))
           }
         }
@@ -327,7 +327,7 @@
                 return anchor.href
               }
             } ())
-        o.method = o.method ? o.method.toUpperCase() : 'GET'
+        o.type = o.type ? o.type.toUpperCase() : 'GET'
         o.url || (o.url = defaultUrl)
         o.data = (o.data && o.processData !== false &&
             typeof o.data !== 'string') ?
@@ -335,7 +335,7 @@
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
         o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
-        if (o.data && typeof o.data === 'string' && o.method === 'GET') {
+        if (o.data && typeof o.data === 'string' && o.type === 'GET') {
           o.url = urlAppend(o.url, o.data)
           o.data = null
         }

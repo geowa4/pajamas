@@ -20,7 +20,7 @@ This should look familiar to jQuery:
       , data     : {                        // optional; null is assumed
           whatever : 'you want'
         }
-      , method   : 'GET'                    // optional; 'GET' is assumed
+      , type   : 'GET'                    // optional; 'GET' is assumed
     })
 
 Then, you can do whatever you'd normally do with a Q promise, such as:
@@ -32,9 +32,62 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
         // error.message is of the form "<method> <url>: <status code> <status text>"
       })
 
-POSTing your data is done in the exact same way as the GET, just change the `method` option to `"POST"`.
+POSTing your data is done in the exact same way as the GET, just change the `type` option to `"POST"`.
 
 If you set the `dataType` to `'*'`, the promise will be resolved with the XHR object.
+
+
+Options
+-------
+
+All parameters must be passed in as properties of a settings object.
+
+
+### `crossDomain`
+
+A cross-domain request can be forced by setting this value to `true`.
+
+*Default*: inferred from URL
+
+
+### `data`
+
+Data sent to the server.
+This data is converted to a query string if it is not already a string.
+To avoid processing the data, set the `processData` option to `false`.
+
+*Default*: null
+
+
+### `dataType`
+
+The type of data that you are expecting to receive back from the server.
+Valid options include 
+'json', 'jsonp', 'script', 'text', 'html', 'xml', and '*'.
+There is an attempt to infer the data type before the request is sent,
+but it is not extremely sophisticated.
+
+*Default*: 'json' if no inference is made
+
+
+### `type`
+
+The type of request to make ('GET', 'POST', 'PUT', 'DELETE').
+
+*Default*: 'GET'
+
+
+### `url`
+
+The URL to which the request is sent.
+
+*Default*: The current page
+
+
+### `xhr`
+
+A function to generate your own XMLHttpRequest.
+This can be extremely useful when mocking your remote calls.
 
 
 AMD
@@ -108,7 +161,7 @@ Expose `param`, `serialize`, and `serializeArray` functions.
 ### v0.9
 
 Handle timeouts.
-Travis CI.
+Examine and test use of Error in 
 
 ### v0.10
 
@@ -123,5 +176,6 @@ Other criteria TBD.
 References
 ----------
 
-Pajamas is based upon @[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library.
-In fact, after reading through it's source I decided to try out his code style (with some modifications).
+Pajamas is based upon 
+@[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library
+and [jQuery](https://github.com/jquery/jquery).
