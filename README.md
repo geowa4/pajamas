@@ -8,6 +8,8 @@ Future versions will support more data types, like XML, JSONP, etc.
 
 This library has been tested against Chrome (latest), FF (latest), and IE9.
 
+[![Build Status](https://travis-ci.org/geowa4/pajamas.png)](https://travis-ci.org/geowa4/pajamas)
+
 
 Usage
 -----
