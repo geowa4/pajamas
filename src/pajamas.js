@@ -16,8 +16,8 @@
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
     , defaultHeaders = {
-          contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
-        , Accept: {
+          contentType : 'application/x-www-form-urlencoded; charset=UTF-8'
+        , Accept      : {
               '*'    : 'text/javascript, text/html, application/xml,' +
                        ' text/xml, */*'
             , xml    : 'application/xml, text/xml'

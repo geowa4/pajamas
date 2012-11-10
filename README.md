@@ -72,6 +72,15 @@ but it is not extremely sophisticated.
 *Default*: 'json' if no inference is made
 
 
+### `headers`
+
+A map of header key/value pairs to send along with the request.
+These key/value pairs may override the defaults like
+'Accept', 'Content-Type', and 'X-Requested-With'.
+
+*Default*: `{}` (depends on data type)
+
+
 ### `type`
 
 The type of request to make ('GET', 'POST', 'PUT', 'DELETE').
