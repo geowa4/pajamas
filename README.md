@@ -114,12 +114,12 @@ Building
 
 If you would like to build Pajamas on your own you will need to do the following.
 
-1. As root or Administrator, install [grunt](https://github.com/cowboy/grunt) 
-   (`npm install -g grunt`).
-1. Navigate to the project's root, and 
-   install [grunt-contrib](https://github.com/gruntjs/grunt-contrib) 
-   (`npm install grunt-contrib`).
-1. Run grunt (`grunt`).
+1. `npm install`
+1. `npm test`
+
+Alternatively, you can install [Grunt](http://gruntjs.com/) globally.
+In the project directory, you will still need to run `npm install` to install all local dependencies.
+Then, you may freely run any Grunt command defined in grunt.js.
 
 
 Roadmap
