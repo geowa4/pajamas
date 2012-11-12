@@ -2,7 +2,7 @@
 requirejs.config({
     baseUrl : '../..'
   , paths : {
-        q    : 'lib/q'
+        q  : 'node_modules/q/q'
       , pj : 'src/pajamas'
     }
 })
