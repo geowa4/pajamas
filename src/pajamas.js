@@ -60,115 +60,6 @@
         else return extension
       }
 
-    , toQueryString = function (data) {
-        var prefix
-          , queryStringBuilder = []
-
-          , push = function(key, value) {
-              var enc = encodeURIComponent
-
-              value = isFunction(value) ?
-                value() :
-                (value == null ? '' : value)
-              queryStringBuilder.push(enc(key) + '=' + enc(value))
-            }
-
-          , buildParams = function (prefix, obj) {
-              var name
-                , i
-                , v
-
-              if (isArray(obj)) {
-                for (i = 0; i < obj.length; i++) {
-                  v = obj[i]
-                  if (/\[\]$/.test(prefix)) {
-                    push(prefix, v)
-                  }
-                  else {
-                    buildParams(
-                        prefix + '[' + (typeof v === 'object' ? i : '') + ']'
-                      , v)
-                  }
-                }
-              }
-              else if (obj && typeof obj === 'object') {
-                for (name in obj) {
-                  if (obj.hasOwnProperty(name))
-                    buildParams(prefix + '[' + name + ']', obj[name])
-                }
-              }
-              else push(prefix, obj)
-            }
-
-        if (isArray(data)) { // assume output from serializeArray
-          for (prefix = 0; prefix < data.length; prefix++) {
-            push(data[prefix].name, data[prefix].value)
-          }
-        }
-        else {
-          for (prefix in data) {
-            if (data.hasOwnProperty(prefix))
-              buildParams(prefix, data[prefix])
-          }
-        }
-
-        return queryStringBuilder.join('&').replace(/%20/g, '+')
-      }
-    , val = function (el) {
-        var v
-
-        if (el.nodeName.toLowerCase() === 'select') {
-          v = (function () {
-            var v
-              , vals = []
-              , selectedIndex = el.selectedIndex
-              , opt
-              , options = el.options
-              , isSingleSelect = el.type === 'select-one'
-              , i
-              , max
-
-            if (selectedIndex < 0) return null
-
-            i = isSingleSelect ? selectedIndex : 0;
-            max = isSingleSelect ? selectedIndex + 1 : options.length;
-            for (; i < max; i++) {
-              opt = options[i]
-
-              if (opt.selected && !opt.disabled &&
-                  (!opt.parentNode.disabled ||
-                    opt.parentNode.nodeName.toLowerCase() !== 'optgroup')) {
-                v = val(opt)
-
-                if (isSingleSelect) return v
-                vals.push(v)
-              }
-            }
-
-            return vals
-          } ())
-        }
-        else if (el.nodeName.toLowerCase() === 'option') {
-          v = el.attributes.value;
-          return !v || v.specified ? el.value : el.text;
-        }
-        else if (el.type === 'button' ||
-            el.nodeName.toLowerCase() === 'button') {
-          v = el.getAttributeNode('value')
-          return v ? v.value : undefined
-        }
-        else if (el.type === 'radio' || el.type === 'checkbox') {
-          return el.getAttribute('value') === null ? 'on' : el.value
-        }
-        else {
-          v = el.value;
-        }
-
-        return typeof v === 'string' ?
-          v.replace(/\r/g, '') :
-          v == null ? '' : v;
-      }
-
     , urlAppend = function (url, dataString) {
         if (typeof dataString !== 'string') return url
         return url + (url.indexOf('?') !== -1 ? '&' : '?') + dataString
@@ -334,7 +225,7 @@
         o.url || (o.url = defaultUrl)
         o.data = (o.data && o.processData !== false &&
             typeof o.data !== 'string') ?
-          toQueryString(o.data) :
+          pajamas.param(o.data) :
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
         o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
@@ -347,8 +238,116 @@
         return promise;
       }
 
-  pajamas.param = toQueryString
-  pajamas.val = val
+  pajamas.param = function (data) {
+    var prefix
+      , queryStringBuilder = []
+
+      , push = function(key, value) {
+          var enc = encodeURIComponent
+
+          value = isFunction(value) ?
+            value() :
+            (value == null ? '' : value)
+          queryStringBuilder.push(enc(key) + '=' + enc(value))
+        }
+
+      , buildParams = function (prefix, obj) {
+          var name
+            , i
+            , v
+
+          if (isArray(obj)) {
+            for (i = 0; i < obj.length; i++) {
+              v = obj[i]
+              if (/\[\]$/.test(prefix)) {
+                push(prefix, v)
+              }
+              else {
+                buildParams(
+                    prefix + '[' + (typeof v === 'object' ? i : '') + ']'
+                  , v)
+              }
+            }
+          }
+          else if (obj && typeof obj === 'object') {
+            for (name in obj) {
+              if (obj.hasOwnProperty(name))
+                buildParams(prefix + '[' + name + ']', obj[name])
+            }
+          }
+          else push(prefix, obj)
+        }
+
+    if (isArray(data)) { // assume output from serializeArray
+      for (prefix = 0; prefix < data.length; prefix++) {
+        push(data[prefix].name, data[prefix].value)
+      }
+    }
+    else {
+      for (prefix in data) {
+        if (data.hasOwnProperty(prefix))
+          buildParams(prefix, data[prefix])
+      }
+    }
+
+    return queryStringBuilder.join('&').replace(/%20/g, '+')
+  }
+
+  pajamas.val = function (el) {
+    var v
+
+    if (el.nodeName.toLowerCase() === 'select') {
+      v = (function () {
+        var v
+          , vals = []
+          , selectedIndex = el.selectedIndex
+          , opt
+          , options = el.options
+          , isSingleSelect = el.type === 'select-one'
+          , i
+          , max
+
+        if (selectedIndex < 0) return null
+
+        i = isSingleSelect ? selectedIndex : 0;
+        max = isSingleSelect ? selectedIndex + 1 : options.length;
+        for (; i < max; i++) {
+          opt = options[i]
+
+          if (opt.selected && !opt.disabled &&
+              (!opt.parentNode.disabled ||
+                opt.parentNode.nodeName.toLowerCase() !== 'optgroup')) {
+            v = pajamas.val(opt)
+
+            if (isSingleSelect) return v
+            vals.push(v)
+          }
+        }
+
+        return vals
+      } ())
+    }
+    else if (el.nodeName.toLowerCase() === 'option') {
+      v = el.attributes.value;
+      return !v || v.specified ? el.value : el.text;
+    }
+    else if (el.type === 'button' ||
+        el.nodeName.toLowerCase() === 'button') {
+      v = el.getAttributeNode('value')
+      return v ? v.value : undefined
+    }
+    else if (el.type === 'radio' || el.type === 'checkbox') {
+      return el.getAttribute('value') === null ? 'on' : el.value
+    }
+    else {
+      v = el.value;
+    }
+
+    return typeof v === 'string' ?
+      v.replace(/\r/g, '') :
+      v == null ? '' : v;
+  }
+
   pajamas.serializeArray = function () {
     var arr = []
       , i
@@ -364,7 +363,7 @@
             el = elems[i]
             if (el.name && !el.disabled &&
                 (checkableType.test(el.type) ? el.checked : true)) {
-              v = val(el)
+              v = pajamas.val(el)
               if (v != null) {
                 if (isArray(v)) { // from multiple select, for instance
                   for (j = 0; j < v.length; j++) {
