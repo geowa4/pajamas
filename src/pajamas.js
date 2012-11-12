@@ -229,7 +229,7 @@
           if (r === null || r.documentElement === null ||
               r.documentElement.nodeName === 'parsererror')
             deferred.resolve(null)
-          else deferred.resolve(this.responseXML)
+          else deferred.resolve(r)
         }
       }
 
@@ -285,7 +285,10 @@
           callbackName =  o.jsonp || 'pajamas' +
             (Date.now || function () { return (new Date()).getTime() }).call()
           callback = function (data) {
-            delete window[callbackName]
+            window[callbackName] = undefined
+            try {
+              delete window[callbackName]
+            } catch (e) {}
             deferred.resolve(data)
           }
           window[callbackName] = callback
