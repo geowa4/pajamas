@@ -23,6 +23,7 @@
   , "devDependencies"   : {
         "grunt"         : "0.3.17"
       , "grunt-contrib" : "0.3.0"
+      , "requirejs"     : "2.1.1"
     }
   , "scripts"           : {
         "test"          : "grunt -verbose"
