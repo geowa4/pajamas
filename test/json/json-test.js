@@ -230,3 +230,22 @@ asyncTest('POST JSON to somewhere that does not exist', 1, function () {
     start()
   })
 })
+
+
+module('delay and timeout')
+
+asyncTest('test timeout', function () {
+  pj({
+      url     : 'json-test.json'
+    , delay   : 100
+    , timeout : 1
+  }).then(function () {
+    ok(false, 'timeout should have rejected this')
+    start()
+  }, function (error) {
+    strictEqual(error.message, 'timeout', 'rejected with \'timeout\' as the message')
+    start()
+  })
+})
+
+

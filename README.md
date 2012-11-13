@@ -72,6 +72,12 @@ but it is not extremely sophisticated.
 *Default*: 'json' if no inference is made
 
 
+### `delay`
+
+The amount of time in milliseconds to wait to send the request.
+This can be useful when simulating latency.
+
+
 ### `headers`
 
 A map of header key/value pairs to send along with the request.
@@ -79,6 +85,11 @@ These key/value pairs may override the defaults like
 'Accept', 'Content-Type', and 'X-Requested-With'.
 
 *Default*: `{}` (depends on data type)
+
+
+### `timeout`
+
+The number of milliseconds to wait before aborting the request.
 
 
 ### `type`

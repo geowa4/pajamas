@@ -40,6 +40,10 @@
         return Object.prototype.toString.call(obj) === '[object Function]'
       }
 
+    , isNumeric = function (numeric) {
+        return !isNaN(parseFloat(numeric)) && isFinite(numeric)
+      }
+
     , clone = function (o) {
         var copy = {}
           , prop
@@ -135,12 +139,22 @@
 
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
+          , timeoutVal
+          , send = function (data) {
+              try {
+                http.send(data)
+              } catch (err) {
+                deferred.reject(err)
+              }
+            }
 
         http.open(o.type, o.url, true)
         setHeaders(http, o)
 
         http.onreadystatechange = function () {
           var status
+
+          timeoutVal && clearTimeout(timeoutVal)
 
           if (http && http[readyState] === 4) {
             status = http.status
@@ -159,11 +173,18 @@
           }
         }
 
-        try {
-          http.send(o.data)
-        } catch (err) {
-          deferred.reject(err)
+        if (isNumeric(o.timeout)) {
+          timeoutVal = setTimeout(function() {
+            http.abort()
+            deferred.reject(new Error('timeout'))
+          }, o.timeout)
         }
+
+        isNumeric(o.delay) ?
+          setTimeout(function () {
+            send(o.data)
+          }, o.delay) :
+          send(o.data)
       }
 
     , sendRemote = function (o, deferred) {
@@ -184,7 +205,6 @@
             deferred.resolve(data)
           }
           window[callbackName] = callback
-          //TODO: need timeout or this can never be rejected
           o.url += (o.url.indexOf('?') > -1 ? '&' : '?') +
             (o.jsonp || 'callback') + '=' + callbackName
           script.src = o.url
