@@ -124,6 +124,15 @@
         }
       }
 
+    , isCrossDomain = function (url, defaultUrl) {
+        var parts = rurl.exec(url)
+          , defaultParts = rurl.exec(defaultUrl)
+        return !!(parts &&
+          (parts[1] !== defaultParts[1] || parts[2] !== defaultParts[2] ||
+            (parts[3] || (parts[1] === 'http:' ? 80 : 443)) !==
+              (defaultParts[3] || (defaultParts[1] === 'http:' ? 80 : 443 ))))
+      }
+
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
 
@@ -157,14 +166,6 @@
         }
       }
 
-    , isCrossDomain = function (url, defaultUrl) {
-        var parts = rurl.exec(url)
-          , defaultParts = rurl.exec(defaultUrl)
-        return !!(parts &&
-          (parts[1] !== defaultParts[1] || parts[2] !== defaultParts[2] ||
-            (parts[3] || (parts[1] === 'http:' ? 80 : 443)) !==
-              (defaultParts[3] || (defaultParts[1] === 'http:' ? 80 : 443 ))))
-      }
     , sendRemote = function (o, deferred) {
         var head = document.head || document.getElementsByTagName('head')[0] ||
             document.documentElement
