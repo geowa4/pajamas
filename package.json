@@ -26,6 +26,6 @@
       , "requirejs"     : "2.1.1"
     }
   , "scripts"           : {
-        "test"          : "grunt -verbose"
+        "test"          : "grunt --verbose"
     }
 }
