@@ -77,10 +77,11 @@ module.exports = function(grunt) {
             , onevar    : true
           }
         , globals : {
-              QUnit         : true
-            , define        : true
-            , module        : true
-            , require       : true
+              QUnit   : true
+            , define  : true
+            , module  : true
+            , require : true
+            , ender   : true
           }
       }
     , uglify : {}

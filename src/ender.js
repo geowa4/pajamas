@@ -1,4 +1,4 @@
-!function ($) {
+!(function ($) {
   var pj = require('pajamas')
     , integrate = function(method) {
         return function() {
@@ -20,4 +20,4 @@
       serialize      : s
     , serializeArray : sa
   }, true)
-}(ender)
+} (ender))
