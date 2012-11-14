@@ -140,9 +140,9 @@
     , sendLocal = function (o, deferred) {
         var http = isFunction(o.xhr) ? o.xhr() : xhr()
           , timeoutVal
-          , send = function (data) {
+          , send = function () {
               try {
-                http.send(data)
+                http.send(o.data)
               } catch (err) {
                 deferred.reject(err)
               }
@@ -182,9 +182,9 @@
 
         isNumeric(o.delay) ?
           setTimeout(function () {
-            send(o.data)
+            send()
           }, o.delay) :
-          send(o.data)
+          send()
       }
 
     , sendRemote = function (o, deferred) {
@@ -193,6 +193,11 @@
           , script = document.createElement('script')
           , callbackName
           , callback
+          , timeoutVal
+          , send = function () {
+              script && head.appendChild(script)
+            }
+
         script.async = 'async'
         if (o.dataType === 'jsonp') {
           callbackName =  o.jsonp || 'pajamas' +
@@ -212,21 +217,38 @@
         else {
           script.src = o.url
         }
+
         script.onload = script.onreadystatechange = function(_, isAbort) {
           if (isAbort || !script.readyState ||
             /loaded|complete/.test(script.readyState)) {
             script.onload = script.onreadystatechange = null;
             if (head && script.parentNode) {
-              head.removeChild(script);
+              head.removeChild(script)
             }
-            script = undefined;
+            script = undefined
+            timeoutVal && clearTimeout(timeoutVal)
+
             if (!isAbort) {
               if (o.dataType !== 'jsonp') deferred.resolve()
             }
-          else deferred.reject(new Error(o.url + ' aborted'))
+            else {
+              deferred.reject(new Error(o.url + ' aborted'))
+            }
           }
         }
-        head.appendChild(script)
+
+        if (isNumeric(o.timeout)) {
+          timeoutVal = setTimeout(function() {
+            script.onload(0, 1)
+            deferred.reject(new Error('timeout'))
+          }, o.timeout)
+        }
+
+        isNumeric(o.delay) ?
+          setTimeout(function () {
+            send()
+          }, o.delay) :
+          send()
       }
     , pajamas = function (options) {
         var deferred = Q.defer()

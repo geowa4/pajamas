@@ -90,6 +90,7 @@ These key/value pairs may override the defaults like
 ### `timeout`
 
 The number of milliseconds to wait before aborting the request.
+For scripts (including JSONP), this will cause the script tag to be removed from the DOM.
 
 
 ### `type`

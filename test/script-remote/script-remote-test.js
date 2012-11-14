@@ -24,3 +24,22 @@ asyncTest('JS file loaded', 3, function () {
       start()
     })
 })
+
+
+module('delay and timeout')
+
+asyncTest('timeout before delay', 1, function () {
+  pj({
+      url     : 'http://underscorejs.org/underscore.js'
+    , delay   : 100
+    , timeout : 1
+  })
+  .then(function () {
+      ok(false, 'timeout should have rejected this')
+      start()
+    }
+  , function (error) {
+      strictEqual(error.message, 'http://underscorejs.org/underscore.js aborted', 'script was aborted')
+      start()
+    })
+})

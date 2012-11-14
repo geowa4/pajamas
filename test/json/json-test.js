@@ -234,16 +234,30 @@ asyncTest('POST JSON to somewhere that does not exist', 1, function () {
 
 module('delay and timeout')
 
-asyncTest('test timeout', function () {
+asyncTest('timeout before delay', 1, function () {
   pj({
       url     : 'json-test.json'
     , delay   : 100
-    , timeout : 1
+    , timeout : 90
   }).then(function () {
     ok(false, 'timeout should have rejected this')
     start()
   }, function (error) {
     strictEqual(error.message, 'timeout', 'rejected with \'timeout\' as the message')
+    start()
+  })
+})
+
+asyncTest('timeout after delay', 1, function () {
+  pj({
+      url     : 'json-test.json'
+    , delay   : 1
+    , timeout : 90
+  }).then(function (data) {
+    deepEqual(Object(data), data, 'data is an object')
+    start()
+  }, function () {
+    ok(false, 'timeout should not be allowed')
     start()
   })
 })
