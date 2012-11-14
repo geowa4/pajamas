@@ -185,7 +185,7 @@ Expose `param`, `serialize`, and `serializeArray` functions.
 
 Handle timeouts.
 
-### v0.10
+### v0.10 (EXPERIMENTAL)
 
 Ender support.
 
