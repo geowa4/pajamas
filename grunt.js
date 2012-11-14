@@ -87,7 +87,8 @@ module.exports = function(grunt) {
     , clean : ['dist']
   })
 
-  grunt.loadNpmTasks('grunt-contrib')
+  grunt.loadNpmTasks('grunt-contrib-compress')
+  grunt.loadNpmTasks('grunt-contrib-clean')
 
   grunt.registerTask('default', 'lint qunit concat min compress')
 
