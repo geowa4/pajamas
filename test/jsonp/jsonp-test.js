@@ -43,11 +43,11 @@ asyncTest('infer JSONP data type', 2, function () {
 
 asyncTest('remote JSONP', 1, function () {
   pj({
-      url : 'http://gumball.wickedlysmart.com/'
+      url : 'https://api.github.com/repos/geowa4/pajamas'
     , dataType : 'jsonp'
   })
-  .then(function (data) {
-      strictEqual(Object.prototype.toString.call(data), '[object Array]', 'data is an array')
+  .then(function (response) {
+      strictEqual(response.data.name, 'pajamas', 'data is an array')
       start()
     }
   , function () {
