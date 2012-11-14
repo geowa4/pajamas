@@ -10,6 +10,7 @@
       , "url"           : "https://github.com/geowa4/pajamas"
     }
   , "main"              : "./src/pajamas.js"
+  , "ender"             : "./src/ender.js"
   , "bugs"              : {
         "url"           : "https://github.com/geowa4/pajamas/issues"
     }
