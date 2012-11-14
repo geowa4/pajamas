@@ -58,7 +58,6 @@ module.exports = function(grunt) {
             , eqeqeq    : true
             , forin     : true
             , immed     : true
-            //, indent    : 2
             , latedef   : true
             , newcap    : true
             , noarg     : true
