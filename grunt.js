@@ -80,6 +80,7 @@ module.exports = function(grunt) {
               QUnit   : true
             , define  : true
             , module  : true
+            , exports : true
             , require : true
             , ender   : true
           }

@@ -1,4 +1,4 @@
-/*global pj:true FakeXHR:true module:true asyncTest:true test ok:true deepEqual:true start:true*/
+/*global pj:true FakeXHR:true module:true asyncTest:true test:true ok:true deepEqual:true start:true*/
 module('fake xhr', {
     setup : function () {
       FakeXHR.instance = null
