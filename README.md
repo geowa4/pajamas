@@ -1,4 +1,4 @@
-Pajamas (v0.9.0)
+Pajamas (v0.10.0)
 ================
 
 Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
@@ -14,6 +14,7 @@ This library has been tested against Chrome (latest), FF (latest), and IE9.
 Usage
 -----
 
+Using the `pj` function, pass an object of options.
 This should look familiar to jQuery:
 
     var promise = pj({
@@ -35,8 +36,51 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
       })
 
 POSTing your data is done in the exact same way as the GET, just change the `type` option to `"POST"`.
-
 If you set the `dataType` to `'*'`, the promise will be resolved with the XHR object.
+See more options below.
+
+
+Serialization
+-------------
+
+Pajamas has three methods for serialization: `param`, `serialize`, and `serializeArray`.
+See [serialization-test.js](https://github.com/geowa4/pajamas/blob/master/test/serialization/serialization-test.js)
+for more detailed examples than what's below.
+
+
+### `pj.serialize(elements...)`
+
+Takes form and input elements as a variable number of arguments.
+Returns a query string representing the form.
+
+
+### `pj.serializeArray(elements...)`
+
+Takes form and input elements as a variable number of arguments.
+Returns an array of objects of the following form:
+
+    [
+        {
+            name  : 'elemName'
+          , value : 'elemValue'
+        }
+      , {
+            name  : 'otherName'
+          , value : 'otherValue'
+        }
+    ]
+
+
+### `pj.param(objectOrArray)`
+
+Takes an object or an array and returns a query string.
+If an Array is passed in, it assumes the format returned by `pj.serializeArray`.
+
+    > pj.param({foo:'bar', baz:'quux'})
+    'foo=bar&baz=quux'
+
+    > pj.param([{name:'foo', value:'bar'}, {name:'baz', value:'quux'}])
+    'foo=bar&baz=quux'
 
 
 Options
@@ -121,6 +165,29 @@ Therefore, if q.js is not discoverable, you will likely need to define a path.
 See [amd-test.js](https://github.com/geowa4/pajamas/blob/master/test/amd/amd-test.js) for an example.
 
 
+Ender
+-----
+
+When using Ender, Pajamas can be accessed without alteration using Ender's mock CommonJS implementation.
+
+    `var pj = require('pajamas')`
+
+Since Pajamas requires Q, Q's static methods are added to `ender` (a.k.a `$`) as well.
+
+    $.when(valueOrPromise)
+    require('Q').when(valueOrPromise)
+
+The static method `param` is added without modification to Ender.
+
+    `$.param(objectOrArray)`
+
+The static methods `serialize` and `serializeArray` require DOM elements so they are added to `ender.fn`.
+The modification simply applies the internal collection as arguments to `pj.serialize` and `pj.serializeArray`.
+
+    `$('#form').serialize()`
+    `$('#form').serializeArray()`
+
+
 Building
 --------
 
@@ -185,7 +252,7 @@ Expose `param`, `serialize`, and `serializeArray` functions.
 
 Handle timeouts.
 
-### v0.10 (EXPERIMENTAL)
+### v0.10 (COMPLETE)
 
 Ender support.
 
