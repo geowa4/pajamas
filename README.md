@@ -171,7 +171,7 @@ Ender
 
 When using Ender, Pajamas can be accessed without alteration using Ender's mock CommonJS implementation.
 
-    `var pj = require('pajamas')`
+    var pj = require('pajamas')
 
 Since Pajamas requires Q, Q's static methods are added to `ender` (a.k.a `$`) as well.
 
@@ -180,13 +180,13 @@ Since Pajamas requires Q, Q's static methods are added to `ender` (a.k.a `$`) as
 
 The static method `param` is added without modification to Ender.
 
-    `$.param(objectOrArray)`
+    $.param(objectOrArray)
 
 The static methods `serialize` and `serializeArray` require DOM elements so they are added to `ender.fn`.
 The modification simply applies the internal collection as arguments to `pj.serialize` and `pj.serializeArray`.
 
-    `$('#form').serialize()`
-    `$('#form').serializeArray()`
+    $('#form').serialize()
+    $('#form').serializeArray()
 
 
 Building
