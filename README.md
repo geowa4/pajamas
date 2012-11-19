@@ -23,15 +23,16 @@ This should look familiar to jQuery:
       , data     : {                        // optional; null is assumed
           whatever : 'you want'
         }
-      , type   : 'GET'                    // optional; 'GET' is assumed
+      , type     : 'GET'                    // optional; 'GET' is assumed
     })
 
 Then, you can do whatever you'd normally do with a Q promise, such as:
 
-    promise.
-      then(function (value) {
+    promise
+    .then(function (value) {
         // do something with the JSON
-      }, function (error) {
+      }
+    , function (error) {
         // error.message is of the form "<method> <url>: <status code> <status text>"
       })
 
