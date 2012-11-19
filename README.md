@@ -40,49 +40,6 @@ If you set the `dataType` to `'*'`, the promise will be resolved with the XHR ob
 See more options below.
 
 
-Serialization
--------------
-
-Pajamas has three methods for serialization: `param`, `serialize`, and `serializeArray`.
-See [serialization-test.js](https://github.com/geowa4/pajamas/blob/master/test/serialization/serialization-test.js)
-for more detailed examples than what's below.
-
-
-### `pj.serialize(elements...)`
-
-Takes form and input elements as a variable number of arguments.
-Returns a query string representing the form.
-
-
-### `pj.serializeArray(elements...)`
-
-Takes form and input elements as a variable number of arguments.
-Returns an array of objects of the following form:
-
-    [
-        {
-            name  : 'elemName'
-          , value : 'elemValue'
-        }
-      , {
-            name  : 'otherName'
-          , value : 'otherValue'
-        }
-    ]
-
-
-### `pj.param(objectOrArray)`
-
-Takes an object or an array and returns a query string.
-If an Array is passed in, it assumes the format returned by `pj.serializeArray`.
-
-    > pj.param({foo:'bar', baz:'quux'})
-    'foo=bar&baz=quux'
-
-    > pj.param([{name:'foo', value:'bar'}, {name:'baz', value:'quux'}])
-    'foo=bar&baz=quux'
-
-
 Options
 -------
 
@@ -157,6 +114,49 @@ A function to generate your own XMLHttpRequest.
 This can be extremely useful when mocking your remote calls.
 
 
+Serialization
+-------------
+
+Pajamas has three methods for serialization: `param`, `serialize`, and `serializeArray`.
+See [serialization-test.js](https://github.com/geowa4/pajamas/blob/master/test/serialization/serialization-test.js)
+for more detailed examples than what's below.
+
+
+### `pj.serialize(elements...)`
+
+Takes form and input elements as a variable number of arguments.
+Returns a query string representing the form.
+
+
+### `pj.serializeArray(elements...)`
+
+Takes form and input elements as a variable number of arguments.
+Returns an array of objects of the following form:
+
+    [
+        {
+            name  : 'elemName'
+          , value : 'elemValue'
+        }
+      , {
+            name  : 'otherName'
+          , value : 'otherValue'
+        }
+    ]
+
+
+### `pj.param(objectOrArray)`
+
+Takes an object or an array and returns a query string.
+If an Array is passed in, it assumes the format returned by `pj.serializeArray`.
+
+    > pj.param({foo:'bar', baz:'quux'})
+    'foo=bar&baz=quux'
+
+    > pj.param([{name:'foo', value:'bar'}, {name:'baz', value:'quux'}])
+    'foo=bar&baz=quux'
+
+
 AMD
 ---
 
@@ -204,62 +204,10 @@ Then, you may freely run any Grunt command defined in grunt.js.
 Roadmap
 -------
 
-The following is what it will take for me to call v1.0
-
-
-### v0.1 (COMPLETE)
-
-This lib needs more tests; a grunt build to automate them would be nice.
-Currently, I have only tested GET requests for JSON in a non-AMD environment.
-I need to test POST, parsing JSON when `window.JSON` is not present, and much more.
-
-### v0.1.1 (COMPLETE)
-
-Test with [RequireJS](http://requirejs.org/).
-Test in FF (latest) and IE9.
-
-### v0.2 (COMPLETE)
-
-Plain text support.
-
-### v0.3 (COMPLETE)
-
-HTML support.
-
-### v0.4 (COMPLETE)
-
-XML support.
-
-### v0.5 (COMPLETE)
-
-JS support.
-
-### v0.6 (COMPLETE)
-
-Default parser (`Accepts: *`).
-Better tests with mock XHR.
-
-### v0.7 (COMPLETE)
-
-JSONP support; crossOrigin scripts
-
-### v0.8 (COMPLETE)
-
-Validate and document `processData` option.
-Expose `param`, `serialize`, and `serializeArray` functions.
-
-### v0.9 (COMPLETE)
-
-Handle timeouts.
-
-### v0.10 (COMPLETE)
-
-Ender support.
-
-### v1.0?
+### v1.0
 
 Use this for my own website.
-Other criteria TBD.
+Cleanup.
 
 
 References
