@@ -44,14 +44,21 @@ Options
 All parameters must be passed in as properties of a settings object.
 
 
-### `crossDomain`
+### crossDomain
 
 A cross-domain request can be forced by setting this value to `true`.
 
 *Default*: inferred from URL
 
 
-### `data`
+### contentType
+
+The value for the `Content-Type` header.
+
+*Default*: 'application/x-www-form-urlencoded; charset=UTF-8'
+
+
+### data
 
 Data sent to the server.
 This data is converted to a query string if it is not already a string.
@@ -60,7 +67,7 @@ To avoid processing the data, set the `processData` option to `false`.
 *Default*: null
 
 
-### `dataType`
+### dataType
 
 The type of data that you are expecting to receive back from the server.
 Valid options include 
@@ -71,13 +78,13 @@ but it is not extremely sophisticated.
 *Default*: 'json' if no inference is made
 
 
-### `delay`
+### delay
 
 The amount of time in milliseconds to wait to send the request.
 This can be useful when simulating latency.
 
 
-### `headers`
+### headers
 
 A map of header key/value pairs to send along with the request.
 These key/value pairs may override the defaults like
@@ -86,27 +93,27 @@ These key/value pairs may override the defaults like
 *Default*: `{}` (depends on data type)
 
 
-### `timeout`
+### timeout
 
 The number of milliseconds to wait before aborting the request.
 For scripts (including JSONP), this will cause the script tag to be removed from the DOM.
 
 
-### `type`
+### type
 
 The type of request to make ('GET', 'POST', 'PUT', 'DELETE').
 
 *Default*: 'GET'
 
 
-### `url`
+### url
 
 The URL to which the request is sent.
 
 *Default*: The current page
 
 
-### `xhr`
+### xhr
 
 A function to generate your own XMLHttpRequest.
 This can be extremely useful when mocking your remote calls.
@@ -120,13 +127,13 @@ See [serialization-test.js](https://github.com/geowa4/pajamas/blob/master/test/s
 for more detailed examples than what's below.
 
 
-### `pj.serialize(elements...)`
+### pj.serialize(elements...)
 
 Takes form and input elements as a variable number of arguments.
 Returns a query string representing the form.
 
 
-### `pj.serializeArray(elements...)`
+### pj.serializeArray(elements...)
 
 Takes form and input elements as a variable number of arguments.
 Returns an array of objects of the following form:
@@ -143,7 +150,7 @@ Returns an array of objects of the following form:
     ]
 
 
-### `pj.param(objectOrArray)`
+### pj.param(objectOrArray)
 
 Takes an object or an array and returns a query string.
 If an Array is passed in, it assumes the format returned by `pj.serializeArray`.
