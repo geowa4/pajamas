@@ -3,7 +3,7 @@ requirejs.config({
     baseUrl : '../..'
   , paths : {
         q  : 'node_modules/q/q'
-      , pj : 'src/pajamas'
+      , pj : 'dist/pajamas.min'
     }
 })
 
