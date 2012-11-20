@@ -92,7 +92,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-compress')
   grunt.loadNpmTasks('grunt-contrib-clean')
 
-  grunt.registerTask('default', 'lint concat min qunit compress')
+  grunt.registerTask('default', 'lint build qunit')
+
+  grunt.registerTask('build', 'concat min compress')
 
   grunt.registerTask('test', 'server watch')
 
