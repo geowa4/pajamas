@@ -1,3 +1,7 @@
+/**
+ * Test
+ */
+
 !(function (factory) {
   if (typeof exports === 'object') exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
