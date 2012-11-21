@@ -31,8 +31,7 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
       }
     , function (reason) {
         // reason is an instance of Error
-        // reason.message is of the form "<method> <url>: <status code> <status text>"
-        // also see reason.type, reason.url, reason.status, and reason.statusText
+        // see reason.type, reason.url, reason.status, and reason.statusText
       })
 
 POSTing your data is done in the exact same way as the GET, just change the `type` option to `"POST"`.

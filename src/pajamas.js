@@ -258,7 +258,6 @@
       }
     , pajamas = function (options) {
         var deferred = Q.defer()
-          , promise = deferred.promise
           , o = options == null ? {} : clone(options)
           , defaultUrl = (function () {
               var anchor
@@ -284,7 +283,7 @@
         }
         if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
         else sendRemote(o, deferred)
-        return promise;
+        return deferred.promise
       }
 
   pajamas.param = function (data) {
