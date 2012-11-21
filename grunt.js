@@ -17,26 +17,19 @@ module.exports = function(grunt) {
           files: ['test/**/*.html']
       }
     , concat : {
-          debug: {
-              src  : [
-                  '<banner:meta.banner>'
-                , '<file_strip_banner:src/<%= pkg.name %>.js>'
-              ]
-            , dest : 'dist/<%= pkg.name %>.js'
-          }
-        , production : {
-              src  : [
-                  '<banner:meta.banner>'
-                , '<file_strip_banner:dist/<%= pkg.name %>.min.js>'
-              ]
-            , dest : 'dist/<%= pkg.name %>.min.js'
-          }
+        dist: {
+            src  : [
+                '<banner:meta.banner>'
+              , '<file_strip_banner:src/<%= pkg.name %>.js>'
+            ]
+          , dest : 'dist/<%= pkg.name %>.js'
+        }
       }
     , min    : {
         dist : {
             src  : [
                 '<banner:meta.banner>'
-              , '<config:concat.debug.dest>'
+              , '<config:concat.dist.dest>'
             ]
           , dest : 'dist/<%= pkg.name %>.min.js'
         }
@@ -61,7 +54,8 @@ module.exports = function(grunt) {
       }
     , jshint : {
           options : {
-              eqeqeq    : true
+              camelcase : true
+            , eqeqeq    : true
             , forin     : true
             , immed     : true
             , latedef   : true
@@ -93,24 +87,14 @@ module.exports = function(grunt) {
       }
     , uglify : {}
     , clean : ['dist']
-    , 'closure-compiler' : {
-        dist : {
-            js           : ['src/pajamas.js']
-          , jsOutputFile : 'dist/pajamas.min.js'
-          , options      : {
-              compilation_level : 'SIMPLE_OPTIMIZATIONS'
-            }
-          }
-      }
   })
 
   grunt.loadNpmTasks('grunt-contrib-compress')
   grunt.loadNpmTasks('grunt-contrib-clean')
-  grunt.loadNpmTasks('grunt-closure-compiler')
 
   grunt.registerTask('default', 'lint build qunit')
 
-  grunt.registerTask('build', 'closure-compiler concat compress')
+  grunt.registerTask('build', 'concat min compress')
 
   grunt.registerTask('test', 'server watch')
 
