@@ -12,17 +12,20 @@ test('Q is available', function () {
 
 module('serialization')
 
-test('serialization methods added to ender', 4, function () {
+test('serialization methods added to ender', 5, function () {
   var pj = require('pajamas')
   strictEqual(typeof ender.fn.serialize, 'function', 'serialize on ender.fn')
   strictEqual(typeof ender.fn.serializeArray, 'function', 'serializeArray on ender.fn')
-  strictEqual(typeof ender.prototype.param, 'undefined', 'param not in prototype')
+  strictEqual(typeof ender.fn.val, 'function', 'val on ender.fn')
+  strictEqual(typeof ender.fn.param, 'undefined', 'param not in prototype')
   strictEqual(ender.param, pj.param, 'param is the same')
 })
 
-test('serialization works the same', 2, function () {
+test('serialization works the same', 3, function () {
   var pj = require('pj')
     , form = document.getElementById('form')
+    , name = document.getElementById('name')
   strictEqual($(form).serialize(), pj.serialize(form), 'serialize form')
   deepEqual($(form).serializeArray(), pj.serializeArray(form), 'serialize form as array')
+  strictEqual($(name).val(), pj.val(name), 'get val of form element')
 })

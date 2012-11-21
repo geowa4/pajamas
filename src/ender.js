@@ -10,6 +10,7 @@
       }
     , s = integrate('serialize')
     , sa = integrate('serializeArray')
+    , v = integrate('val')
 
   $.ender({
       ajax  : pj
@@ -19,5 +20,6 @@
   $.ender({
       serialize      : s
     , serializeArray : sa
+    , val            : v
   }, true)
 } (ender))
