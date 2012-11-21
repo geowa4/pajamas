@@ -1,9 +1,9 @@
-Pajamas (v0.10.0)
-================
+Pajamas
+=======
 
 Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
-
 This library has been tested against Chrome (latest), FF (latest), and IE9.
+See the package.json file for the current version number and tested dependencies.
 
 [![Build Status](https://travis-ci.org/geowa4/pajamas.png)](https://travis-ci.org/geowa4/pajamas)
 
@@ -18,7 +18,7 @@ This should look familiar to jQuery:
         url      : '/my/awesome/data.json'  // optional; the current url is assumed
       , dataType : 'json'                   // optional; 'json' is assumed
       , data     : {                        // optional; null is assumed
-          whatever : 'you want'
+            whatever : 'you want'
         }
       , type     : 'GET'                    // optional; 'GET' is assumed
     })
