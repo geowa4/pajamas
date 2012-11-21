@@ -152,6 +152,7 @@
 
         http.onreadystatechange = function () {
           var status
+            , err
 
           timeoutVal && clearTimeout(timeoutVal)
 
@@ -166,9 +167,15 @@
               else
                 deferred.resolve(null)
             }
-            else deferred.reject(
-                    new Error(o.type + ' ' + o.url + ': ' +
-                      http.status + ' ' + http.statusText))
+            else {
+              err = new Error(o.type + ' ' + o.url + ': ' +
+                http.status + ' ' + http.statusText)
+              err.type = o.type
+              err.url = o.url
+              err.status = http.status
+              err.statusText = http.statusText
+              deferred.reject(err)
+            }
           }
         }
 

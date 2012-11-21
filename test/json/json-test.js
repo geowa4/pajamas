@@ -150,15 +150,20 @@ asyncTest('GET with defaults (url does not exist)', 1, function () {
   })
 })
 
-asyncTest('GET JSON that does not exist', 1, function () {
+asyncTest('GET JSON that does not exist', 6, function () {
   pj({
       url      : 'this-does-not-exist.json'
     , dataType : 'json'
   }).then(function () {
     ok(false, 'deferred was resolved')
     start()
-  }, function () {
+  }, function (reason) {
     ok(true, 'deferred was rejected')
+    ok(/GET this-does-not-exist.json: \d+ .*/i.test(reason.message), 'error message in correct format')
+    strictEqual(reason.type, 'GET', 'error.type')
+    strictEqual(reason.url, 'this-does-not-exist.json', 'error.url')
+    strictEqual(typeof reason.status, 'number', 'error.status')
+    strictEqual(typeof reason.statusText, 'string', 'error.statusText')
     start()
   })
 })
