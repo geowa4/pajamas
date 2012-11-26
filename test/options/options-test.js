@@ -1,4 +1,4 @@
-/*global pj:true module:true asyncTest:true test:true ok:true deepEqual:true start:true*/
+/*global pj:true module:true asyncTest:true ok:true start:true*/
 
 module('success')
 
@@ -9,9 +9,11 @@ asyncTest('success handler can be null', 1, function () {
   })
   .then(function (value) {
       ok(value != null, 'value is returned')
+      start()
     }
   , function () {
       ok(false, 'promise was rejected')
+      start()
     })
 })
 
@@ -23,11 +25,13 @@ asyncTest('success handler fires first', 1, function () {
         check = true
       }
   })
-  .then(function (value) {
+  .then(function () {
       ok(check, 'success handler already ran')
+      start()
     }
   , function () {
       ok(false, 'promise was rejected')
+      start()
     })
 })
 
@@ -38,11 +42,13 @@ asyncTest('error handler can be null', 1, function () {
       url   : 'this-does-not-exist.json'
     , error : null
   })
-  .then(function (value) {
+  .then(function () {
       ok(false, 'promise was resolved')
+      start()
     }
   , function (reason) {
       ok(reason != null, 'reason given')
+      start()
     })
 })
 
@@ -54,10 +60,12 @@ asyncTest('error handler fires first', function () {
         check = true
       }
   })
-  .then(function (value) {
+  .then(function () {
       ok(false, 'promise was resolved')
+      start()
     }
   , function () {
       ok(check, 'error handler already ran')
+      start()
     })
 })
