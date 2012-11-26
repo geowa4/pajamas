@@ -85,6 +85,11 @@ The amount of time in milliseconds to wait to send the request.
 This can be useful when simulating latency.
 
 
+### error
+
+The default rejection handler for the generated promise.
+
+
 ### headers
 
 A map of header key/value pairs to send along with the request.
@@ -92,6 +97,11 @@ These key/value pairs may override the defaults like
 'Accept', 'Content-Type', and 'X-Requested-With'.
 
 *Default*: `{}` (depends on data type)
+
+
+### success
+
+The default resolution handler for the generated promise.
 
 
 ### timeout
