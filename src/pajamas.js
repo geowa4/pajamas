@@ -290,10 +290,14 @@
         else sendRemote(o, deferred)
 
         return promise
-        .then(o.success || function (value) {
-            return value
+        .then(function (value) {
+            var ret = o.success && o.success(value)
+            return ret || value
           }
-        , o.error || function (reason) {
+        , function (reason) {
+            var ret = o.error && o.error(reason)
+            if (ret) return ret
+            // throw reason if o.error didn't throw or return
             throw reason
           })
       }
