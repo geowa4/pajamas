@@ -56,8 +56,9 @@ asyncTest('error handler fires first', function () {
   var check = false
   pj({
       url     : 'this-does-not-exist.json'
-    , error : function () {
+    , error : function (reason) {
         check = true
+        throw reason
       }
   })
   .then(function () {
