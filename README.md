@@ -88,6 +88,29 @@ This can be useful when simulating latency.
 ### error
 
 The default rejection handler for the generated promise.
+This is passed to the `then` function of the promise;
+the promise returned from `then` is what is returned to the user.
+
+*Default*: function (reason) { throw reason }
+
+    var check = false
+      , originalReason
+    pj({
+        url     : 'this-does-not-exist.json'
+      , error : function (reason) {
+          check = true
+          originalReason = reason
+          throw reason // must throw something to reject
+        }
+    })
+    .then(function () {
+        // not called in this example
+      }
+    , function (reason) {
+        // logs true twice
+        console.log(check)
+        console.log(originalReason === reason)
+      })
 
 
 ### headers
@@ -102,6 +125,29 @@ These key/value pairs may override the defaults like
 ### success
 
 The default resolution handler for the generated promise.
+This is passed to the `then` function of the promise;
+the promise returned from `then` is what is returned to the user.
+
+*Default*: function (value) { return value }
+
+    var check = false
+      , originalValue
+    pj({
+        url     : '../json/json-test.json'
+      , success : function (value) {
+          check = true
+          originalValue = value
+          return value
+        }
+    })
+    .then(function (value) {
+        // logs true twice
+        console.log(check)
+        console.log(originalValue === value)
+      }
+    , function () {
+        // not called in this example
+      })
 
 
 ### timeout
