@@ -40,8 +40,8 @@
         return Object.prototype.toString.call(obj) === '[object Function]'
       }
 
-    , isNumeric = function (numeric) {
-        return !isNaN(parseFloat(numeric)) && isFinite(numeric)
+    , isNumeric = function (n) {
+        return !isNaN(parseFloat(n)) && isFinite(n)
       }
 
     , clone = function (o) {
