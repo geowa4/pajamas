@@ -16,8 +16,15 @@ module.exports = function(grunt) {
     , qunit  : {
           files: ['test/**/*.html']
       }
+    , copy   : {
+        dist : {
+          files : {
+            'dist/ender.js' : 'src/ender.js'
+          }
+        }
+      }
     , concat : {
-        dist: {
+        dist : {
             src  : [
                 '<banner:meta.banner>'
               , '<file_strip_banner:src/<%= pkg.name %>.js>'
@@ -89,12 +96,13 @@ module.exports = function(grunt) {
     , clean : ['dist']
   })
 
+  grunt.loadNpmTasks('grunt-contrib-copy')
   grunt.loadNpmTasks('grunt-contrib-compress')
   grunt.loadNpmTasks('grunt-contrib-clean')
 
   grunt.registerTask('default', 'lint build qunit')
 
-  grunt.registerTask('build', 'concat min compress')
+  grunt.registerTask('build', 'copy concat min compress')
 
   grunt.registerTask('test', 'server watch')
 

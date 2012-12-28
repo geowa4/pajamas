@@ -2,15 +2,15 @@
     "name"              : "pajamas"
   , "description"       : "A wrapper for asynchronous http requests using the q promise library"
   , "keywords"          : ["ajax", "xhr", "q", "promise", "async"]
-  , "version"           : "1.1.1"
+  , "version"           : "1.1.2"
   , "homepage"          : "http://documentup.com/geowa4/pajamas"
   , "author"            : "George Adams IV (http://gada.ms)"
   , "repository"        : {
         "type"          : "git"
       , "url"           : "https://github.com/geowa4/pajamas"
     }
-  , "main"              : "./src/pajamas.js"
-  , "ender"             : "./src/ender.js"
+  , "main"              : "./dist/pajamas.js"
+  , "ender"             : "./dist/ender.js"
   , "bugs"              : {
         "url"           : "https://github.com/geowa4/pajamas/issues"
     }
@@ -25,6 +25,7 @@
         "grunt"                  : "0.3.17"
       , "grunt-contrib-compress" : "0.3.2"
       , "grunt-contrib-clean"    : "0.3.1"
+      , "grunt-contrib-copy"     : "0.3.2"
       , "requirejs"              : "2.1.1"
       , "ender-js"               : "0.4.4-1"
     }
