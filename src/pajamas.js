@@ -295,7 +295,14 @@
             return ret || value
           }
         , function (reason) {
-            var ret = o.error && o.error(reason)
+            var ret
+            // retry as many times as desired
+            if (isNumeric(o.retry) && o.retry > 0) {
+              o.retry--
+              return pajamas(o)
+            }
+            // TODO: else if (o.retry is an object)
+            ret = o.error && o.error(reason)
             if (ret) return ret
             // throw reason if o.error didn't throw or return
             throw reason

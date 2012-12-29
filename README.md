@@ -15,12 +15,12 @@ Using the `pj` function, pass an object of options.
 This should look familiar to jQuery:
 
     var promise = pj({
-        url      : '/my/awesome/data.json'  // optional; the current url is assumed
-      , dataType : 'json'                   // optional; 'json' is assumed
-      , data     : {                        // optional; null is assumed
-            whatever : 'you want'
-        }
-      , type     : 'GET'                    // optional; 'GET' is assumed
+      url      : '/my/awesome/data.json'  // optional; the current url is assumed
+    , dataType : 'json'                   // optional; 'json' is assumed
+    , data     : {                        // optional; null is assumed
+          whatever : 'you want'
+      }
+    , type     : 'GET'                    // optional; 'GET' is assumed
     })
 
 Then, you can do whatever you'd normally do with a Q promise, such as:
@@ -104,6 +104,15 @@ These key/value pairs may override the defaults like
 'Accept', 'Content-Type', and 'X-Requested-With'.
 
 *Default*: `{}` (depends on data type)
+
+
+### retry
+
+An integer for the number of times the request should be retried
+with a nearly identical set of options. 
+The only changes will be a decremented retry count,
+and all inferences (`type`, `dataType`, `url`) will be passed along
+to avoid having to make the same inferences again.
 
 
 ### success
