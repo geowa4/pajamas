@@ -24,7 +24,7 @@
   , "devDependencies"   : {
         "grunt"                  : "0.3.17"
       , "grunt-contrib-compress" : "0.3.3"
-      , "grunt-contrib-clean"    : "0.4.0a"
+      , "grunt-contrib-clean"    : "0.3.1"
       , "grunt-contrib-copy"     : "0.3.2"
       , "requirejs"              : "2.1.2"
       , "ender-js"               : "0.4.4-1"

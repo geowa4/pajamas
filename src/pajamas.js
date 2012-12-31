@@ -16,18 +16,18 @@
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
     , defaultHeaders = {
-          contentType : 'application/x-www-form-urlencoded; charset=UTF-8'
-        , Accept      : {
-              '*'    : 'text/javascript, text/html, application/xml,' +
-                       ' text/xml, */*'
-            , xml    : 'application/xml, text/xml'
-            , html   : 'text/html'
-            , text   : 'text/plain'
-            , json   : 'application/json, text/javascript'
-            , script : 'text/javascript, application/javascript,' +
-                       ' application/ecmascript, application/x-ecmascript'
-          }
-        , requestedWith: xmlHttpRequest
+        contentType : 'application/x-www-form-urlencoded; charset=UTF-8'
+      , Accept      : {
+          '*'    : 'text/javascript, text/html, application/xml,' +
+                   ' text/xml, */*'
+        , xml    : 'application/xml, text/xml'
+        , html   : 'text/html'
+        , text   : 'text/plain'
+        , json   : 'application/json, text/javascript'
+        , script : 'text/javascript, application/javascript,' +
+                     ' application/ecmascript, application/x-ecmascript'
+        }
+      , requestedWith: xmlHttpRequest
       }
 
     , isArray = Array.isArray || function (obj) {
@@ -169,8 +169,8 @@
                 deferred.resolve(null)
             }
             else {
-              err = new Error(o.type + ' ' + o.url + ': ' +
-                http.status + ' ' + http.statusText)
+              err = new Error(o.type + ' ' + o.url + ': ' + http.status + ' ' +
+                http.statusText)
               err.type = o.type
               err.url = o.url
               err.status = http.status
@@ -337,8 +337,8 @@
               }
               else {
                 buildParams(
-                    prefix + '[' + (typeof v === 'object' ? i : '') + ']'
-                  , v)
+                  prefix + '[' + (typeof v === 'object' ? i : '') + ']'
+                , v)
               }
             }
           }
