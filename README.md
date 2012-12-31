@@ -114,6 +114,9 @@ The only changes will be a decremented retry count,
 and all inferences (`type`, `dataType`, `url`) will be passed along
 to avoid having to make the same inferences again.
 
+If `retry` is an object, that will be used as the options object for the retry.
+This retry object may also have a retry property.
+
 
 ### success
 

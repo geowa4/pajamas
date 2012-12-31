@@ -301,7 +301,9 @@
               o.retry--
               return pajamas(o)
             }
-            // TODO: else if (o.retry is an object)
+            else if (o.retry === Object(o.retry)) {
+              return pajamas(o.retry)
+            }
             ret = o.error && o.error(reason)
             if (ret) return ret
             // throw reason if o.error didn't throw or return

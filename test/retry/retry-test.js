@@ -1,5 +1,5 @@
 /*global pj:true FakeXHR:true module:true asyncTest:true strictEqual:true ok:true start:true*/
-module('retry with a number', {
+module('retry', {
   setup    : function () {
     FakeXHR.instance = null
     FakeXHR.sendHook = function () {
@@ -25,7 +25,8 @@ asyncTest('retry count of 0', 1, function () {
   , xhr : function () {
       return new FakeXHR()
     }
-  }).then(function () {
+  })
+  .then(function () {
     ok(false, 'deferred was resolved')
     start()
   }, function () {
@@ -46,7 +47,8 @@ asyncTest('retry count greater than 0', 1, function () {
   , xhr : function () {
       return new FakeXHR()
     }
-  }).then(function () {
+  })
+  .then(function () {
     ok(false, 'deferred was resolved')
     start()
   }, function () {
@@ -54,3 +56,23 @@ asyncTest('retry count greater than 0', 1, function () {
     start()
   })
 })
+
+asyncTest('retry object', 1, function () {
+  pj({
+    url   : 'does-not-exist'
+  , retry : {
+      url : 'retry-test.html'
+    }
+  , xhr   : function () {
+      return new FakeXHR()
+    }
+  })
+  .then(function (response) {
+    strictEqual(typeof response, 'string', 'retry was successful')
+    start()
+  }, function () {
+    ok(false, 'deferred was rejected')
+    start()
+  })
+})
+
