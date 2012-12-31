@@ -12,7 +12,6 @@
     , xhr = win[xmlHttpRequest] ?
         function () { return new win[xmlHttpRequest]() } :
         function () { return new win.ActiveXObject('Microsoft.XMLHTTP') }
-    , responseText = 'responseText'
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
     , defaultHeaders = {
@@ -93,7 +92,7 @@
 
     , responseParsers = {
         json   : function (deferred) {
-          var r = this[responseText]
+          var r = this.responseText
 
           try {
             r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
@@ -104,16 +103,16 @@
         }
       , script : function (deferred) {
           try {
-            deferred.resolve(eval(this[responseText]))
+            deferred.resolve(eval(this.responseText))
           } catch (err) {
             deferred.reject(err)
           }
         }
       , text   : function (deferred) {
-          deferred.resolve(String(this[responseText]))
+          deferred.resolve(String(this.responseText))
         }
       , html   : function (deferred) {
-          deferred.resolve(this[responseText])
+          deferred.resolve(this.responseText)
         }
       , xml    : function (deferred) {
           var r = this.responseXML
@@ -161,8 +160,8 @@
             status = http.status
             if (status >= 200 && status < 300 ||
                 status === 304 ||
-                status === 0 && http[responseText] !== '') {
-              if (http[responseText])
+                status === 0 && http.responseText !== '') {
+              if (http.responseText)
                 (responseParsers[o.dataType] || defaultParser)
                   .call(http, deferred)
               else
