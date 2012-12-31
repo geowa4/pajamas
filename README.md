@@ -3,7 +3,7 @@ Pajamas
 
 Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 This library has been tested against Chrome (latest), FF (latest), and IE9.
-See the package.json file for the current version number and tested dependencies.
+See the [package.json](https://github.com/geowa4/pajamas/blob/master/package.json) file for the current version number and tested dependencies.
 
 [![Build Status](https://travis-ci.org/geowa4/pajamas.png)](https://travis-ci.org/geowa4/pajamas)
 
@@ -111,8 +111,7 @@ These key/value pairs may override the defaults like
 An integer for the number of times the request should be retried
 with a nearly identical set of options. 
 The only changes will be a decremented retry count,
-and all inferences (`type`, `dataType`, `url`) will be passed along
-to avoid having to make the same inferences again.
+and all inferences (`type`, `dataType`, `url`) will be passed along to avoid having to make the same inferences again.
 
 If `retry` is an object, that will be used as the options object for the retry.
 This retry object may also have a retry property.
