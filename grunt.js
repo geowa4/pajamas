@@ -41,16 +41,6 @@ module.exports = function(grunt) {
       , dest : 'dist/<%= pkg.name %>.min.js'
       }
     }
-  , compress : {
-      gzip : {
-        options : {
-          mode : 'gzip'
-        }
-      , files   : {
-          'dist/<%= pkg.name %>.min.js.gz': 'dist/<%= pkg.name %>.min.js'
-        }
-      }
-    }
   , watch  : {
       files : '<config:lint.files>'
     , tasks : 'lint qunit'
@@ -99,12 +89,11 @@ module.exports = function(grunt) {
   })
 
   grunt.loadNpmTasks('grunt-contrib-copy')
-  grunt.loadNpmTasks('grunt-contrib-compress')
   grunt.loadNpmTasks('grunt-contrib-clean')
 
   grunt.registerTask('default', 'lint build qunit')
 
-  grunt.registerTask('build', 'copy concat min compress')
+  grunt.registerTask('build', 'copy concat min')
 
   grunt.registerTask('test', 'server watch')
 

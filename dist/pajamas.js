@@ -1,4 +1,4 @@
-/*! pajamas - v1.3.1 - 2013-01-01
+/*! pajamas - v1.3.2 - 2013-01-01
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 George Adams IV (http://gada.ms); Licensed MIT */
 
