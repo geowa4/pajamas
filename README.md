@@ -251,15 +251,6 @@ In the project directory, you will still need to run `npm install` to install al
 Then, you may freely run any Grunt command defined in grunt.js.
 
 
-Roadmap
--------
-
-### v1.0
-
-Use this for my own website.
-Cleanup.
-
-
 References
 ----------
 
