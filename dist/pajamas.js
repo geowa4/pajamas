@@ -1,7 +1,5 @@
-/*! pajamas - v1.3.5 - 2013-01-11
-* http://documentup.com/geowa4/pajamas
-* Copyright (c) 2013 George Adams IV (http://gada.ms); Licensed MIT */
-
+/*! pajamas - v1.3.5 - 2013-03-05\n* http://documentup.com/geowa4/pajamas
+* Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
   if (typeof module !== 'undefined' && typeof module.exports === 'object')
     module.exports = factory(require('q'))

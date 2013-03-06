@@ -1,34 +1,44 @@
 {
-    "name"              : "pajamas"
-  , "description"       : "A wrapper for asynchronous http requests using the q promise library"
-  , "keywords"          : ["ajax", "xhr", "q", "promise", "async", "ender"]
-  , "version"           : "1.3.5"
-  , "homepage"          : "http://documentup.com/geowa4/pajamas"
-  , "author"            : "George Adams IV (http://gada.ms)"
-  , "repository"        : {
-        "type"          : "git"
-      , "url"           : "https://github.com/geowa4/pajamas"
-    }
-  , "main"              : "./dist/pajamas.js"
-  , "ender"             : "./dist/ender.js"
-  , "bugs"              : {
-        "url"           : "https://github.com/geowa4/pajamas/issues"
-    }
-  , "licenses"          : [{
-        "type"          : "MIT"
-      , "url"           : "https://github.com/geowa4/pajamas/raw/master/LICENSE"
-    }]
-  , "dependencies"      : {
-        "q"             : "0.8.x"
-    }
-  , "devDependencies"   : {
-        "grunt"                  : "0.3.17"
-      , "grunt-contrib-clean"    : "0.3.1"
-      , "grunt-contrib-copy"     : "0.3.2"
-      , "requirejs"              : "2.1.2"
-      , "ender-js"               : "0.4.4-1"
-    }
-  , "scripts"           : {
-        "test"          : "grunt --verbose"
-    }
+  "name"            : "pajamas"
+, "description"     : "A wrapper for asynchronous http requests using the q promise library"
+, "keywords"        : ["ajax", "xhr", "q", "promise", "async", "ender"]
+, "version"         : "1.3.5"
+, "homepage"        : "http://documentup.com/geowa4/pajamas"
+, "author"          : "George Adams IV (http://gada.ms)"
+, "repository"      : {
+    "type" : "git"
+  , "url"  : "https://github.com/geowa4/pajamas"
+  }
+, "main"            : "./dist/pajamas.js"
+, "ender"           : "./dist/ender.js"
+, "bugs"            : {
+    "url" : "https://github.com/geowa4/pajamas/issues"
+  }
+, "licenses"        : [{
+    "type" : "MIT"
+  , "url"  : "https://github.com/geowa4/pajamas/raw/master/LICENSE"
+  }]
+, "dependencies"    : {
+    "q" : "0.9.x"
+  }
+, "devDependencies" : {
+    "grunt"                    : "~0.4.0"
+  , "grunt-contrib-copy"       : "~0.4.0"
+  , "grunt-contrib-concat"     : "~0.1.2"
+  , "grunt-contrib-uglify"     : "~0.1.1"
+  , "grunt-contrib-jshint"     : "~0.1.1"
+  , "grunt-contrib-connect"    : "0.1.2"
+  , "grunt-contrib-clean"      : "0.4.0"
+  , "grunt-contrib-livereload" : "0.1.1"
+  , "grunt-contrib-qunit"      : "0.2.0"
+  , "grunt-usemin"             : "~0.1.9"
+  , "grunt-regarde"            : "~0.1.1"
+  , "grunt-open"               : "~0.2.0"
+  , "matchdep"                 : "~0.1.1"
+  , "requirejs"                : "2.1.5"
+  , "ender-js"                 : "0.4.4-1"
+  }
+, "scripts"         : {
+    "test" : "grunt --verbose"
+  }
 }
