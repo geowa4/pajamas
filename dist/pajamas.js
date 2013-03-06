@@ -1,4 +1,5 @@
-/*! pajamas - v1.3.5 - 2013-03-05\n* http://documentup.com/geowa4/pajamas
+/*! pajamas - v1.3.5 - 2013-03-05
+* http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
   if (typeof module !== 'undefined' && typeof module.exports === 'object')

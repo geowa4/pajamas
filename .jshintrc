@@ -1,0 +1,32 @@
+{
+  "camelcase" : true
+, "eqeqeq"    : true
+, "forin"     : true
+, "immed"     : true
+, "latedef"   : true
+, "newcap"    : true
+, "noarg"     : true
+, "nonew"     : true
+, "quotmark"  : "single"
+, "undef"     : true
+, "unused"    : true
+, "trailing"  : true
+, "asi"       : true
+, "eqnull"    : true
+, "evil"      : true
+, "expr"      : true
+, "laxbreak"  : true
+, "laxcomma"  : true
+, "sub"       : true
+, "browser"   : true
+, "onevar"    : true
+
+, "globals" : {
+    "QUnit"   : true
+  , "define"  : true
+  , "module"  : true
+  , "exports" : true
+  , "require" : true
+  , "ender"   : true
+  }
+}
