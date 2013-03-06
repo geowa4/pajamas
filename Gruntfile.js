@@ -48,7 +48,7 @@ module.exports = function(grunt) {
     }
   , watch  : {
       livereload : {
-        files : '<%= jshint.files %>'
+        files : ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'test/**/*.html']
       , tasks : ['livereload']
       }
     , js : {
@@ -66,8 +66,7 @@ module.exports = function(grunt) {
           middleware : function (connect) {
             return [
               lrSnippet
-            , mountFolder(connect, '.tmp')
-            , mountFolder(connect, 'app')
+            , mountFolder(connect, '.')
             ]
           }
         }
@@ -75,7 +74,7 @@ module.exports = function(grunt) {
     }
   , open   : {
       server : {
-        path : 'http://localhost:<%= connect.options.port %>'
+        path : 'http://localhost:<%= connect.options.port %>/test/index.html'
       }
     }
   , jshint : {
@@ -104,7 +103,7 @@ module.exports = function(grunt) {
     , 'livereload-start'
     , 'connect:livereload'
     , 'open'
-    , 'watch'
+    , 'watch:livereload'
     ])
   })
 
