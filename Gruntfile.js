@@ -1,6 +1,6 @@
 var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet
   , mountFolder = function (connect, dir) {
-      return connect.static(require('path').resolve(dir))
+      return connect['static'](require('path').resolve(dir))
     }
 
 module.exports = function(grunt) {
@@ -13,9 +13,6 @@ module.exports = function(grunt) {
         '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
         '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n'
-    }
-  , lint   : {
-      files: ['grunt.js', 'src/**/*.js', 'test/**/*.js']
     }
   , qunit  : {
       files: ['test/**/*.html']
@@ -51,20 +48,29 @@ module.exports = function(grunt) {
     }
   , watch  : {
       livereload : {
-        files: [
-          '<%= lint.files %>'
-        ]
-      , tasks: ['livereload']
+        files : '<%= jshint.files %>'
+      , tasks : ['livereload']
       }
     , js : {
-        files : '<%= lint.files %>'
-      , tasks : 'lint qunit'
+        files : '<%= jshint.files %>'
+      , tasks : ['jshint', 'qunit']
       }
     }
   , connect : {
       options : {
-        port     : 9000
+        port     : 4000
       , hostname : 'localhost'
+      }
+    , livereload : {
+        options : {
+          middleware : function (connect) {
+            return [
+              lrSnippet
+            , mountFolder(connect, '.tmp')
+            , mountFolder(connect, 'app')
+            ]
+          }
+        }
       }
     }
   , open   : {
@@ -73,13 +79,10 @@ module.exports = function(grunt) {
       }
     }
   , jshint : {
-      all     : [
-        'src/<%= pkg.name %>.js'
-      ]
+      files   : ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js']
     , options : {
         jshintrc : '.jshintrc'
       }
-    , 
     }
   , clean  : {
       dist : ['.tmp', 'dist']
