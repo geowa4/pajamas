@@ -15,7 +15,7 @@ module.exports = function(grunt) {
         ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n'
     }
   , qunit  : {
-      files: ['test/**/*.html']
+      files: ['test/*/*.html']
     }
   , copy   : {
       dist : {
