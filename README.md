@@ -242,6 +242,22 @@ The modification simply applies the internal collection as arguments to `pj.seri
     > $('#username').val()
 
 
+Partial Application
+-------------------
+
+Methods are often created to wrap an AJAX call with the intention of pre-canning a bunch of options.
+That is no longer necessary.
+Using `pj.partial` you can achieve the same goal.
+
+    > var get = pj.partial({type : 'GET'})
+
+Or, if you're using Ender:
+
+    > $.get({url : 'some.xml'})
+    > $.getJSON({url : '/some/resource'})
+    > $.getScript({url : 'some.js'})
+
+
 Building
 --------
 
