@@ -1,7 +1,7 @@
 Pajamas
 =======
 
-Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
+Pajamas is a simple, well-tested AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 This library has been tested against Chrome (latest), FF (latest), and IE9.
 See the [package.json](https://github.com/geowa4/pajamas/blob/master/package.json) file for the current version number and tested dependencies.
 
