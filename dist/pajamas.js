@@ -313,11 +313,10 @@
           })
       }
 
-  pajamas.partial = function (d) {
-    var applied = function (o) {
-      pajamas(defaults(o || {}, d))
-    }
-    return defaults(applied, pajamas)
+  pajamas.partial = function (outer) {
+    return function (inner) {
+        return pajamas(defaults(outer || {}, inner || {}))
+      }
   }
 
   pajamas.param = function (data) {
