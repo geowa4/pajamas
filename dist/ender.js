@@ -13,13 +13,13 @@
     , v = integrate('val')
 
   $.ender({
-    ajax  : pj
-  , param : pj.param
+      ajax  : pj
+    , param : pj.param
   })
 
   $.ender({
-    serialize      : s
-  , serializeArray : sa
-  , val            : v
+      serialize      : s
+    , serializeArray : sa
+    , val            : v
   }, true)
 } (ender))
