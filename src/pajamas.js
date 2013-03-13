@@ -43,15 +43,15 @@
         return !isNaN(parseFloat(n)) && isFinite(n)
       }
 
-    , clone = function (o) {
-        var copy = {}
-          , prop
+    , defaults = function (o, d) {
+        var prop
 
-        for (prop in o) {
-          if (o.hasOwnProperty(prop)) copy[prop] = o[prop];
+        for (prop in d) {
+          if (!o.hasOwnProperty(prop) && d.hasOwnProperty(prop))
+            o[prop] = d[prop]
         }
 
-        return copy
+        return o
       }
 
     , inferDataType = function (url) {
@@ -259,7 +259,7 @@
     , pajamas = function (options) {
         var deferred = Q.defer()
           , promise = deferred.promise
-          , o = options == null ? {} : clone(options)
+          , o = options == null ? {} : defaults({}, options)
           , defaultUrl = (function () {
               var anchor
               try {
@@ -309,6 +309,12 @@
             throw reason
           })
       }
+
+  pajamas.partial = function (outer) {
+    return function (inner) {
+        return pajamas(defaults(outer || {}, inner || {}))
+      }
+  }
 
   pajamas.param = function (data) {
     var prefix
