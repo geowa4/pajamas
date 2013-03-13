@@ -253,6 +253,7 @@ Using `pj.partial` you can achieve the same goal.
 
 Or, if you're using Ender:
 
+    > $.post({url : 'some/form'})
     > $.get({url : 'some.xml'})
     > $.getJSON({url : '/some/resource'})
     > $.getScript({url : 'some.js'})
