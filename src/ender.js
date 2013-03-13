@@ -13,13 +13,17 @@
     , v = integrate('val')
 
   $.ender({
-      ajax  : pj
-    , param : pj.param
+    ajax      : pj
+  , post      : pj.partial({type : 'POST'})
+  , get       : pj.partial({type : 'GET'})
+  , getJSON   : pj.partial({type : 'GET', dataType : 'json'})
+  , getScript : pj.partial({type : 'GET', dataType : 'script'})
+  , param     : pj.param
   })
 
   $.ender({
-      serialize      : s
-    , serializeArray : sa
-    , val            : v
+    serialize      : s
+  , serializeArray : sa
+  , val            : v
   }, true)
 } (ender))

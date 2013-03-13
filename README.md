@@ -1,7 +1,7 @@
 Pajamas
 =======
 
-Pajamas is a simple AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
+Pajamas is a simple, well-tested AJAX library built for use with the [Q](http://documentup.com/kriskowal/q/) promise library.
 This library has been tested against Chrome (latest), FF (latest), and IE9.
 See the [package.json](https://github.com/geowa4/pajamas/blob/master/package.json) file for the current version number and tested dependencies.
 
@@ -177,14 +177,14 @@ Takes form and input elements as a variable number of arguments.
 Returns an array of objects of the following form:
 
     [
-        {
-            name  : 'elemName'
-          , value : 'elemValue'
-        }
-      , {
-            name  : 'otherName'
-          , value : 'otherValue'
-        }
+      {
+        name  : 'elemName'
+      , value : 'elemValue'
+      }
+    , {
+        name  : 'otherName'
+      , value : 'otherValue'
+      }
     ]
 
 
@@ -226,6 +226,10 @@ Since Pajamas requires Q, Q's static methods are added to `ender` (a.k.a `$`) as
     > $.when(valueOrPromise)
     > require('Q').when(valueOrPromise)
 
+The static method `ajax` is added to Ender and is equivalent to `require('pajamas')`.
+
+    > $.ajax({url : 'some.json'}).then(function (json) { ... })
+
 The static method `param` is added without modification to Ender.
 
     > $.param(objectOrArray)
@@ -236,6 +240,22 @@ The modification simply applies the internal collection as arguments to `pj.seri
     > $('#form').serialize()
     > $('#form').serializeArray()
     > $('#username').val()
+
+
+Partial Application
+-------------------
+
+Methods are often created to wrap an AJAX call with the intention of pre-canning a bunch of options.
+That is no longer necessary.
+Using `pj.partial` you can achieve the same goal.
+
+    > var get = pj.partial({type : 'GET'})
+
+Or, if you're using Ender:
+
+    > $.get({url : 'some.xml'})
+    > $.getJSON({url : '/some/resource'})
+    > $.getScript({url : 'some.js'})
 
 
 Building
