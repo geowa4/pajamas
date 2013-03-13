@@ -177,14 +177,14 @@ Takes form and input elements as a variable number of arguments.
 Returns an array of objects of the following form:
 
     [
-        {
-            name  : 'elemName'
-          , value : 'elemValue'
-        }
-      , {
-            name  : 'otherName'
-          , value : 'otherValue'
-        }
+      {
+        name  : 'elemName'
+      , value : 'elemValue'
+      }
+    , {
+        name  : 'otherName'
+      , value : 'otherValue'
+      }
     ]
 
 
@@ -225,6 +225,10 @@ Since Pajamas requires Q, Q's static methods are added to `ender` (a.k.a `$`) as
 
     > $.when(valueOrPromise)
     > require('Q').when(valueOrPromise)
+
+The static method `ajax` is added to Ender and is equivalent to `require('pajamas')`.
+
+    > $.ajax({url : 'some.json'}).then(function (json) { ... })
 
 The static method `param` is added without modification to Ender.
 
