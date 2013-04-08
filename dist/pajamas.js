@@ -1,4 +1,4 @@
-/*! pajamas - v1.3.5 - 2013-03-12
+/*! pajamas - v1.4.2 - 2013-04-07
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
@@ -281,7 +281,7 @@
           pajamas.param(o.data) :
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
-        o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
+        o.crossDomain == null || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
         
         if (o.data && typeof o.data === 'string' && o.type === 'GET') {
           o.url = urlAppend(o.url, o.data)
