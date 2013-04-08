@@ -1,4 +1,4 @@
-/*! pajamas - v1.3.5 - 2013-03-12
+/*! pajamas - v1.4.1 - 2013-03-29
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
