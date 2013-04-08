@@ -278,7 +278,7 @@
           pajamas.param(o.data) :
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
-        o.crossDomain || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
+        o.crossDomain == null || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
         
         if (o.data && typeof o.data === 'string' && o.type === 'GET') {
           o.url = urlAppend(o.url, o.data)
