@@ -28,5 +28,16 @@
   , "exports" : true
   , "require" : true
   , "ender"   : true
+
+  , "pj"          : true
+  , "FakeXHR"     : true
+  , "$"           : true
+  , "module"      : true
+  , "test"        : true
+  , "asyncTest"   : true
+  , "ok"          : true
+  , "deepEqual"   : true
+  , "strictEqual" : true
+  , "start"       : true
   }
 }
