@@ -270,7 +270,7 @@
                 return anchor.href
               }
             } ())
-        
+
         o.type = o.type ? o.type.toUpperCase() : 'GET'
         o.url || (o.url = defaultUrl)
         o.data = (o.data && o.processData !== false &&
@@ -279,12 +279,12 @@
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
         o.crossDomain != null || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
-        
+
         if (o.data && typeof o.data === 'string' && o.type === 'GET') {
           o.url = urlAppend(o.url, o.data)
           o.data = null
         }
-        
+
         if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
         else sendRemote(o, deferred)
 

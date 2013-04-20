@@ -1,20 +1,20 @@
 /*global pj:true FakeXHR:true module:true test:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true*/
 module('fake xhr', {
-    setup : function () {
-      FakeXHR.instance = null
-    }
+  setup : function () {
+    FakeXHR.instance = null
+  }
 })
 
 test('check method calls', 10, function () {
   pj({
-      url      : 'xml-test.xml'
-    , dataType : 'xml'
-    , data     : {
-        foo : 'bar'
-      }
-    , xhr      : function () {
-        return new FakeXHR()
-      }
+    url      : 'xml-test.xml'
+  , dataType : 'xml'
+  , data     : {
+      foo : 'bar'
+    }
+  , xhr      : function () {
+      return new FakeXHR()
+    }
   })
 
   strictEqual(FakeXHR.instance.methodCallCount('open'), 1, 'open called')
@@ -33,10 +33,10 @@ test('check method calls', 10, function () {
 
 test('infer xml data type', 1, function () {
   pj({
-      url : 'xml-test.xml'
-    , xhr : function () {
-        return new FakeXHR()
-      }
+    url : 'xml-test.xml'
+  , xhr : function () {
+      return new FakeXHR()
+    }
   })
 
   deepEqual(FakeXHR.instance.methodCallArgs('setRequestHeader', 0), ['Accept', 'application/xml, text/xml'], 'Accepts header defaults to xml')
@@ -47,8 +47,8 @@ module('valid GET')
 
 asyncTest('GET XML', 7, function () {
   pj({
-      url      : 'xml-test.xml'
-    , dataType : 'xml'
+    url      : 'xml-test.xml'
+  , dataType : 'xml'
   }).then(function (value) {
     var doc
     ok(true, 'deferred was resolved')
@@ -58,8 +58,7 @@ asyncTest('GET XML', 7, function () {
     strictEqual(doc.nodeName, 'foo', 'xml root is <foo>')
     ok(doc.hasChildNodes, 'document has child nodes')
     strictEqual(doc.firstChild.nodeName, 'bar', 'first child is <bar>')
-    strictEqual(doc.firstChild.firstChild.nodeValue, 'baz',
-      'Inner value is \'baz\'')
+    strictEqual(doc.firstChild.firstChild.nodeValue, 'baz', 'Inner value is \'baz\'')
     start()
   }, function () {
     ok(false, 'deferred was rejected')
@@ -72,8 +71,8 @@ module('invalid GET')
 
 asyncTest('GET bad XML', function () {
   pj({
-      url      : 'xml-test-invalid.xml'
-    , dataType : 'xml'
+    url      : 'xml-test-invalid.xml'
+  , dataType : 'xml'
   }).then(function (value) {
     strictEqual(value, null, 'response is null')
     start()
@@ -85,8 +84,8 @@ asyncTest('GET bad XML', function () {
 
 asyncTest('GET non-existent XML', 1, function () {
   pj({
-      url      : 'this-file-does-not-exist.xml'
-    , dataType : 'xml'
+    url      : 'this-file-does-not-exist.xml'
+  , dataType : 'xml'
   }).then(function () {
     ok(false, 'deferred was resolved')
     start()
