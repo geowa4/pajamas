@@ -15,9 +15,9 @@ Using the `pj` function, pass an object of options.
 This should look familiar to jQuery:
 
     var promise = pj({
-      url      : '/my/awesome/data.json'  // optional; the current url is assumed
+      url      : '/my/awesome/data.json'  // optional; the current URL is assumed
     , dataType : 'json'                   // optional; 'json' is assumed
-    , data     : {                        // optional; null is assumed
+    , data     : {                        // optional; `null` is assumed
         whatever : 'you want'
       }
     , type     : 'GET'                    // optional; 'GET' is assumed
@@ -31,7 +31,7 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
       }
     , function (reason) {
         // reason is an instance of Error
-        // see reason.type, reason.url, reason.status, and reason.statusText
+        // see reason.type, reason.url, reason.status, reason.statusText, and reason.xhr
       })
 
 POSTing your data is done in the exact same way as the GET, just change the `type` option to `"POST"`.
