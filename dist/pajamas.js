@@ -95,19 +95,22 @@
 
     , responseParsers = {
         json   : function (deferred) {
-          var r = this.responseText
+          var r = this.responseText, e
 
           try {
             r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
             deferred.resolve(r)
           } catch (err) {
-            deferred.reject(new Error('Could not parse JSON in response.'))
+            e = new Error('Could not parse JSON in response.')
+            e.xhr = this
+            deferred.reject(e)
           }
         }
       , script : function (deferred) {
           try {
             deferred.resolve(eval(this.responseText))
           } catch (err) {
+            err.xhr = this
             deferred.reject(err)
           }
         }
@@ -146,6 +149,7 @@
               try {
                 http.send(o.data)
               } catch (err) {
+                err.xhr = http
                 deferred.reject(err)
               }
             }
@@ -177,6 +181,7 @@
               err.url = o.url
               err.status = http.status
               err.statusText = http.statusText
+              err.xhr = http
               deferred.reject(err)
             }
           }
@@ -184,8 +189,10 @@
 
         if (isNumeric(o.timeout)) {
           timeoutVal = setTimeout(function() {
+            var e = new Error('timeout')
+            e.xhr = http
             http.abort()
-            deferred.reject(new Error('timeout'))
+            deferred.reject(e)
           }, o.timeout)
         }
 
