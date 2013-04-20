@@ -54,7 +54,7 @@ asyncTest('success handler fires first', 3, function () {
 
 module('error')
 
-asyncTest('error handler can be null', 1, function () {
+asyncTest('error handler can be null', 2, function () {
   pj({
     url   : 'this-does-not-exist.json'
   , error : null
@@ -64,6 +64,7 @@ asyncTest('error handler can be null', 1, function () {
     start()
   }, function (reason) {
     ok(reason != null, 'reason given')
+    strictEqual(Object.prototype.toString.call(reason.xhr), '[object XMLHttpRequest]', 'XHR provided with reason')
     start()
   })
 })
