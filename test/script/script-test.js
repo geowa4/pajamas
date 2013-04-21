@@ -95,3 +95,22 @@ asyncTest('GET error-ridden JS', 1, function () {
     start()
   })
 })
+
+
+module('verbose response')
+
+asyncTest('resolution value is a object', 3, function () {
+  pj({
+    url               : 'script-test-value.js'
+  , verboseResolution : true
+  })
+  .then(function (value) {
+    strictEqual(Object.prototype.toString.call(value.xhr), '[object XMLHttpRequest]', 'XHR object provided with value')
+    strictEqual(Object.prototype.toString.call(value.status), '[object Number]', 'response status is set')
+    strictEqual(value.response, 7, 'response came back parsed')
+    start()
+  }, function () {
+    ok(false, 'promise was rejected')
+    start()
+  })
+})

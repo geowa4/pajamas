@@ -112,3 +112,38 @@ asyncTest('GET HTML that does not exist', 1, function () {
     start()
   })
 })
+
+
+module('verbose response')
+
+asyncTest('resolution value is a object', 6, function () {
+  pj({
+    url               : 'text-test-value.htm'
+  , dataType          : 'text'
+  , verboseResolution : true
+  })
+  .then(function (value) {
+    strictEqual(Object.prototype.toString.call(value.xhr), '[object XMLHttpRequest]', 'XHR object provided with value')
+    strictEqual(Object.prototype.toString.call(value.status), '[object Number]', 'response status is set')
+    strictEqual(value.response, '<h1>hello, world</h1>', 'response came back parsed')
+    start()
+  }, function () {
+    ok(false, 'promise was rejected')
+    start()
+  })
+
+  pj({
+    url               : 'text-test-value.htm'
+  , dataType          : 'html'
+  , verboseResolution : true
+  })
+  .then(function (value) {
+    strictEqual(Object.prototype.toString.call(value.xhr), '[object XMLHttpRequest]', 'XHR object provided with value')
+    strictEqual(Object.prototype.toString.call(value.status), '[object Number]', 'response status is set')
+    strictEqual(value.response, '<h1>hello, world</h1>', 'response came back parsed')
+    start()
+  }, function () {
+    ok(false, 'promise was rejected')
+    start()
+  })
+})

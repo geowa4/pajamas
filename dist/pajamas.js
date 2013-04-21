@@ -1,4 +1,4 @@
-/*! pajamas - v1.4.3 - 2013-04-20
+/*! pajamas - v1.4.3 - 2013-04-21
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
@@ -89,38 +89,37 @@
           if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
       }
 
-    , defaultParser = function (deferred) {
-        deferred.resolve(this)
+    , makeResolution = function (http, response, verboseResolution) {
+        if (verboseResolution)
+          return {
+            response : response
+          , status   : http.status
+          , xhr      : http
+          }
+        else return response
       }
 
     , responseParsers = {
-        json   : function (deferred) {
+        json   : function () {
           var r = this.responseText, e
 
           try {
-            r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
-            deferred.resolve(r)
+            return win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
           } catch (err) {
             e = new Error('Could not parse JSON in response.')
-            e.xhr = this
-            deferred.reject(e)
+            throw e
           }
         }
-      , script : function (deferred) {
-          try {
-            deferred.resolve(eval(this.responseText))
-          } catch (err) {
-            err.xhr = this
-            deferred.reject(err)
-          }
+      , script : function () {
+          return eval(this.responseText)
         }
-      , text   : function (deferred) {
-          deferred.resolve(String(this.responseText))
+      , text   : function () {
+          return String(this.responseText)
         }
-      , html   : function (deferred) {
-          deferred.resolve(this.responseText)
+      , html   : function () {
+          return this.responseText
         }
-      , xml    : function (deferred) {
+      , xml    : function () {
           var r = this.responseXML
           // Chrome makes `responseXML` null;
           // IE makes `documentElement` null;
@@ -128,8 +127,8 @@
           // this is my attempt at standardization
           if (r === null || r.documentElement === null ||
               r.documentElement.nodeName === 'parsererror')
-            deferred.resolve(null)
-          else deferred.resolve(r)
+            return null
+          else return r
         }
       }
 
@@ -159,6 +158,7 @@
 
         http.onreadystatechange = function () {
           var status
+            , parser
             , err
 
           timeoutVal && clearTimeout(timeoutVal)
@@ -168,11 +168,23 @@
             if (status >= 200 && status < 300 ||
                 status === 304 ||
                 status === 0 && http.responseText !== '') {
-              if (http.responseText)
-                (responseParsers[o.dataType] || defaultParser)
-                  .call(http, deferred)
+              if (http.responseText) {
+                try {
+                  parser = responseParsers[o.dataType]
+                  deferred.resolve(makeResolution(
+                    http
+                  , parser ? parser.call(http) : http
+                  , o.verboseResolution))
+                } catch (e) {
+                  e.xhr = http
+                  deferred.reject(e)
+                }
+              }
               else
-                deferred.resolve(null)
+                deferred.resolve(makeResolution(
+                  http
+                , null
+                , o.verboseResolution))
             }
             else {
               err = new Error(o.type + ' ' + o.url + ': ' + http.status + ' ' +
@@ -300,24 +312,23 @@
 
         return promise
         .then(function (value) {
-            var ret = o.success && o.success(value)
-            return ret || value
+          var ret = o.success && o.success(value)
+          return ret || value
+        }, function (reason) {
+          var ret
+          // retry as many times as desired
+          if (isNumeric(o.retry) && o.retry > 0) {
+            o.retry--
+            return pajamas(o)
           }
-        , function (reason) {
-            var ret
-            // retry as many times as desired
-            if (isNumeric(o.retry) && o.retry > 0) {
-              o.retry--
-              return pajamas(o)
-            }
-            else if (o.retry === Object(o.retry)) {
-              return pajamas(o.retry)
-            }
-            ret = o.error && o.error(reason)
-            if (ret) return ret
-            // throw reason if o.error didn't throw or return
-            throw reason
-          })
+          else if (o.retry === Object(o.retry)) {
+            return pajamas(o.retry)
+          }
+          ret = o.error && o.error(reason)
+          if (ret) return ret
+          // throw reason if o.error didn't throw or return
+          throw reason
+        })
       }
 
   pajamas.partial = function (outer) {
