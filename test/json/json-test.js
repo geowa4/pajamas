@@ -267,4 +267,20 @@ asyncTest('timeout after delay', 1, function () {
   })
 })
 
+module('verbose response')
 
+asyncTest('resolution value is a object', 3, function () {
+  pj({
+    url               : 'json-test.json'
+  , verboseResolution : true
+  })
+  .then(function (value) {
+    strictEqual(Object.prototype.toString.call(value.xhr), '[object XMLHttpRequest]', 'XHR object provided with value')
+    strictEqual(Object.prototype.toString.call(value.status), '[object Number]', 'response status is set')
+    strictEqual(Object.prototype.toString.call(value.response), '[object Object]', 'response came back parsed')
+    start()
+  }, function () {
+    ok(false, 'promise was rejected')
+    start()
+  })
+})

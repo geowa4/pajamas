@@ -86,35 +86,37 @@
           if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
       }
 
-    , defaultParser = function (deferred) {
-        deferred.resolve(this)
+    , makeResolution = function (http, response, verboseResolution) {
+        if (verboseResolution)
+          return {
+            response : response
+          , status   : http.status
+          , xhr      : http
+          }
+        else return response
       }
 
     , responseParsers = {
-        json   : function (deferred) {
-          var r = this.responseText
+        json   : function () {
+          var r = this.responseText, e
 
           try {
-            r = win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
-            deferred.resolve(r)
+            return win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
           } catch (err) {
-            deferred.reject(new Error('Could not parse JSON in response.'))
+            e = new Error('Could not parse JSON in response.')
+            throw e
           }
         }
-      , script : function (deferred) {
-          try {
-            deferred.resolve(eval(this.responseText))
-          } catch (err) {
-            deferred.reject(err)
-          }
+      , script : function () {
+          return eval(this.responseText)
         }
-      , text   : function (deferred) {
-          deferred.resolve(String(this.responseText))
+      , text   : function () {
+          return String(this.responseText)
         }
-      , html   : function (deferred) {
-          deferred.resolve(this.responseText)
+      , html   : function () {
+          return this.responseText
         }
-      , xml    : function (deferred) {
+      , xml    : function () {
           var r = this.responseXML
           // Chrome makes `responseXML` null;
           // IE makes `documentElement` null;
@@ -122,8 +124,8 @@
           // this is my attempt at standardization
           if (r === null || r.documentElement === null ||
               r.documentElement.nodeName === 'parsererror')
-            deferred.resolve(null)
-          else deferred.resolve(r)
+            return null
+          else return r
         }
       }
 
@@ -143,6 +145,7 @@
               try {
                 http.send(o.data)
               } catch (err) {
+                err.xhr = http
                 deferred.reject(err)
               }
             }
@@ -152,6 +155,7 @@
 
         http.onreadystatechange = function () {
           var status
+            , parser
             , err
 
           timeoutVal && clearTimeout(timeoutVal)
@@ -161,11 +165,23 @@
             if (status >= 200 && status < 300 ||
                 status === 304 ||
                 status === 0 && http.responseText !== '') {
-              if (http.responseText)
-                (responseParsers[o.dataType] || defaultParser)
-                  .call(http, deferred)
+              if (http.responseText) {
+                try {
+                  parser = responseParsers[o.dataType]
+                  deferred.resolve(makeResolution(
+                    http
+                  , parser ? parser.call(http) : http
+                  , o.verboseResolution))
+                } catch (e) {
+                  e.xhr = http
+                  deferred.reject(e)
+                }
+              }
               else
-                deferred.resolve(null)
+                deferred.resolve(makeResolution(
+                  http
+                , null
+                , o.verboseResolution))
             }
             else {
               err = new Error(o.type + ' ' + o.url + ': ' + http.status + ' ' +
@@ -174,6 +190,7 @@
               err.url = o.url
               err.status = http.status
               err.statusText = http.statusText
+              err.xhr = http
               deferred.reject(err)
             }
           }
@@ -181,8 +198,10 @@
 
         if (isNumeric(o.timeout)) {
           timeoutVal = setTimeout(function() {
+            var e = new Error('timeout')
+            e.xhr = http
             http.abort()
-            deferred.reject(new Error('timeout'))
+            deferred.reject(e)
           }, o.timeout)
         }
 
@@ -270,7 +289,7 @@
                 return anchor.href
               }
             } ())
-        
+
         o.type = o.type ? o.type.toUpperCase() : 'GET'
         o.url || (o.url = defaultUrl)
         o.data = (o.data && o.processData !== false &&
@@ -279,35 +298,34 @@
           (o.data || null)
         o.dataType || (o.dataType = inferDataType(o.url))
         o.crossDomain != null || (o.crossDomain = isCrossDomain(o.url, defaultUrl))
-        
+
         if (o.data && typeof o.data === 'string' && o.type === 'GET') {
           o.url = urlAppend(o.url, o.data)
           o.data = null
         }
-        
+
         if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
         else sendRemote(o, deferred)
 
         return promise
         .then(function (value) {
-            var ret = o.success && o.success(value)
-            return ret || value
+          var ret = o.success && o.success(value)
+          return ret || value
+        }, function (reason) {
+          var ret
+          // retry as many times as desired
+          if (isNumeric(o.retry) && o.retry > 0) {
+            o.retry--
+            return pajamas(o)
           }
-        , function (reason) {
-            var ret
-            // retry as many times as desired
-            if (isNumeric(o.retry) && o.retry > 0) {
-              o.retry--
-              return pajamas(o)
-            }
-            else if (o.retry === Object(o.retry)) {
-              return pajamas(o.retry)
-            }
-            ret = o.error && o.error(reason)
-            if (ret) return ret
-            // throw reason if o.error didn't throw or return
-            throw reason
-          })
+          else if (o.retry === Object(o.retry)) {
+            return pajamas(o.retry)
+          }
+          ret = o.error && o.error(reason)
+          if (ret) return ret
+          // throw reason if o.error didn't throw or return
+          throw reason
+        })
       }
 
   pajamas.partial = function (outer) {

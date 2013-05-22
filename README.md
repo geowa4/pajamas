@@ -15,9 +15,9 @@ Using the `pj` function, pass an object of options.
 This should look familiar to jQuery:
 
     var promise = pj({
-      url      : '/my/awesome/data.json'  // optional; the current url is assumed
+      url      : '/my/awesome/data.json'  // optional; the current URL is assumed
     , dataType : 'json'                   // optional; 'json' is assumed
-    , data     : {                        // optional; null is assumed
+    , data     : {                        // optional; `null` is assumed
         whatever : 'you want'
       }
     , type     : 'GET'                    // optional; 'GET' is assumed
@@ -27,12 +27,11 @@ Then, you can do whatever you'd normally do with a Q promise, such as:
 
     promise
     .then(function (value) {
-        // do something with the JSON
-      }
-    , function (reason) {
-        // reason is an instance of Error
-        // see reason.type, reason.url, reason.status, and reason.statusText
-      })
+      // do something with the JSON
+    }, function (reason) {
+      // reason is an instance of Error
+      // see reason.type, reason.url, reason.status, reason.statusText, and reason.xhr
+    })
 
 POSTing your data is done in the exact same way as the GET, just change the `type` option to `"POST"`.
 If you set the `dataType` to `'*'`, the promise will be resolved with the XHR object.
@@ -148,6 +147,16 @@ The type of request to make ('GET', 'POST', 'PUT', 'DELETE').
 The URL to which the request is sent.
 
 *Default*: The current page
+
+
+### verboseResolution
+
+If this is set to a truthy value, the resolution of the local (not cross domain and not JSONP) will be an object with three fields: `response`, `status`, and `xhr`.
+The `response` field is the normal response that you would normally have received as the resolution value.
+The `status` field is the status code of the response (i.e. 200, 304, etc.).
+The `xhr` field is the XHR object that was used to make the request.
+
+*Default*: undefined
 
 
 ### xhr
