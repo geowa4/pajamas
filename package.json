@@ -2,7 +2,7 @@
   "name"            : "pajamas"
 , "description"     : "A wrapper for asynchronous http requests using the q promise library"
 , "keywords"        : ["ajax", "xhr", "q", "promise", "async", "ender"]
-, "version"         : "1.4.3"
+, "version"         : "1.5.0"
 , "homepage"        : "http://documentup.com/geowa4/pajamas"
 , "author"          : "George Adams IV (http://gada.ms)"
 , "repository"      : {
