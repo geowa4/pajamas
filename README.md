@@ -6,6 +6,7 @@ This library has been tested against Chrome (latest), FF (latest), and IE9.
 See the [package.json](https://github.com/geowa4/pajamas/blob/master/package.json) file for the current version number and tested dependencies.
 
 [![Build Status](https://travis-ci.org/geowa4/pajamas.png)](https://travis-ci.org/geowa4/pajamas)
+[![Dependency Status](https://gemnasium.com/geowa4/pajamas.png)](https://gemnasium.com/geowa4/pajamas)
 
 
 Usage
