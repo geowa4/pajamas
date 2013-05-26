@@ -1,8 +1,8 @@
 {
   "name"          : "pajamas"
-, "version"       : "1.5.0"
+, "version"       : "1.5.2"
 , "main"          : "./dist/pajamas.js"
 , "dependencies"  : {
-    "q" : "0.9.x"
+    "q" : "0.9.3"
   }
 }
