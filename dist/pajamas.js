@@ -1,4 +1,4 @@
-/*! pajamas - v1.5.0 - 2013-05-22
+/*! pajamas - v1.5.0 - 2013-05-26
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 !(function (factory) {
@@ -333,7 +333,8 @@
 
   pajamas.partial = function (outer) {
     return function (inner) {
-        return pajamas(defaults(outer || {}, inner || {}))
+        var outerClone = defaults({}, outer)
+        return pajamas(defaults(outerClone, inner || {}))
       }
   }
 

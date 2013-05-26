@@ -330,7 +330,8 @@
 
   pajamas.partial = function (outer) {
     return function (inner) {
-        return pajamas(defaults(outer || {}, inner || {}))
+        var outerClone = defaults({}, outer)
+        return pajamas(defaults(outerClone, inner || {}))
       }
   }
 
