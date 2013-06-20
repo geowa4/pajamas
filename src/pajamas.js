@@ -226,7 +226,8 @@
         script.async = 'async'
         if (o.dataType === 'jsonp') {
           callbackName =  o.jsonp || 'pajamas' +
-            (Date.now || function () { return (new Date()).getTime() }).call()
+            (Date.now || function () { return (new Date()).getTime() }).call() +
+            Math.floor(Math.random()*1000)
           callback = function (data) {
             window[callbackName] = undefined
             try {
