@@ -3,9 +3,12 @@ module('JSONP test', {
     setup    : function () {
       this.now = Date.now
       Date.now = function () { return 0 }
+      this.random = Math.random
+      Math.random = function() { return 0 }
     }
   , teardown : function () {
       Date.now = this.now
+      Math.random = this.random
     }
 })
 

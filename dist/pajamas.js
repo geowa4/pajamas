@@ -1,7 +1,7 @@
-/*! pajamas - v1.5.2 - 2013-05-26
+/*! pajamas - v1.5.3 - 2013-06-21
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
-!(function (factory) {
+(function (factory) {
   if (typeof module !== 'undefined' && typeof module.exports === 'object')
     module.exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
@@ -228,7 +228,7 @@
 
         script.async = 'async'
         if (o.dataType === 'jsonp') {
-          callbackName =  o.jsonp || 'pajamas' +
+          callbackName =  o.jsonp || 'pajamas' + (Math.floor(Math.random()*1000)) +
             (Date.now || function () { return (new Date()).getTime() }).call()
           callback = function (data) {
             window[callbackName] = undefined
