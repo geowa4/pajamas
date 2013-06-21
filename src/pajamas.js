@@ -1,4 +1,4 @@
-!(function (factory) {
+(function (factory) {
   if (typeof module !== 'undefined' && typeof module.exports === 'object')
     module.exports = factory(require('q'))
   else if (typeof define === 'function' && define.amd) define(['q'], factory)
@@ -225,9 +225,8 @@
 
         script.async = 'async'
         if (o.dataType === 'jsonp') {
-          callbackName =  o.jsonp || 'pajamas' +
-            (Date.now || function () { return (new Date()).getTime() }).call() +
-            Math.floor(Math.random()*1000)
+          callbackName =  o.jsonp || 'pajamas' + (Math.floor(Math.random()*1000)) +
+            (Date.now || function () { return (new Date()).getTime() }).call()
           callback = function (data) {
             window[callbackName] = undefined
             try {
