@@ -102,6 +102,8 @@ These conditions are necessary for compatilibility with existing libraries like 
 A map of header key/value pairs to send along with the request.
 These key/value pairs may override the defaults like
 'Accept', 'Content-Type', and 'X-Requested-With'.
+Explicitly setting these three to falsey values will result in them
+not being added to the request headers at all.
 
 *Default*: `{}` (depends on data type)
 
