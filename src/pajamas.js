@@ -29,6 +29,10 @@
       , requestedWith: xmlHttpRequest
       }
 
+    , hasOwn = function (o, p) {
+        return o.hasOwnProperty(p)
+      }
+
     , isArray = Array.isArray || function (obj) {
         return obj instanceof Array
       }
@@ -46,10 +50,8 @@
     , defaults = function (o, d) {
         var prop
 
-        for (prop in d) {
-          if (!o.hasOwnProperty(prop) && d.hasOwnProperty(prop))
-            o[prop] = d[prop]
-        }
+        for (prop in d)
+          if (!hasOwn(o, prop) && hasOwn(d, prop)) o[prop] = d[prop]
 
         return o
       }
@@ -73,17 +75,26 @@
           , accept = 'Accept'
           , h
 
-        headers[accept] = headers[accept] ||
-          defaultHeaders[accept][options.dataType] ||
-          defaultHeaders[accept]['*']
+        if (!hasOwn(headers, accept)) {
+          headers[accept] = defaultHeaders[accept][options.dataType] ||
+            defaultHeaders[accept]['*']
+        }
+        else if (!headers[accept]) delete headers[accept]
 
-        if (!options.crossDomain && !headers[requestedWith])
-          headers[requestedWith] = defaultHeaders.requestedWith
-        if (!headers[contentType])
+        if (!hasOwn(headers, requestedWith)) {
+          if (!options.crossDomain)
+            headers[requestedWith] = defaultHeaders.requestedWith
+        }
+        else if (!headers[requestedWith]) delete headers[requestedWith]
+
+        if (!hasOwn(headers, contentType)) {
           headers[contentType] = options.contentType ||
             defaultHeaders.contentType
+        }
+        else if (!headers[contentType]) delete headers[contentType]
+
         for (h in headers)
-          if (headers.hasOwnProperty(h)) http.setRequestHeader(h, headers[h])
+          if (hasOwn(headers, h)) http.setRequestHeader(h, headers[h])
       }
 
     , makeResolution = function (http, response, verboseResolution) {
@@ -98,13 +109,12 @@
 
     , responseParsers = {
         json   : function () {
-          var r = this.responseText, e
+          var r = this.responseText
 
           try {
             return win.JSON ? win.JSON.parse(r) : eval('(' + r + ')')
           } catch (err) {
-            e = new Error('Could not parse JSON in response.')
-            throw e
+            throw new Error('Could not parse JSON in response.')
           }
         }
       , script : function () {
@@ -372,7 +382,7 @@
           }
           else if (obj && typeof obj === 'object') {
             for (name in obj) {
-              if (obj.hasOwnProperty(name))
+              if (hasOwn(obj, name))
                 buildParams(prefix + '[' + name + ']', obj[name])
             }
           }
@@ -386,7 +396,7 @@
     }
     else {
       for (prefix in data) {
-        if (data.hasOwnProperty(prefix))
+        if (hasOwn(data, prefix))
           buildParams(prefix, data[prefix])
       }
     }

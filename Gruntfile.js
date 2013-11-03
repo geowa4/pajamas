@@ -49,11 +49,11 @@ module.exports = function(grunt) {
   , watch  : {
       livereload : {
         files : ['Gruntfile.js', 'src/**/*.js', 'test/**/*.js', 'test/**/*.html']
-      , tasks : ['livereload']
+      , tasks : ['build', 'livereload']
       }
     , js : {
         files : '<%= jshint.files %>'
-      , tasks : ['jshint', 'qunit']
+      , tasks : ['jshint', 'build', 'qunit']
       }
     }
   , connect : {

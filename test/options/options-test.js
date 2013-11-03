@@ -1,4 +1,27 @@
-/*global pj:true module:true asyncTest:true ok:true strictEqual:true start:true*/
+/*global pj:true module:true asyncTest:true ok:true deepEqual:true strictEqual:true start:true FakeXHR:true*/
+
+module('headers', {
+  setup : function () {
+    FakeXHR.instance = null
+  }
+})
+
+test('explicitly set headers are not overwritten', 1, function () {
+  pj({
+    url     : '../json/json-test.json'
+  , headers : {
+      'Accept'           : false
+    , 'X-Requested-With' : false
+    , 'Content-Type'     : null
+    }
+  , xhr     : function () {
+      return new FakeXHR()
+    }
+  })
+
+  strictEqual(FakeXHR.instance.methodCallCount('setRequestHeader'), 0, 'setRequestHeader called')
+})
+
 
 module('success')
 
