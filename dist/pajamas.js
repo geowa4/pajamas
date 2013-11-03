@@ -1,4 +1,4 @@
-/*! pajamas - v1.5.3 - 2013-06-21
+/*! pajamas - v1.5.3 - 2013-11-03
 * http://documentup.com/geowa4/pajamas
 * Copyright (c) 2013 ; Licensed MIT */
 (function (factory) {
@@ -263,6 +263,10 @@
               deferred.reject(new Error(o.url + ' aborted'))
             }
           }
+        }
+
+        script.onerror = function () {
+          deferred.reject(new Error('Error loading ' + o.url))
         }
 
         if (isNumeric(o.timeout)) {
