@@ -58,3 +58,34 @@ asyncTest('remote JSONP', 1, function () {
       start()
     })
 })
+
+asyncTest('JSONP endpoint does not exist, but is handled well by the server', 1, function () {
+  pj({
+      url : 'https://api.github.com/this-url-does-not-exist'
+    , dataType : 'jsonp'
+  })
+  .then(function () {
+      ok(true, 'deferred was resolved')
+      start()
+    }
+  , function () {
+      ok(false, 'deferred was rejected')
+      start()
+    })
+})
+
+asyncTest('JSONP endpoint does not exist and cannot be handled by the server', 1, function () {
+  var url = 'http://example.com/this-url-does-not-exist'
+  pj({
+      url : 'http://example.com/this-url-does-not-exist'
+    , dataType : 'jsonp'
+  })
+  .then(function () {
+      ok(false, 'deferred was resolved')
+      start()
+    }
+  , function (reason) {
+      strictEqual(reason.message, 'Error loading ' + url + '?callback=pajamas00', 'deferred was rejected')
+      start()
+    })
+})

@@ -262,6 +262,10 @@
           }
         }
 
+        script.onerror = function () {
+          deferred.reject(new Error('Error loading ' + o.url))
+        }
+
         if (isNumeric(o.timeout)) {
           timeoutVal = setTimeout(function() {
             script.onload(0, 1)
