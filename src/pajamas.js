@@ -12,6 +12,7 @@
     , xhr = win[xmlHttpRequest] ?
         function () { return new win[xmlHttpRequest]() } :
         function () { return new win.ActiveXObject('Microsoft.XMLHTTP') }
+    , corsSupported = ('withCredentials' in xhr())
     , contentType = 'Content-Type'
     , requestedWith = 'X-Requested-With'
     , defaultHeaders = {
@@ -318,8 +319,10 @@
           o.data = null
         }
 
-        if (!o.crossDomain && o.dataType !== 'jsonp') sendLocal(o, deferred)
-        else sendRemote(o, deferred)
+        if (o.dataType === 'jsonp' ||
+          (o.dataType === 'script' && o.crossDomain) ||
+          (o.crossDomain && !corsSupported)) sendRemote(o, deferred)
+        else sendLocal(o, deferred)
 
         return promise
         .then(function (value) {
