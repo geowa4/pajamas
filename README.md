@@ -290,3 +290,7 @@ References
 Pajamas is based upon 
 @[ded](https://github.com/ded)'s [Reqwest](https://github.com/ded/reqwest) AJAX library
 and [jQuery](https://github.com/jquery/jquery).
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/geowa4/pajamas/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
